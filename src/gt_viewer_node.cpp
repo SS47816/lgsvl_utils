@@ -12,7 +12,6 @@
 #include <ros/ros.h>
 #include <ros/console.h>
 
-// #include <tf/tf.h>
 #include <tf2_ros/transform_listener.h>
 #include <tf2_geometry_msgs/tf2_geometry_msgs.h>
 
@@ -38,7 +37,7 @@ class GTViwerNode
   ros::Publisher jsk_bboxes_pub;
   ros::Publisher autoware_objects_pub;
 
-  tf2_ros::Buffer tf_buffer;
+  tf2_ros::Buffer tf2_buffer;
   tf2_ros::TransformListener tf2_listener;
 
   std::string bbox_target_frame_;
@@ -47,7 +46,7 @@ class GTViwerNode
   autoware_msgs::DetectedObject transformAutowareObject(const lgsvl_msgs::Detection3D& lgsvl_detection3d, geometry_msgs::TransformStamped transform_stamped);
 };
 
-GTViwerNode::GTViwerNode() : tf2_listener(tf_buffer)
+GTViwerNode::GTViwerNode() : tf2_listener(tf2_buffer)
 {
   ros::NodeHandle private_nh("~");
   
@@ -96,7 +95,7 @@ void GTViwerNode::detections3DCallback(const lgsvl_msgs::Detection3DArray& lgsvl
   geometry_msgs::TransformStamped transform_stamped;
   try
   {
-    transform_stamped = tf_buffer.lookupTransform(bbox_target_frame_, lgsvl_detections3d.header.frame_id, ros::Time(0));
+    transform_stamped = tf2_buffer.lookupTransform(bbox_target_frame_, lgsvl_detections3d.header.frame_id, ros::Time(0));
   }
   catch (tf2::TransformException& ex)
   {
