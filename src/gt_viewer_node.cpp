@@ -49,22 +49,45 @@ void GTViwerNode::detections3DCallback(const lgsvl_msgs::Detection3DArray& lgsvl
 {
   jsk_recognition_msgs::BoundingBoxArray jsk_bboxes;
   autoware_msgs::DetectedObjectArray autoware_bboxes;
+  jsk_bboxes.header = lgsvl_bboxes.header;
+  autoware_bboxes.header = lgsvl_bboxes.header;
 
-  for (auto const& detection : lgsvl_bboxes.detections)
+  for (auto const& lgsvl_bbox : lgsvl_bboxes.detections)
   {
     jsk_recognition_msgs::BoundingBox jsk_bbox;
-
+    jsk_bbox.header = lgsvl_bbox.header;
+    jsk_bbox.pose = lgsvl_bbox.bbox.position;
+    jsk_bbox.dimensions = lgsvl_bbox.bbox.size;
+    jsk_bbox.value = lgsvl_bbox.score;
+    if (lgsvl_bbox.label == "Pedestrian")
+    {
+      jsk_bbox.label = 2;
+    }
+    else if (lgsvl_bbox.label == "Bicyclist")
+    {
+      jsk_bbox.label = 1;
+    }
+    else
+    {
+      jsk_bbox.label = 0;
+    }
 
     jsk_bboxes.boxes.emplace_back(jsk_bbox);
 
     autoware_msgs::DetectedObject autoware_bbox;
-
-
+    autoware_bbox.header = lgsvl_bbox.header;
+    autoware_bbox.id = lgsvl_bbox.id;
+    autoware_bbox.label = lgsvl_bbox.label;
+    autoware_bbox.score = lgsvl_bbox.score;
+    autoware_bbox.pose = lgsvl_bbox.bbox.position;
+    autoware_bbox.dimensions = lgsvl_bbox.bbox.size;
+    autoware_bbox.velocity = lgsvl_bbox.velocity;
+    
     autoware_bboxes.objects.emplace_back(autoware_bbox);
   }
 
-  jsk_bboxes.header = lgsvl_bboxes.header;
-  autoware_bboxes.header = lgsvl_bboxes.header;
+  jsk_bboxes_pub
+  autoware_bboxes_pub.
 }
 
 }
