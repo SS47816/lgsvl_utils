@@ -95,5 +95,12 @@ void GTViwerNode::detections3DCallback(const lgsvl_msgs::Detection3DArray& lgsvl
   jsk_bboxes_pub.publish(jsk_bboxes);
   autoware_bboxes_pub.publish(autoware_bboxes);
 }
+} // namespace lgsvl_utils
 
+int main(int argc, char** argv)
+{
+  ros::init(argc, argv, "gt_viewer_node");
+  lgsvl_utils::GTViwerNode gt_viewer_node;
+  ros::spin();  // spin the ros node.
+  return 0;
 }
