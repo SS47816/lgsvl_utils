@@ -37,6 +37,6 @@
   />
 
   <!-- rviz -->
-  <node type="rviz" name="rviz" pkg="rviz" args="-d $(find frenet_optimal_planner)/rviz/lgsvl.rviz" />
+  <node type="rviz" name="rviz" pkg="rviz" args="-d $(find lgsvl-utils)/rviz/lgsvl.rviz" />
 
 </launch>
