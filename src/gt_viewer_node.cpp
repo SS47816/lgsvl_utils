@@ -38,11 +38,17 @@ class GTViwerNode
 
 GTViwerNode::GTViwerNode()
 {
-  std::string detections3d_topic = "/simulator/ground_truth/3d_detections";
+  std::string lgsvl_gt3d_topic = "/simulator/ground_truth/3d_detections";
+  std::string jsk_bboxes_topic;
+  std::string autoware_bboxes_topic;
   
-  lgsvl_gt3d_sub = nh.subscribe(detections3d_topic, 1, &GTViwerNode::detections3DCallback, this);
+  ROS_ASSERT(nh.getParam("lgsvl_bboxes3d_topic", lgsvl_gt3d_topic));
+  ROS_ASSERT(nh.getParam("jsk_bboxes_topic", jsk_bboxes_topic));
+  ROS_ASSERT(nh.getParam("autoware_bboxes_topic", autoware_bboxes_topic));
 
-
+  lgsvl_gt3d_sub = nh.subscribe(lgsvl_gt3d_topic, 1, &GTViwerNode::detections3DCallback, this);
+  jsk_bboxes_pub = nh.advertise<jsk_recognition_msgs::BoundingBoxArray>(jsk_bboxes_topic, 1);
+  autoware_bboxes_pub = nh.advertise<autoware_msgs::DetectedObjectArray>(autoware_bboxes_topic, 1);
 }
 
 void GTViwerNode::detections3DCallback(const lgsvl_msgs::Detection3DArray& lgsvl_bboxes)
@@ -86,8 +92,8 @@ void GTViwerNode::detections3DCallback(const lgsvl_msgs::Detection3DArray& lgsvl
     autoware_bboxes.objects.emplace_back(autoware_bbox);
   }
 
-  jsk_bboxes_pub
-  autoware_bboxes_pub.
+  jsk_bboxes_pub.publish(jsk_bboxes);
+  autoware_bboxes_pub.publish(autoware_bboxes);
 }
 
 }
