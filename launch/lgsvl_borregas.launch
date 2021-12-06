@@ -1,0 +1,42 @@
+
+<launch>
+  <!-- ROS-Bridge node for Simulator connection -->
+  <node name="websocket_bridge" pkg="rosbridge_server" type="rosbridge_websocket" output="screen" clear_params="true" required="true" />
+
+  <!-- Re-publishing simulator/camera_node/image/compressed topic to /image_raw as expected by Autoware -->
+  <node name="republish" type="republish" pkg="image_transport" output="screen" args="compressed in:=/simulator/camera_node/image raw out:=/image_raw" />
+
+
+  <!-- FIXME: this is to make a temporary hard-link TF between /gps (GPS coordinates fix) and /base_link (base of the car) if localization is failed (e.g. no lidar data)  -->
+  <!-- <node pkg="tf" type="static_transform_publisher" name="gps_to_base_link" args="0 0 0 0 0 0  /gps /base_link 10"/> -->
+
+
+  <!-- <node pkg="tf" type="static_transform_publisher" name="lidar_to_camera" args="0.029 -0.574 -1.820 4.712 0.009 -1.883 /velodyne /camera 10" /> -->
+
+  <!-- TF -->
+  <include file="$(env HOME)/shared_dir/autoware-data/BorregasAve/data/tf/tf.launch"/>
+
+  <!-- Point Cloud -->
+  <!-- Note: this is generated from simulator -->
+  <include file="$(find map_file)/launch/points_map_loader.launch">
+    <arg name="path_pcd" value="$(env HOME)/shared_dir/autoware-data/BorregasAve/data/map/pointcloud_map/BorregasAve.pcd" />
+  </include>
+
+  <!-- Vector Map -->
+  <node pkg="map_file" type="vector_map_loader" name="vector_map_loader" args="
+   $(env HOME)/shared_dir/autoware-data/BorregasAve/data/map/vector_map/lane.csv
+   $(env HOME)/shared_dir/autoware-data/BorregasAve/data/map/vector_map/dtlane.csv
+   $(env HOME)/shared_dir/autoware-data/BorregasAve/data/map/vector_map/point.csv
+   $(env HOME)/shared_dir/autoware-data/BorregasAve/data/map/vector_map/line.csv
+   $(env HOME)/shared_dir/autoware-data/BorregasAve/data/map/vector_map/pole.csv
+   $(env HOME)/shared_dir/autoware-data/BorregasAve/data/map/vector_map/signaldata.csv
+   $(env HOME)/shared_dir/autoware-data/BorregasAve/data/map/vector_map/stopline.csv
+   $(env HOME)/shared_dir/autoware-data/BorregasAve/data/map/vector_map/vector.csv
+   $(env HOME)/shared_dir/autoware-data/BorregasAve/data/map/vector_map/whiteline.csv
+   $(env HOME)/shared_dir/autoware-data/BorregasAve/data/map/vector_map/node.csv" 
+  />
+
+  <!-- rviz -->
+  <node type="rviz" name="rviz" pkg="rviz" args="-d $(find frenet_optimal_planner)/rviz/lgsvl.rviz" />
+
+</launch>
