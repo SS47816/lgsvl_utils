@@ -38,13 +38,15 @@ class GTViwerNode
 
 GTViwerNode::GTViwerNode()
 {
-  std::string lgsvl_gt3d_topic = "/simulator/ground_truth/3d_detections";
+  ros::NodeHandle private_nh("~");
+  
+  std::string lgsvl_gt3d_topic;
   std::string jsk_bboxes_topic;
   std::string autoware_bboxes_topic;
   
-  ROS_ASSERT(nh.getParam("lgsvl_bboxes3d_topic", lgsvl_gt3d_topic));
-  ROS_ASSERT(nh.getParam("jsk_bboxes_topic", jsk_bboxes_topic));
-  ROS_ASSERT(nh.getParam("autoware_bboxes_topic", autoware_bboxes_topic));
+  ROS_ASSERT(private_nh.getParam("lgsvl_gt3d_topic", lgsvl_gt3d_topic));
+  ROS_ASSERT(private_nh.getParam("jsk_bboxes_topic", jsk_bboxes_topic));
+  ROS_ASSERT(private_nh.getParam("autoware_bboxes_topic", autoware_bboxes_topic));
 
   lgsvl_gt3d_sub = nh.subscribe(lgsvl_gt3d_topic, 1, &GTViwerNode::detections3DCallback, this);
   jsk_bboxes_pub = nh.advertise<jsk_recognition_msgs::BoundingBoxArray>(jsk_bboxes_topic, 1);
@@ -95,6 +97,7 @@ void GTViwerNode::detections3DCallback(const lgsvl_msgs::Detection3DArray& lgsvl
   jsk_bboxes_pub.publish(jsk_bboxes);
   autoware_bboxes_pub.publish(autoware_bboxes);
 }
+
 } // namespace lgsvl_utils
 
 int main(int argc, char** argv)
