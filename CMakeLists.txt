@@ -9,6 +9,7 @@ project(lgsvl-utils)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   jsk_recognition_msgs
+  autoware_msgs
   lgsvl_msgs
   roscpp
   rospy
