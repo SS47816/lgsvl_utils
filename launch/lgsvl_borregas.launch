@@ -12,7 +12,7 @@
   <node pkg="tf" type="static_transform_publisher" name="base_link_to_imu" args="0 0 0 0 0 0 /base_link /imu 10"/>
   <node pkg="tf" type="static_transform_publisher" name="base_link_to_velodyne" args="1 0 2 0 0 0 /base_link /velodyne 10"/>
   <node pkg="tf" type="static_transform_publisher" name="base_link_to_camera" args="1.2 0 1.3 0 0 0 /base_link /camera 10" />
-  <node pkg="tf" type="static_transform_publisher" name="map_to_base_link" args="-8.7 56.1 -0.7 -1.8545904 0 0 /map /base_link 10" />
+  <node pkg="tf" type="static_transform_publisher" name="map_to_base_link" args="-8.7 51.6 -0.8 -1.8545904 0 0 /map /base_link 10" />
 
   <!-- Point Cloud -->
   <!-- Note: this is generated from simulator -->
