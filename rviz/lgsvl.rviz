@@ -6,6 +6,11 @@ Panels:
       Expanded:
         - /Global Options1
         - /Status1
+        - /TF1
+        - /TF1/Tree1
+        - /TF1/Tree1/world1
+        - /TF1/Tree1/world1/map1
+        - /BoundingBoxArray1
       Splitter Ratio: 0.5
     Tree Height: 740
   - Class: rviz/Selection
@@ -34,6 +39,37 @@ Toolbars:
 Visualization Manager:
   Class: ""
   Displays:
+    - Class: rviz/TF
+      Enabled: true
+      Frame Timeout: 15
+      Frames:
+        All Enabled: true
+        base_link:
+          Value: true
+        camera:
+          Value: true
+        gps:
+          Value: true
+        map:
+          Value: true
+        mobility:
+          Value: true
+        velodyne:
+          Value: true
+        world:
+          Value: true
+      Marker Scale: 1
+      Name: TF
+      Show Arrows: true
+      Show Axes: true
+      Show Names: true
+      Tree:
+        world:
+          map:
+            mobility:
+              {}
+      Update Interval: 0
+      Value: true
     - Alpha: 0.5
       Cell Size: 1
       Class: rviz/Grid
@@ -83,7 +119,7 @@ Visualization Manager:
       Use rainbow: true
       Value: true
     - Class: rviz/Image
-      Enabled: false
+      Enabled: true
       Image Topic: /simulator/camera_node/image
       Max Value: 1
       Median window: 5
@@ -93,7 +129,7 @@ Visualization Manager:
       Queue Size: 2
       Transport Hint: compressed
       Unreliable: false
-      Value: false
+      Value: true
     - Class: rviz/MarkerArray
       Enabled: true
       Marker Topic: /vector_map
@@ -135,7 +171,7 @@ Visualization Manager:
       Use rainbow: true
       Value: true
     - Class: rviz/Image
-      Enabled: true
+      Enabled: false
       Image Topic: /simulator/camera_node/image
       Max Value: 1
       Median window: 5
@@ -145,7 +181,19 @@ Visualization Manager:
       Queue Size: 2
       Transport Hint: compressed
       Unreliable: false
+      Value: false
+    - Class: jsk_rviz_plugin/BoundingBoxArray
+      Enabled: true
+      Name: BoundingBoxArray
+      Topic: /simulator/ground_truth/jsk_bounding_boxes
+      Unreliable: false
       Value: true
+      alpha: 0.800000011920929
+      color: 25; 255; 0
+      coloring: Auto
+      line width: 0.004999999888241291
+      only edge: false
+      show coords: false
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -174,7 +222,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 157.96971130371094
+      Distance: 145.7657012939453
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
