@@ -2,64 +2,6 @@
   {
     "params": {
       "Frequency": 20,
-      "Topic": "/nmea_sentence",
-      "Frame": "gps",
-      "IgnoreMapOrigin": true
-    },
-    "transform": {
-      "x": 0,
-      "y": 0,
-      "z": 0,
-      "pitch": 0,
-      "yaw": 0,
-      "roll": 0
-    },
-    "name": "GPS",
-    "parent": "GPS Odometry",
-    "pluginId": "75bbcbfa-fdca-4703-8e82-abf8078f7991",
-    "sortKey": 0,
-    "plugin": {
-      "isFavored": true,
-      "isShared": false,
-      "isOwned": false,
-      "accessInfo": {
-        "userAccessType": "favored",
-        "owner": {
-          "id": "0d888b00-fa53-47c1-882a-b68391268a11",
-          "firstName": "SVL",
-          "lastName": "Content"
-        }
-      },
-      "supportedSimulatorVersions": [
-        "2021.3",
-        "2021.2",
-        "2021.2.2",
-        "2021.1",
-        "2021.1.1"
-      ],
-      "id": "75bbcbfa-fdca-4703-8e82-abf8078f7991",
-      "name": "GPS Device Sensor",
-      "type": "GpsSensor",
-      "category": "sensor",
-      "ownerId": "0d888b00-fa53-47c1-882a-b68391268a11",
-      "accessType": "public",
-      "description": "This sensor outputs the GPS location of the vehicle in Longitude/Latitude and Northing/Easting coordintates.\nSee https://www.svlsimulator.com/docs/simulation-content/sensors-list/#gps-device for more details.",
-      "copyright": "LG Electronics Inc.",
-      "licenseName": "LG Content",
-      "imageUrl": "/api/v1/assets/download/preview/f73de137-d067-47db-9fb7-242aae49b2ad",
-      "status": "active",
-      "owner": {
-        "id": "0d888b00-fa53-47c1-882a-b68391268a11",
-        "firstName": "SVL",
-        "lastName": "Content"
-      },
-      "shareRequests": []
-    },
-    "type": "GpsSensor"
-  },
-  {
-    "params": {
-      "Frequency": 20,
       "Topic": "/simulator/ground_truth/odom",
       "Frame": "gps",
       "IgnoreMapOrigin": true
@@ -75,7 +17,7 @@
     "name": "GPS Odometry",
     "parent": null,
     "pluginId": "483f7b90-2f76-42ee-82c1-22f02f25f924",
-    "sortKey": 1,
+    "sortKey": 0,
     "plugin": {
       "isFavored": true,
       "isShared": false,
@@ -114,6 +56,64 @@
       "shareRequests": []
     },
     "type": "GpsOdometrySensor"
+  },
+  {
+    "params": {
+      "Frequency": 20,
+      "Topic": "/nmea_sentence",
+      "Frame": "gps",
+      "IgnoreMapOrigin": true
+    },
+    "transform": {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "pitch": 0,
+      "yaw": 0,
+      "roll": 0
+    },
+    "name": "GPS",
+    "parent": "GPS Odometry",
+    "pluginId": "75bbcbfa-fdca-4703-8e82-abf8078f7991",
+    "sortKey": 1,
+    "plugin": {
+      "isFavored": true,
+      "isShared": false,
+      "isOwned": false,
+      "accessInfo": {
+        "userAccessType": "favored",
+        "owner": {
+          "id": "0d888b00-fa53-47c1-882a-b68391268a11",
+          "firstName": "SVL",
+          "lastName": "Content"
+        }
+      },
+      "supportedSimulatorVersions": [
+        "2021.3",
+        "2021.2",
+        "2021.2.2",
+        "2021.1",
+        "2021.1.1"
+      ],
+      "id": "75bbcbfa-fdca-4703-8e82-abf8078f7991",
+      "name": "GPS Device Sensor",
+      "type": "GpsSensor",
+      "category": "sensor",
+      "ownerId": "0d888b00-fa53-47c1-882a-b68391268a11",
+      "accessType": "public",
+      "description": "This sensor outputs the GPS location of the vehicle in Longitude/Latitude and Northing/Easting coordintates.\nSee https://www.svlsimulator.com/docs/simulation-content/sensors-list/#gps-device for more details.",
+      "copyright": "LG Electronics Inc.",
+      "licenseName": "LG Content",
+      "imageUrl": "/api/v1/assets/download/preview/f73de137-d067-47db-9fb7-242aae49b2ad",
+      "status": "active",
+      "owner": {
+        "id": "0d888b00-fa53-47c1-882a-b68391268a11",
+        "firstName": "SVL",
+        "lastName": "Content"
+      },
+      "shareRequests": []
+    },
+    "type": "GpsSensor"
   },
   {
     "params": {
@@ -175,11 +175,11 @@
     "params": {
       "LaserCount": 32,
       "MinDistance": 0.5,
-      "MaxDistance": 100,
+      "MaxDistance": 200,
       "RotationFrequency": 10,
-      "MeasurementsPerRotation": 360,
-      "FieldOfView": 41.33,
-      "CenterAngle": 10,
+      "MeasurementsPerRotation": 1800,
+      "FieldOfView": 40,
+      "CenterAngle": -5,
       "Compensated": true,
       "PointColor": "#ff000000",
       "Topic": "/points_raw",
@@ -193,7 +193,7 @@
       "yaw": 0,
       "roll": 0
     },
-    "name": "Lidar",
+    "name": "Lidar (Velodyne 32C)",
     "parent": null,
     "pluginId": "b30d0478-8c7b-4687-bfc2-b3cdb3f5faff",
     "sortKey": 3,
@@ -238,6 +238,64 @@
   },
   {
     "params": {
+      "Topic": "/simulator/ground_truth/3d_detections",
+      "Frame": "velodyne",
+      "MaxDistance": 100,
+      "Frequency": 20
+    },
+    "transform": {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "pitch": 0,
+      "yaw": 0,
+      "roll": 0
+    },
+    "name": "3D Ground Truth Sensor",
+    "parent": "Lidar (Velodyne 32C)",
+    "pluginId": "e3fef197-9724-48ec-b98e-c5a0892d09c4",
+    "sortKey": 4,
+    "plugin": {
+      "isFavored": true,
+      "isShared": false,
+      "isOwned": false,
+      "accessInfo": {
+        "userAccessType": "favored",
+        "owner": {
+          "id": "0d888b00-fa53-47c1-882a-b68391268a11",
+          "firstName": "SVL",
+          "lastName": "Content"
+        }
+      },
+      "supportedSimulatorVersions": [
+        "2021.3",
+        "2021.2",
+        "2021.2.2",
+        "2021.1",
+        "2021.1.1"
+      ],
+      "id": "e3fef197-9724-48ec-b98e-c5a0892d09c4",
+      "name": "3D Ground Truth Sensor",
+      "type": "PerceptionSensor3D",
+      "category": "sensor",
+      "ownerId": "0d888b00-fa53-47c1-882a-b68391268a11",
+      "accessType": "public",
+      "description": "This sensor returns 3D ground truth data for training and creates bounding boxes around the detected objects. The color of the object corresponds to the object's type:\n\t[\n\t\t\"Car\": \"Green\"\n\t\t\"Pedestrian\": \"Yellow\"\n\t\t\"Bicycle\": \"Cyan\"\n\t\t\"Unknown\":  \"Magenta\"\n\t]\nSee https://www.svlsimulator.com/docs/simulation-content/sensors-list/#3d-ground-truth for more details.",
+      "copyright": "LG Electronics Inc.",
+      "licenseName": "LG Content",
+      "imageUrl": "/api/v1/assets/download/preview/fc200028-6393-4dc5-aa5e-4369df4d4e09",
+      "status": "active",
+      "owner": {
+        "id": "0d888b00-fa53-47c1-882a-b68391268a11",
+        "firstName": "SVL",
+        "lastName": "Content"
+      },
+      "shareRequests": []
+    },
+    "type": "PerceptionSensor3D"
+  },
+  {
+    "params": {
       "Width": 1920,
       "Height": 1080,
       "Frequency": 15,
@@ -259,7 +317,7 @@
     "name": "Main Camera",
     "parent": null,
     "pluginId": "3d4f1e08-4c62-4e9f-b859-b26d4910b85e",
-    "sortKey": 4,
+    "sortKey": 5,
     "plugin": {
       "isFavored": true,
       "isShared": false,
@@ -301,13 +359,62 @@
   },
   {
     "params": {
+      "Frame": "camera",
+      "FieldOfView": 90,
+      "Topic": "/simulator/ground_truth/2d_detections"
+    },
+    "name": "2D Ground Truth Sensor",
+    "parent": "Main Camera",
+    "pluginId": "e0bfb6cc-a8f0-425e-9b6c-a643ca1e255a",
+    "sortKey": 6,
+    "plugin": {
+      "isFavored": true,
+      "isShared": false,
+      "isOwned": false,
+      "accessInfo": {
+        "userAccessType": "favored",
+        "owner": {
+          "id": "0d888b00-fa53-47c1-882a-b68391268a11",
+          "firstName": "SVL",
+          "lastName": "Content"
+        }
+      },
+      "supportedSimulatorVersions": [
+        "2021.3",
+        "2021.2",
+        "2021.2.2",
+        "2021.1",
+        "2021.1.1"
+      ],
+      "id": "e0bfb6cc-a8f0-425e-9b6c-a643ca1e255a",
+      "name": "2D Ground Truth Sensor",
+      "type": "PerceptionSensor2D",
+      "category": "sensor",
+      "ownerId": "0d888b00-fa53-47c1-882a-b68391268a11",
+      "accessType": "public",
+      "description": "This sensor outputs an image where objects are encased in a box. The color of the box depends on the type of object.\n\t[\n\t\t\"Car\": \"Green\"\n\t\t\"Pedestrian\": \"Yellow\"\n\t\t\"Bicycle\": \"Cyan\"\n\t\t\"Unknown\":  \"Magenta\"\n\t]\nSee https://www.svlsimulator.com/docs/simulation-content/sensors-list/#2d-ground-truth for more details.",
+      "copyright": "LG Electronics Inc.",
+      "licenseName": "LG Content",
+      "imageUrl": "/api/v1/assets/download/preview/67d4aed4-5c4a-4eae-8fb7-c3e561aa4c71",
+      "status": "active",
+      "owner": {
+        "id": "0d888b00-fa53-47c1-882a-b68391268a11",
+        "firstName": "SVL",
+        "lastName": "Content"
+      },
+      "shareRequests": []
+    },
+    "type": "PerceptionSensor2D"
+  },
+  {
+    "params": {
       "Topic": "/simulator/keyboard_cmd",
       "Frame": "base_link"
     },
     "name": "Keyboard Car Control",
     "parent": null,
     "pluginId": "a2ff904a-ff06-4f06-9e45-cb58217a7142",
-    "sortKey": 5,
+    "sortKey": 7,
     "plugin": {
       "isFavored": true,
       "isShared": false,
@@ -355,7 +462,7 @@
     "name": "Autoware Car Control",
     "parent": null,
     "pluginId": "76ff7bd1-81bf-4284-b9bf-e8173dc6053e",
-    "sortKey": 6,
+    "sortKey": 8,
     "plugin": {
       "isFavored": true,
       "isShared": false,
@@ -394,112 +501,5 @@
       "shareRequests": []
     },
     "type": "AutowareAiControlSensor"
-  },
-  {
-    "params": {
-      "Topic": "/simulator/ground_truth/3d_detections",
-      "Frame": "velodyne",
-      "MaxDistance": 100,
-      "Frequency": 20
-    },
-    "transform": {
-      "x": 0,
-      "y": 0,
-      "z": 0,
-      "pitch": 0,
-      "yaw": 0,
-      "roll": 0
-    },
-    "name": "3D Ground Truth Sensor",
-    "parent": "Lidar",
-    "pluginId": "e3fef197-9724-48ec-b98e-c5a0892d09c4",
-    "sortKey": 7,
-    "plugin": {
-      "isFavored": true,
-      "isShared": false,
-      "isOwned": false,
-      "accessInfo": {
-        "userAccessType": "favored",
-        "owner": {
-          "id": "0d888b00-fa53-47c1-882a-b68391268a11",
-          "firstName": "SVL",
-          "lastName": "Content"
-        }
-      },
-      "supportedSimulatorVersions": [
-        "2021.3",
-        "2021.2",
-        "2021.2.2",
-        "2021.1",
-        "2021.1.1"
-      ],
-      "id": "e3fef197-9724-48ec-b98e-c5a0892d09c4",
-      "name": "3D Ground Truth Sensor",
-      "type": "PerceptionSensor3D",
-      "category": "sensor",
-      "ownerId": "0d888b00-fa53-47c1-882a-b68391268a11",
-      "accessType": "public",
-      "description": "This sensor returns 3D ground truth data for training and creates bounding boxes around the detected objects. The color of the object corresponds to the object's type:\n\t[\n\t\t\"Car\": \"Green\"\n\t\t\"Pedestrian\": \"Yellow\"\n\t\t\"Bicycle\": \"Cyan\"\n\t\t\"Unknown\":  \"Magenta\"\n\t]\nSee https://www.svlsimulator.com/docs/simulation-content/sensors-list/#3d-ground-truth for more details.",
-      "copyright": "LG Electronics Inc.",
-      "licenseName": "LG Content",
-      "imageUrl": "/api/v1/assets/download/preview/fc200028-6393-4dc5-aa5e-4369df4d4e09",
-      "status": "active",
-      "owner": {
-        "id": "0d888b00-fa53-47c1-882a-b68391268a11",
-        "firstName": "SVL",
-        "lastName": "Content"
-      },
-      "shareRequests": []
-    },
-    "type": "PerceptionSensor3D"
-  },
-  {
-    "params": {
-      "Frame": "camera",
-      "FieldOfView": 90,
-      "Topic": "/simulator/ground_truth/2d_detections"
-    },
-    "name": "2D Ground Truth Sensor",
-    "parent": "Main Camera",
-    "pluginId": "e0bfb6cc-a8f0-425e-9b6c-a643ca1e255a",
-    "sortKey": 8,
-    "plugin": {
-      "isFavored": true,
-      "isShared": false,
-      "isOwned": false,
-      "accessInfo": {
-        "userAccessType": "favored",
-        "owner": {
-          "id": "0d888b00-fa53-47c1-882a-b68391268a11",
-          "firstName": "SVL",
-          "lastName": "Content"
-        }
-      },
-      "supportedSimulatorVersions": [
-        "2021.3",
-        "2021.2",
-        "2021.2.2",
-        "2021.1",
-        "2021.1.1"
-      ],
-      "id": "e0bfb6cc-a8f0-425e-9b6c-a643ca1e255a",
-      "name": "2D Ground Truth Sensor",
-      "type": "PerceptionSensor2D",
-      "category": "sensor",
-      "ownerId": "0d888b00-fa53-47c1-882a-b68391268a11",
-      "accessType": "public",
-      "description": "This sensor outputs an image where objects are encased in a box. The color of the box depends on the type of object.\n\t[\n\t\t\"Car\": \"Green\"\n\t\t\"Pedestrian\": \"Yellow\"\n\t\t\"Bicycle\": \"Cyan\"\n\t\t\"Unknown\":  \"Magenta\"\n\t]\nSee https://www.svlsimulator.com/docs/simulation-content/sensors-list/#2d-ground-truth for more details.",
-      "copyright": "LG Electronics Inc.",
-      "licenseName": "LG Content",
-      "imageUrl": "/api/v1/assets/download/preview/67d4aed4-5c4a-4eae-8fb7-c3e561aa4c71",
-      "status": "active",
-      "owner": {
-        "id": "0d888b00-fa53-47c1-882a-b68391268a11",
-        "firstName": "SVL",
-        "lastName": "Content"
-      },
-      "shareRequests": []
-    },
-    "type": "PerceptionSensor2D"
   }
 ]
