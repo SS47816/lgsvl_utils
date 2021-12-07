@@ -3,8 +3,14 @@
 ROS Helper Nodes for visualising and utilising LGSVL simulator
 
 ## Current Functions
-* **Visualizing Objects**: Converting `lgsvl` 3D/2D Ground Truth Objects to `autoware` and `jsk` messages
-* **Vehicle Localization**: Recieving `lgsvl` Ego Vehicle Ground Truth Pose and publishing frame transform between `map` and `baselink`
+* **Visualizing Objects**: Converte `lgsvl` 3D Ground Truth Objects to `autoware` and `jsk` messages
+* **Vehicle Localization**: Recieve `lgsvl` Ego Vehicle Ground Truth Pose and publish frame transform between `map` and `baselink`
+
+**TODO**
+* 2D Ground Truth Objects
+* Vehicle Control
+* Joystick Control
+* Other Sensors
 
 ## Dependencies
 * lgsvl-msgs
@@ -22,7 +28,18 @@ git clone https://github.com/SS47816/lgsvl_utils.git
 cd ..
 rosdep install --from-paths src --ignore-src -r -y
 catkin_make
+source devel/setup.bash
 ```
+
+## Usage
+### Example BorregasAve Map in LGSVL
+**Step 1**: download 
+
+```bash
+# launch the example BorregasAve Map
+roslaunch lgsvl_utils lgsvl_borregas.launch 
+```
+
 
 ## Contribution
 
