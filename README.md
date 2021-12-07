@@ -7,10 +7,17 @@ ROS Helper Nodes for visualising and utilising LGSVL simulator
 * **Vehicle Localization**: Recieve `lgsvl` Ego Vehicle Ground Truth Pose and publish frame transform between `map` and `baselink`
 
 **TODO**
-* 2D Ground Truth Objects
-* Vehicle Control
+* Support for Other Map Formats
+* Global Planner?
+* Relocalization?
+
+* Vehicle Control (Enable Reversing)
 * Joystick Control
-* Other Sensors
+
+* 2D Ground Truth Objects
+* Support for Other Sensors
+
+* Vehicle Model?
 
 ## Dependencies
 * lgsvl-msgs
