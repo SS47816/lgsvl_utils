@@ -7,11 +7,11 @@ Panels:
         - /Global Options1
         - /Status1
         - /TF1/Tree1
-        - /Grid1
         - /Sensors1
         - /Perception1
         - /Maps1
-      Splitter Ratio: 0.4986225962638855
+        - /Maps1/Lanelet2 Map1/Namespaces1
+      Splitter Ratio: 0.5454545617103577
     Tree Height: 1005
   - Class: rviz/Selection
     Name: Selection
@@ -54,8 +54,6 @@ Visualization Manager:
           Value: true
         map:
           Value: true
-        mobility:
-          Value: true
         velodyne:
           Value: true
         world:
@@ -66,19 +64,17 @@ Visualization Manager:
       Show Axes: true
       Show Names: true
       Tree:
-        base_link:
-          camera:
-            {}
-          gps:
-            {}
-          imu:
-            {}
-          velodyne:
-            {}
         world:
           map:
-            mobility:
-              {}
+            base_link:
+              camera:
+                {}
+              gps:
+                {}
+              imu:
+                {}
+              velodyne:
+                {}
       Update Interval: 0
       Value: true
     - Alpha: 0.5
@@ -104,8 +100,8 @@ Visualization Manager:
         - Alpha: 1
           Autocompute Intensity Bounds: true
           Autocompute Value Bounds:
-            Max Value: 10.059784889221191
-            Min Value: -2.2788140773773193
+            Max Value: 9.586013793945312
+            Min Value: -2.6582043170928955
             Value: true
           Axis: Z
           Channel Name: intensity
@@ -201,8 +197,8 @@ Visualization Manager:
         - Alpha: 1
           Autocompute Intensity Bounds: true
           Autocompute Value Bounds:
-            Max Value: 9.995610237121582
-            Min Value: -9.249414443969727
+            Max Value: 15.327667236328125
+            Min Value: -1.4769706726074219
             Value: true
           Axis: Z
           Channel Name: intensity
@@ -230,6 +226,16 @@ Visualization Manager:
           Value: true
         - Class: rviz/MarkerArray
           Enabled: true
+          Marker Topic: /vector_map
+          Name: VectorMap
+          Namespaces:
+            signal: true
+            stop_line: true
+            white_line: true
+          Queue Size: 100
+          Value: true
+        - Class: rviz/MarkerArray
+          Enabled: true
           Marker Topic: /lanelet2_map_viz
           Name: Lanelet2 Map
           Namespaces:
@@ -246,12 +252,10 @@ Visualization Manager:
           Value: true
         - Class: rviz/MarkerArray
           Enabled: true
-          Marker Topic: /vector_map
-          Name: VectorMap
+          Marker Topic: /lanelet2_world_viz
+          Name: MarkerArray
           Namespaces:
-            signal: true
-            stop_line: true
-            white_line: true
+            {}
           Queue Size: 100
           Value: true
       Enabled: true
@@ -284,7 +288,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 71.35345458984375
+      Distance: 171.3174591064453
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -299,10 +303,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.8447972536087036
+      Pitch: 0.5447973012924194
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 3.201740264892578
+      Yaw: 3.1467275619506836
     Saved: ~
 Window Geometry:
   Displays:
