@@ -53,6 +53,7 @@
   <build_depend>jsk_recognition_msgs</build_depend>
   <build_depend>autoware_msgs</build_depend>
   <build_depend>lgsvl_msgs</build_depend>
+  <build_depend>nav_msgs</build_depend>
   <build_depend>std_msgs</build_depend>
   <build_depend>roscpp</build_depend>
   <build_depend>rospy</build_depend>
@@ -63,6 +64,7 @@
   <build_export_depend>jsk_recognition_msgs</build_export_depend>
   <build_export_depend>autoware_msgs</build_export_depend>
   <build_export_depend>lgsvl_msgs</build_export_depend>
+  <build_export_depend>nav_msgs</build_export_depend>
   <build_export_depend>std_msgs</build_export_depend>
   <build_export_depend>roscpp</build_export_depend>
   <build_export_depend>rospy</build_export_depend>
@@ -73,6 +75,7 @@
   <exec_depend>jsk_recognition_msgs</exec_depend>
   <exec_depend>autoware_msgs</exec_depend>
   <exec_depend>lgsvl_msgs</exec_depend>
+  <exec_depend>nav_msgs</exec_depend>
   <exec_depend>std_msgs</exec_depend>
   <exec_depend>roscpp</exec_depend>
   <exec_depend>rospy</exec_depend>

@@ -12,6 +12,7 @@ find_package(catkin REQUIRED COMPONENTS
   jsk_recognition_msgs
   autoware_msgs
   lgsvl_msgs
+  nav_msgs
   std_msgs
   roscpp
   rospy
@@ -79,6 +80,7 @@ generate_messages(
   lgsvl_msgs
   jsk_recognition_msgs
   autoware_msgs
+  nav_msgs
   std_msgs
 )
 
@@ -145,6 +147,10 @@ include_directories(
 add_executable(gt_viewer_node src/gt_viewer_node.cpp)
 target_link_libraries(gt_viewer_node ${catkin_LIBRARIES})
 add_dependencies(gt_viewer_node ${catkin_EXPORTED_TARGETS} ${${PROJECT_NAME}_EXPORTED_TARGETS})
+
+add_executable(localizer_node src/localizer_node.cpp)
+target_link_libraries(localizer_node ${catkin_LIBRARIES})
+add_dependencies(localizer_node ${catkin_EXPORTED_TARGETS} ${${PROJECT_NAME}_EXPORTED_TARGETS})
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
