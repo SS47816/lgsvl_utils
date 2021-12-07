@@ -7,11 +7,32 @@
   <node name="republish" type="republish" pkg="image_transport" output="screen" args="compressed in:=/simulator/camera_node/image raw out:=/image_raw" />
 
   <!-- TF -->
-  <include file="$(env HOME)/shared_dir/autoware-data/BorregasAve/data/tf/tf.launch"/>
-  <node pkg="tf" type="static_transform_publisher" name="base_link_to_gps" args="0 0 0 0 0 0 /base_link /gps 10"/>
-  <node pkg="tf" type="static_transform_publisher" name="base_link_to_imu" args="0 0 0 0 0 0 /base_link /imu 10"/>
+  <!-- <include file="$(env HOME)/shared_dir/autoware-data/BorregasAve/data/tf/tf.launch"/> -->
+  <node pkg="tf" type="static_transform_publisher" name="base_link_to_gps"      args="0 0 0 0 0 0 /base_link /gps 10"/>
+  <node pkg="tf" type="static_transform_publisher" name="base_link_to_imu"      args="0 0 0 0 0 0 /base_link /imu 10"/>
   <node pkg="tf" type="static_transform_publisher" name="base_link_to_velodyne" args="1 0 1.5 0 0 0 /base_link /velodyne 10"/>
-  <node pkg="tf" type="static_transform_publisher" name="base_link_to_camera" args="1.5 0 1.2 0 0 0 /base_link /camera 10" />
+  <node pkg="tf" type="static_transform_publisher" name="base_link_to_camera"   args="1.5 0 1.2 0 0 0 /base_link /camera 10" />
+  <!-- <node pkg="tf" type="static_transform_publisher" name="world_to_map"        args="-87038 -41586 0 0 0 0 /world /map 10" /> -->
+  <node pkg="tf" type="static_transform_publisher" name="world_to_map"          args="-87038 -41586 0 0 0 0 /world /map 10" />
+
+  <!-- Ground Truth Viewer -->
+  <node pkg="lgsvl_utils" type="gt_viewer_node" name="gt_viewer_node" output="screen">
+    <param name="lgsvl_gt3d_topic"          value="/simulator/ground_truth/3d_detections" />
+    <param name="jsk_bboxes_topic"          value="/simulator/ground_truth/jsk_bounding_boxes" />
+    <param name="autoware_objects_topic"    value="/simulator/ground_truth/autoware_detected_objects" />
+    <param name="bbox_target_frame"         value="base_link" />
+    <param name="bbox_filter_size"          value="10.0" />
+  </node>
+
+  <!-- Localizer -->
+  <node pkg="lgsvl_utils" type="localizer_node" name="localizer_node" output="screen">
+    <param name="lgsvl_odom_topic"          value="/simulator/ground_truth/odom" />
+    <param name="input_ll2_map_viz_topic"   value="/lanelet2_map_viz" />
+    <param name="output_ll2_map_viz_topic"  value="/lanelet2_world_viz" />
+    <param name="world_frame"               value="world" />
+    <param name="map_frame"                 value="map" />
+    <param name="baselink_frame"            value="base_link" />
+  </node>
 
   <!-- Point Cloud -->
   <!-- Note: this is generated from simulator -->
@@ -33,26 +54,17 @@
     $(env HOME)/shared_dir/autoware-data/BorregasAve/data/map/vector_map/node.csv" 
   />
 
+  
+
   <!-- lanelet2 Map -->
   <node pkg="map_file" type="lanelet2_map_loader" name="lanelet2_map_loader" output="screen">
     <param name="lanelet2_path" value="$(find lgsvl_utils)/lgsvl_assets/maps/BorregasAve/BorregasAve.osm" />
   </node>
   <node pkg="map_file" type="lanelet2_map_visualization" name="lanelet2_map_visualization" output="screen" />
 
-  <!-- Ground Truth Viewer -->
-  <node pkg="lgsvl_utils" type="gt_viewer_node" name="gt_viewer_node" output="screen">
-    <param name="lgsvl_gt3d_topic"        value="/simulator/ground_truth/3d_detections" />
-    <param name="jsk_bboxes_topic"        value="/simulator/ground_truth/jsk_bounding_boxes" />
-    <param name="autoware_objects_topic"  value="/simulator/ground_truth/autoware_detected_objects" />
-    <param name="bbox_target_frame"       value="base_link" />
-    <param name="bbox_filter_size"        value="10.0" />
-  </node>
-
-  <!-- Localizer -->
-  <node pkg="lgsvl_utils" type="localizer_node" name="localizer_node" output="screen">
-    <param name="lgsvl_odom_topic"        value="/simulator/ground_truth/odom" />
-    <param name="map_frame"               value="map" />
-    <param name="baselink_frame"          value="base_link" />
+  <!-- lanelet2 Global Planner -->
+  <node pkg="ll2_global_planner" type="ll2_global_planner_node" name="ll2_global_planner" output="screen">
+    <rosparam command="load" file="$(find ll2_global_planner)/config/params.yaml" />
   </node>
 
   <!-- rviz -->
