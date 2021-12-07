@@ -39,6 +39,7 @@
     <param name="jsk_bboxes_topic"        value="/simulator/ground_truth/jsk_bounding_boxes" />
     <param name="autoware_objects_topic"  value="/simulator/ground_truth/autoware_detected_objects" />
     <param name="bbox_target_frame"       value="base_link" />
+    <param name="bbox_filter_size"        value="10.0" />
   </node>
 
   <!-- Localizer -->

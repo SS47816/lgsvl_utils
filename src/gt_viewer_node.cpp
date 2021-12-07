@@ -41,6 +41,7 @@ class GTViwerNode
   tf2_ros::TransformListener tf2_listener;
 
   std::string bbox_target_frame_;
+  double bbox_filter_size_;
   
   void detections3DCallback(const lgsvl_msgs::Detection3DArray& lgsvl_detections3d);
   jsk_recognition_msgs::BoundingBox transformJskBbox(const lgsvl_msgs::Detection3D& lgsvl_detection3d, geometry_msgs::TransformStamped transform_stamped);
@@ -55,11 +56,11 @@ GTViwerNode::GTViwerNode() : tf2_listener(tf2_buffer)
   std::string jsk_bboxes_topic;
   std::string autoware_objects_topic;
   
-  
   ROS_ASSERT(private_nh.getParam("lgsvl_gt3d_topic", lgsvl_gt3d_topic));
   ROS_ASSERT(private_nh.getParam("jsk_bboxes_topic", jsk_bboxes_topic));
   ROS_ASSERT(private_nh.getParam("autoware_objects_topic", autoware_objects_topic));
   ROS_ASSERT(private_nh.getParam("bbox_target_frame", bbox_target_frame_));
+  ROS_ASSERT(private_nh.getParam("bbox_filter_size", bbox_filter_size_));
 
   lgsvl_gt3d_sub = nh.subscribe(lgsvl_gt3d_topic, 1, &GTViwerNode::detections3DCallback, this);
   jsk_bboxes_pub = nh.advertise<jsk_recognition_msgs::BoundingBoxArray>(jsk_bboxes_topic, 1);
@@ -124,8 +125,12 @@ void GTViwerNode::detections3DCallback(const lgsvl_msgs::Detection3DArray& lgsvl
   
   for (auto const& lgsvl_detection3d : lgsvl_detections3d.detections)
   {
-    jsk_bboxes.boxes.emplace_back(transformJskBbox(lgsvl_detection3d, transform_stamped));
-    autoware_objects.objects.emplace_back(transformAutowareObject(lgsvl_detection3d, transform_stamped));
+    // Filter out false objects from lgsvl
+    if (lgsvl_detection3d.bbox.size.z < bbox_filter_size_)
+    {
+      jsk_bboxes.boxes.emplace_back(transformJskBbox(lgsvl_detection3d, transform_stamped));
+      autoware_objects.objects.emplace_back(transformAutowareObject(lgsvl_detection3d, transform_stamped));
+    }
   }
   jsk_bboxes_pub.publish(jsk_bboxes);
   autoware_objects_pub.publish(autoware_objects);
