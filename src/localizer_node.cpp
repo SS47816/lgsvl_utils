@@ -49,7 +49,6 @@ LocalizerNode::LocalizerNode()
   ROS_ASSERT(private_nh.getParam("baselink_frame", baselink_frame_));
 
   lgsvl_odom_sub = nh.subscribe(lgsvl_odom_topic, 1, &LocalizerNode::odomCallback, this);
-  
 }
 
 void LocalizerNode::odomCallback(const nav_msgs::Odometry& lgsvl_odom_msg)

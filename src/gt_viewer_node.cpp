@@ -74,6 +74,7 @@ jsk_recognition_msgs::BoundingBox GTViwerNode::transformJskBbox(const lgsvl_msgs
   // jsk_bbox.header = lgsvl_detection3d.header;
   jsk_bbox.header.frame_id = bbox_target_frame_;
   jsk_bbox.pose = pose_transformed;
+  jsk_bbox.pose.position.z += lgsvl_detection3d.bbox.size.z/2;
   jsk_bbox.dimensions = lgsvl_detection3d.bbox.size;
   jsk_bbox.value = lgsvl_detection3d.score;
   if (lgsvl_detection3d.label == "Pedestrian") { jsk_bbox.label = 2; }
@@ -94,6 +95,7 @@ autoware_msgs::DetectedObject GTViwerNode::transformAutowareObject(const lgsvl_m
   autoware_object.label = lgsvl_detection3d.label;
   autoware_object.score = lgsvl_detection3d.score;
   autoware_object.pose = pose_transformed;
+  autoware_object.pose.position.z += lgsvl_detection3d.bbox.size.z/2;
   autoware_object.dimensions = lgsvl_detection3d.bbox.size;
   autoware_object.velocity = lgsvl_detection3d.velocity;
 
