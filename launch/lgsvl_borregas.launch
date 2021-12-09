@@ -7,8 +7,8 @@
   <node name="republish" type="republish" pkg="image_transport" output="screen" args="compressed in:=/simulator/camera_node/image raw out:=/image_raw" />
 
   <!-- TF -->
-  <node ns="tf_static" pkg="tf" type="static_transform_publisher" name="world_to_map"               args="0 0 0 0 0 0 /world /map 10" />
-  <node ns="tf_static" pkg="tf" type="static_transform_publisher" name="map_to_odom"                args="0 0 0 0 0 0 /map /odom 10" />
+  <node ns="tf_static" pkg="tf" type="static_transform_publisher" name="world_to_map" args="0 0 0 0 0 0 /world /map 10" />
+  <node ns="tf_static" pkg="tf" type="static_transform_publisher" name="map_to_odom"  args="0 0 0 0 0 0 /map /odom 10" />
 
   <!-- Ground Truth Viewer -->
   <node ns="lgsvl_utils" pkg="lgsvl_utils" type="gt_viewer_node" name="gt_viewer_node" output="screen">
@@ -26,12 +26,13 @@
     <param name="baselink_frame"            value="base_link" />
   </node>
 
+  <!-- Map Files -->
+<arg name="scene_num" default="noupdate" />
   <!-- Point Cloud -->
-  <!-- Note: this is generated from simulator -->
   <arg name="scene_num" default="noupdate" />
   <arg name="path_area_list" default='""' />
   <arg name="path_pcd" default="$(env HOME)/shared_dir/autoware-data/BorregasAve/data/map/pointcloud_map/BorregasAve.pcd" />
-  <node pkg="map_file" type="points_map_loader" name="points_map_loader" output="screen">
+  <node pkg="map_file" type="points_map_loader" name="points_map_loader" output="log">
     <rosparam subst_value="true">
       area: $(arg scene_num)
       arealist_path: $(arg path_area_list)
@@ -51,56 +52,31 @@
     $(env HOME)/shared_dir/autoware-data/BorregasAve/data/map/vector_map/vector.csv
     $(env HOME)/shared_dir/autoware-data/BorregasAve/data/map/vector_map/whiteline.csv
     $(env HOME)/shared_dir/autoware-data/BorregasAve/data/map/vector_map/node.csv" 
-  />
+  output="log" />
 
   <!-- lanelet2 Map -->
-  <node pkg="map_file" type="lanelet2_map_loader" name="lanelet2_map_loader" output="screen">
+  <node pkg="map_file" type="lanelet2_map_loader" name="lanelet2_map_loader" output="log">
     <param name="lanelet2_path" value="$(env HOME)/shared_dir/autoware-data/BorregasAve/data/map/lanelet2_map/BorregasAve_no_proj.osm" />
   </node>
-  <node pkg="map_file" type="lanelet2_map_visualization" name="lanelet2_map_visualization" output="screen" />
-
-  <!-- Global Planner -->
-  <node pkg="mission_planner" type="mission_planner" name="mission_planner" output="screen">
-    <param name="map_frame"                         value="map" />
-    <param name="base_link_frame"                   value="base_link" />
-    <remap from="~input/vector_map"                 to="/lanelet_map_bin" />
-    <remap from="~input/goal_pose"                  to="/move_base_simple/goal" />
-    <remap from="~input/checkpoint"                 to="/move_base_simple/fake_goal" />
-    <remap from="~output/route"                     to="/planning/mission_planning/route" />
-    <remap from="~debug/route_marker"               to="/planning/mission_planning/route_marker" />
-    <remap from="~output/global_path"               to="/planning/mission_planning/global_path" />
-  </node>
-
+  <node pkg="map_file" type="lanelet2_map_visualization" name="lanelet2_map_visualization" output="log" />
 
   <!-- lanelet2 Global Planner -->
-  <!-- <node pkg="ll2_global_planner" type="ll2_global_planner_node" name="ll2_global_planner" output="screen">
-    <rosparam command="load" file="$(find ll2_global_planner)/config/params.yaml" />
-  </node> -->
+  <node pkg="mission_planner" type="mission_planner" name="mission_planner" output="screen">
+    <param name="map_frame"                   value="map" />
+    <param name="base_link_frame"             value="base_link" />
+    <remap from="~input/vector_map"           to="/lanelet_map_bin" />
+    <remap from="~input/goal_pose"            to="/move_base_simple/goal" />
+    <remap from="~input/checkpoint"           to="/move_base_simple/fake_goal" />
+    <remap from="~output/route"               to="/planning/mission_planning/route" />
+    <remap from="~debug/route_marker"         to="/planning/mission_planning/route_marker" />
+    <remap from="~output/global_path"         to="/planning/mission_planning/global_path" />
+  </node>
 
-  <!-- launch waypoint planner instead of hardcoded path -->
-  <!-- <include file="$(find way_planner)/launch/way_planner.launch">
-    <arg name="mapSource" value="0"/>
-    <arg name="enableReplan" value="false"/>
-  </include> -->
-
-  <!-- rviz -->
+  <!-- Rviz -->
   <node type="rviz" name="rviz" pkg="rviz" args="-d $(find lgsvl_utils)/rviz/lgsvl.rviz" />
 
   <!-- Robot Model -->
-  <arg name="base_frame" default="/base_link"/>
-  <arg name="topic_name" default="vehicle_model"/>
-  <arg name="offset_x" default="1.2"/>
-  <arg name="offset_y" default="0.0"/>
-  <arg name="offset_z" default="0.0"/>
-  <arg name="offset_roll" default="0.0"/> <!-- degree -->
-  <arg name="offset_pitch" default="0.0"/> <!-- degree -->
-  <arg name="offset_yaw" default="0.0"/> <!-- degree -->
-  <arg name="model_path" default="$(find lgsvl_utils)/urdf/lexus.urdf" />
-  <arg name="gui" default="False" />
-
-  <param name="robot_description" textfile="$(arg model_path)" />
-  <param name="use_gui" value="$(arg gui)"/>
-  <node pkg="joint_state_publisher" type="joint_state_publisher" name="joint_state_publisher" />
-  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" />
+  <param name="robot_description"             textfile="$(find lgsvl_utils)/urdf/lexus.urdf" />
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen" />
 
 </launch>

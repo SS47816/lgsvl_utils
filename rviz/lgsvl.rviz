@@ -5,7 +5,6 @@ Panels:
     Property Tree Widget:
       Expanded:
         - /Global Options1
-        - /RobotModel1
         - /TF1/Tree1
         - /Sensors1
         - /Perception1
@@ -82,19 +81,50 @@ Visualization Manager:
       Value: true
       Visual Enabled: true
     - Class: rviz/TF
-      Enabled: false
+      Enabled: true
       Frame Timeout: 15
       Frames:
         All Enabled: true
+        base_link:
+          Value: true
+        camera:
+          Value: true
+        gps:
+          Value: true
+        imu:
+          Value: true
+        lidar_center:
+          Value: true
+        lidar_front:
+          Value: true
+        map:
+          Value: true
+        odom:
+          Value: true
+        world:
+          Value: true
       Marker Scale: 1
       Name: TF
       Show Arrows: true
       Show Axes: true
       Show Names: true
       Tree:
-        {}
+        world:
+          map:
+            odom:
+              base_link:
+                camera:
+                  {}
+                gps:
+                  {}
+                imu:
+                  {}
+                lidar_center:
+                  {}
+                lidar_front:
+                  {}
       Update Interval: 0
-      Value: false
+      Value: true
     - Alpha: 0.5
       Cell Size: 1
       Class: rviz/Grid
@@ -130,9 +160,9 @@ Visualization Manager:
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
-          Max Intensity: 255
+          Max Intensity: 229
           Min Color: 0; 0; 0
-          Min Intensity: 0
+          Min Intensity: 2
           Name: Lidar Center
           Position Transformer: XYZ
           Queue Size: 10
@@ -160,7 +190,7 @@ Visualization Manager:
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
-          Max Intensity: 255
+          Max Intensity: 253
           Min Color: 0; 0; 0
           Min Intensity: 0
           Name: Lidar Front
@@ -245,8 +275,8 @@ Visualization Manager:
         - Alpha: 1
           Autocompute Intensity Bounds: true
           Autocompute Value Bounds:
-            Max Value: 13.027128219604492
-            Min Value: -2.208930492401123
+            Max Value: 12.12532901763916
+            Min Value: -3.334710121154785
             Value: true
           Axis: Z
           Channel Name: intensity
@@ -262,7 +292,7 @@ Visualization Manager:
           Min Intensity: 0
           Name: PointMap
           Position Transformer: XYZ
-          Queue Size: 10
+          Queue Size: 0
           Selectable: true
           Size (Pixels): 3
           Size (m): 0.05000000074505806
@@ -366,7 +396,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 76.22805786132812
+      Distance: 71.6480941772461
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -381,10 +411,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.5797972679138184
+      Pitch: 0.7297987341880798
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 3.0836682319641113
+      Yaw: 3.1336965560913086
     Saved: ~
 Window Geometry:
   Displays:
