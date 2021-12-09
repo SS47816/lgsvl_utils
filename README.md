@@ -10,15 +10,15 @@ ROS Helper Nodes for visualising and utilising LGSVL simulator
 * **Vehicle Model**:  Display Vehicle model in Rviz
 
 **TODOs**
-* Relocalization?
-* Vehicle Control (Enable Reversing)
-* Joystick Control (Xbox, Logitech F710)
-
+* Global Plan to `nav_msgs::Path`
 * 2D Ground Truth Objects
+* Joystick Control (Xbox, Logitech F710)
+* Vehicle Control (Enable Reversing)
 * Support for Other Sensors
+* Relocalization?
 
 **Known Issues**
-* Map elements idle
+* PCD Map stays idle
 * BorregasAve lanelet2 map wrong connections
 
 ## Dependencies
