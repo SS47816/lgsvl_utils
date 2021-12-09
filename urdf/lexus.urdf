@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<robot name="car">
+  <link name="base_link">
+    <visual name="base_visual">
+      <origin xyz="1.3 0 -0.35" rpy="1.57 0 3.14" />
+      <geometry>
+        <mesh filename="package://lgsvl_utils/urdf/lexus.dae" scale="1.0 1.0 1.0"/>
+      </geometry>
+    </visual>
+
+    <collision>
+      <origin xyz="1.5 0 0.45" rpy="0 0 0"/>
+      <geometry>
+        <box size="5.0 2.0 1.6"/>
+      </geometry>
+   </collision>
+  </link>
+
+  <link name="gps" />
+  <link name="imu" />
+  <link name="lidar_center" />
+  <link name="lidar_front" />
+  <link name="camera" />
+
+  <joint name="base_to_gps" type="fixed">
+    <parent link="base_link"/>
+    <child link="gps"/>
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+
+  <joint name="base_to_imu" type="fixed">
+    <parent link="base_link"/>
+    <child link="imu"/>
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+
+  <joint name="base_to_lidar_center" type="fixed">
+    <parent link="base_link"/>
+    <child link="lidar_center"/>
+    <origin xyz="0.8 0 1.7 " rpy="0 0 0" />
+  </joint>
+
+  <joint name="base_to_lidar_front" type="fixed">
+    <parent link="base_link"/>
+    <child link="lidar_front"/>
+    <origin xyz="1.7 0 1.35" rpy="0 0.2618 0" />
+  </joint>
+
+  <joint name="base_to_camera" type="fixed">
+    <parent link="base_link"/>
+    <child link="camera"/>
+    <origin xyz="2 0 1.2" rpy="0 0 0" />
+  </joint>
+
+</robot>
