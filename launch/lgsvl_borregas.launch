@@ -27,36 +27,40 @@
   </node>
 
   <!-- Map Files -->
-<arg name="scene_num" default="noupdate" />
+  <arg name="map_name" default="BorregasAve" />
+  <arg name="map_file_path" default="$(env HOME)/shared_dir/autoware-data/$(arg map_name)/data/map" />
+  <arg name="pcd_map_path" default="$(arg map_file_path)/pointcloud_map/$(arg map_name).pcd" />
+  <arg name="lanelet2_map_path" default="$(arg map_file_path)/lanelet2_map/$(arg map_name)_no_proj.osm" />
+  <arg name="vector_map_folder" default="$(arg map_file_path)/vector_map" />
+
   <!-- Point Cloud -->
   <arg name="scene_num" default="noupdate" />
   <arg name="path_area_list" default='""' />
-  <arg name="path_pcd" default="$(env HOME)/shared_dir/autoware-data/BorregasAve/data/map/pointcloud_map/BorregasAve.pcd" />
   <node pkg="map_file" type="points_map_loader" name="points_map_loader" output="log">
     <rosparam subst_value="true">
       area: $(arg scene_num)
       arealist_path: $(arg path_area_list)
-      pcd_paths: [ $(arg path_pcd) ]
+      pcd_paths: [ $(arg pcd_map_path) ]
     </rosparam>
   </node>
 
   <!-- Vector Map -->
   <node pkg="map_file" type="vector_map_loader" name="vector_map_loader" args="
-    $(env HOME)/shared_dir/autoware-data/BorregasAve/data/map/vector_map/lane.csv
-    $(env HOME)/shared_dir/autoware-data/BorregasAve/data/map/vector_map/dtlane.csv
-    $(env HOME)/shared_dir/autoware-data/BorregasAve/data/map/vector_map/point.csv
-    $(env HOME)/shared_dir/autoware-data/BorregasAve/data/map/vector_map/line.csv
-    $(env HOME)/shared_dir/autoware-data/BorregasAve/data/map/vector_map/pole.csv
-    $(env HOME)/shared_dir/autoware-data/BorregasAve/data/map/vector_map/signaldata.csv
-    $(env HOME)/shared_dir/autoware-data/BorregasAve/data/map/vector_map/stopline.csv
-    $(env HOME)/shared_dir/autoware-data/BorregasAve/data/map/vector_map/vector.csv
-    $(env HOME)/shared_dir/autoware-data/BorregasAve/data/map/vector_map/whiteline.csv
-    $(env HOME)/shared_dir/autoware-data/BorregasAve/data/map/vector_map/node.csv" 
+    $(arg vector_map_folder)/lane.csv
+    $(arg vector_map_folder)/dtlane.csv
+    $(arg vector_map_folder)/point.csv
+    $(arg vector_map_folder)/line.csv
+    $(arg vector_map_folder)/pole.csv
+    $(arg vector_map_folder)/signaldata.csv
+    $(arg vector_map_folder)/stopline.csv
+    $(arg vector_map_folder)/vector.csv
+    $(arg vector_map_folder)/whiteline.csv
+    $(arg vector_map_folder)/node.csv" 
   output="log" />
 
   <!-- lanelet2 Map -->
   <node pkg="map_file" type="lanelet2_map_loader" name="lanelet2_map_loader" output="log">
-    <param name="lanelet2_path" value="$(env HOME)/shared_dir/autoware-data/BorregasAve/data/map/lanelet2_map/BorregasAve_no_proj.osm" />
+    <param name="lanelet2_path" value="$(arg lanelet2_map_path)" />
   </node>
   <node pkg="map_file" type="lanelet2_map_visualization" name="lanelet2_map_visualization" output="log" />
 

@@ -109,20 +109,21 @@ Visualization Manager:
       Show Axes: true
       Show Names: true
       Tree:
+        base_link:
+          camera:
+            {}
+          gps:
+            {}
+          imu:
+            {}
+          lidar_center:
+            {}
+          lidar_front:
+            {}
         world:
           map:
             odom:
-              base_link:
-                camera:
-                  {}
-                gps:
-                  {}
-                imu:
-                  {}
-                lidar_center:
-                  {}
-                lidar_front:
-                  {}
+              {}
       Update Interval: 0
       Value: true
     - Alpha: 0.5
@@ -160,7 +161,7 @@ Visualization Manager:
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
-          Max Intensity: 229
+          Max Intensity: 255
           Min Color: 0; 0; 0
           Min Intensity: 2
           Name: Lidar Center
@@ -190,7 +191,7 @@ Visualization Manager:
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
-          Max Intensity: 253
+          Max Intensity: 255
           Min Color: 0; 0; 0
           Min Intensity: 0
           Name: Lidar Front
@@ -396,7 +397,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 71.6480941772461
+      Distance: 58.369102478027344
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -411,10 +412,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.7297987341880798
+      Pitch: 0.5097988247871399
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 3.1336965560913086
+      Yaw: 3.128696918487549
     Saved: ~
 Window Geometry:
   Displays:
