@@ -2,6 +2,8 @@
 
 ROS Helper Nodes for visualising and utilising LGSVL Simulator
 
+![image](media/demo.png)
+
 <video controls="controls">
   <source type="video/mp4" src="media/demo.mp4"></source>
   <p>Your browser does not support the video element.</p>
