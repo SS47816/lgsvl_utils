@@ -130,6 +130,10 @@ autoware_msgs::DetectedObject GTViwerNode::transformAutowareObject(const lgsvl_m
   { 
     autoware_object.label = "bus";
   }
+  else if (lgsvl_detection3d->label == "BoxTruck")
+  { 
+    autoware_object.label = "truck";
+  }
   else 
   { 
     autoware_object.label = "car";
