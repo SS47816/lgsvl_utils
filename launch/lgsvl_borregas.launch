@@ -88,7 +88,7 @@
   <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen" />
 
   <!-- Joystick Teleop -->
-  <!-- <node pkg="joy" type="joy_node" name="joy_node" respawn="true" >
+  <node pkg="joy" type="joy_node" name="joy_node" respawn="true" >
     <param name="dev"                         value="/dev/input/js0" />
     <param name="deadzone"                    value="0.05" />
     <param name="autorepeat_rate"             value="20" />
@@ -99,14 +99,15 @@
     <param name="joy_type"                    value="Xbox" />
     <param name="joy_topic"                   value="/joy" />
     <param name="autonomous_cmd_topic"        value="/cmd_vel" />
-    <param name="vehicle_cmd_topic"           value="/cmd_vel_out" />
-    <param name="health_monitor_topic"        value="/health_monitor" />
+    <param name="cmd_vel_out_topic"           value="/cmd_vel_out" />
+    <param name="vehicle_cmd_topic"           value="/vehicle_cmd" />
+    <!-- <param name="health_monitor_topic"        value="/health_monitor" /> -->
     <param name="max_speed_fwd"               value="1.67" />
     <param name="max_speed_rev"               value="0.97" />
     <param name="max_speed_fwd_allowed"       value="0.83" />
     <param name="max_speed_rev_allowed"       value="0.48" />
     <param name="max_steering_angle"          value="35.0" />
     <param name="max_steering_angle_allowed"  value="35.0" />
-  </node> -->
+  </node>
 
 </launch>
