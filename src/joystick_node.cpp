@@ -271,6 +271,8 @@ void JoystickTeleop::joystickCallback(const sensor_msgs::Joy::ConstPtr& joy_msg)
   vehicle_cmd.header = joy_msg->header;
   vehicle_cmd.header.frame_id = "base_link";
   vehicle_cmd.twist_cmd.twist = cmd_vel_out;
+  // vehicle_cmd.steer_cmd.steer = 0;
+  // vehicle_cmd.accel_cmd.accel = 0;
   vehicle_cmd_pub.publish(vehicle_cmd);
   ROS_INFO("[joystick_node] %s: Steering Goal Angle: %.2f [deg]  Throttle Goal Speed: %.2f [m/s]", joy_type.c_str(), cmd_vel_out.angular.z * max_steering_angle_, cmd_vel_out.linear.x);
   

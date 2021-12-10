@@ -8,7 +8,6 @@ Panels:
         - /TF1/Tree1
         - /Sensors1
         - /Perception1
-        - /Perception1/AutowareObjectMarkers1
         - /Maps1
         - /Maps1/Lanelet2 Map1/Namespaces1
         - /Planning1
@@ -162,7 +161,7 @@ Visualization Manager:
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
-          Max Intensity: 255
+          Max Intensity: 202
           Min Color: 0; 0; 0
           Min Intensity: 0
           Name: Lidar Center
@@ -192,7 +191,7 @@ Visualization Manager:
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
-          Max Intensity: 239
+          Max Intensity: 211
           Min Color: 0; 0; 0
           Min Intensity: 0
           Name: Lidar Front
@@ -233,7 +232,7 @@ Visualization Manager:
           alpha: 0.800000011920929
           color: 25; 255; 0
           coloring: Auto
-          line width: 0.004999999888241291
+          line width: 0.10000000149011612
           only edge: false
           show coords: false
         - Class: rviz/MarkerArray
@@ -241,7 +240,11 @@ Visualization Manager:
           Marker Topic: /simulator/ground_truth/objects_markers
           Name: AutowareObjectMarkers
           Namespaces:
-            {}
+            /simulator/ground_truth/arrow_markers: true
+            /simulator/ground_truth/box_markers: true
+            /simulator/ground_truth/centroid_markers: true
+            /simulator/ground_truth/label_markers: true
+            /simulator/ground_truth/model_markers: true
           Queue Size: 100
           Value: true
         - Angle Tolerance: 0.10000000149011612
@@ -294,7 +297,7 @@ Visualization Manager:
           Color: 255; 255; 255
           Color Transformer: AxisColor
           Decay Time: 0
-          Enabled: true
+          Enabled: false
           Invert Rainbow: false
           Max Color: 255; 255; 255
           Max Intensity: 255
@@ -311,7 +314,7 @@ Visualization Manager:
           Unreliable: false
           Use Fixed Frame: true
           Use rainbow: true
-          Value: true
+          Value: false
         - Class: rviz/MarkerArray
           Enabled: true
           Marker Topic: /vector_map
@@ -406,7 +409,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 61.649024963378906
+      Distance: 74.03965759277344
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -421,10 +424,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.7047988176345825
+      Pitch: 0.5497985482215881
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 3.283698320388794
+      Yaw: 3.1237001419067383
     Saved: ~
 Window Geometry:
   Displays:
