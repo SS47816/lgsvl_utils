@@ -14,19 +14,22 @@ ROS Helper Nodes for visualising and utilising LGSVL Simulator
 * **Vehicle Localization**: Recieve `lgsvl` Ego Vehicle Ground Truth Pose and publish frame transform between `map` and `baselink`
 * **Map Format Supports**: `pointcloud map`, `lanelet2 map`, `vector map`
 * **Global Planners**:  `lanelet2 map`, `vector map` (fixing issues)
-* **Vehicle Model**:  Display Vehicle model in Rviz
+* **Vehicle Model**:  Display a ego vehicle model in Rviz
+* **Joystick Control**: Drive in the Simulator with a joystick (currently support `Xbox`, `Logitech F710`)
 
 **TODOs**
-* Global Plan to `nav_msgs::Path`
-* 2D Ground Truth Objects
-* Joystick Control (Xbox, Logitech F710)
+* Change joystick control to accel, brake, steer, and gear
 * Vehicle Control (Enable Reversing)
+
+* 2D Ground Truth Objects
 * Support for Other Sensors
 * Relocalization?
+* Packing functions into this pkg
 
 **Known Issues**
-* PCD Map stays idle
+* Global Plan to `nav_msgs::Path` centerline coordinates wrong
 * BorregasAve lanelet2 map wrong connections
+* PCD Map stays idle
 
 ## Dependencies
 * lgsvl-msgs
