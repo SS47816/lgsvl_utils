@@ -1,8 +1,65 @@
 [
   {
     "params": {
+      "Topic": "/simulator/ground_truth/can_bus",
+      "Frame": "base_link",
+      "Frequency": 20
+    },
+    "transform": {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "pitch": 0,
+      "yaw": 0,
+      "roll": 0
+    },
+    "name": "CAN Bus Sensor",
+    "parent": "GPS Odometry",
+    "pluginId": "b0bdc474-ac09-4355-901d-d7012a8c57a8",
+    "sortKey": 0,
+    "plugin": {
+      "isFavored": true,
+      "isShared": false,
+      "isOwned": false,
+      "accessInfo": {
+        "userAccessType": "favored",
+        "owner": {
+          "id": "0d888b00-fa53-47c1-882a-b68391268a11",
+          "firstName": "SVL",
+          "lastName": "Content"
+        }
+      },
+      "supportedSimulatorVersions": [
+        "2021.3",
+        "2021.2",
+        "2021.2.2",
+        "2021.1",
+        "2021.1.1"
+      ],
+      "id": "b0bdc474-ac09-4355-901d-d7012a8c57a8",
+      "name": "CAN Bus Sensor",
+      "type": "CanBusSensor",
+      "category": "sensor",
+      "ownerId": "0d888b00-fa53-47c1-882a-b68391268a11",
+      "accessType": "public",
+      "description": "This sensor sends data about the vehicle chassis. The data includes:\n\t* Speed [m/s]\n\t* Throttle [%]\n\t* Braking [%]\n\t* Steering [+/- %]\n\t* Parking Brake Status [bool]\n\t* High Beam Status [bool]\n\t* Low Beam Status [bool]\n\t* Hazard Light Status [bool]\n\t* Fog Light Status [bool]\n\t* Left Turn Signal Status [bool]\n\t* Right Turn Signal Status [bool]\n\t* Wiper Status [bool]\n\t* Reverse Gear Status [bool]\n\t* Selected Gear [Int]\n\t* Engine Status [bool]\n\t* Engine RPM [RPM]\n\t* GPS Latitude [Latitude]\n\t* GPS Longitude [Longitude]\n\t* Altitude [m]\n\t* Orientation [3D Vector of Euler angles]\n\t* Velocity [3D Vector of m/s]\nSee https://www.svlsimulator.com/docs/simulation-content/sensors-list/#can-bus for more details.",
+      "copyright": "LG Electronics Inc.",
+      "licenseName": "LG Content",
+      "imageUrl": "/api/v1/assets/download/preview/cd38d045-4374-4cf4-a62b-8bfba1128a39",
+      "status": "active",
+      "owner": {
+        "id": "0d888b00-fa53-47c1-882a-b68391268a11",
+        "firstName": "SVL",
+        "lastName": "Content"
+      },
+      "shareRequests": []
+    },
+    "type": "CanBusSensor"
+  },
+  {
+    "params": {
       "Frequency": 20,
-      "Topic": "/odom",
+      "Topic": "/simulator/ground_truth/odom",
       "Frame": "map",
       "IgnoreMapOrigin": true
     },
@@ -17,7 +74,7 @@
     "name": "GPS Odometry",
     "parent": null,
     "pluginId": "483f7b90-2f76-42ee-82c1-22f02f25f924",
-    "sortKey": 0,
+    "sortKey": 1,
     "plugin": {
       "isFavored": true,
       "isShared": false,
@@ -60,7 +117,7 @@
   {
     "params": {
       "Frequency": 20,
-      "Topic": "/nmea_sentence",
+      "Topic": "/simulator/ground_truth/nmea_sentence",
       "Frame": "gps",
       "IgnoreMapOrigin": true
     },
@@ -75,7 +132,7 @@
     "name": "GPS",
     "parent": "GPS Odometry",
     "pluginId": "75bbcbfa-fdca-4703-8e82-abf8078f7991",
-    "sortKey": 1,
+    "sortKey": 2,
     "plugin": {
       "isFavored": true,
       "isShared": false,
@@ -117,7 +174,7 @@
   },
   {
     "params": {
-      "Topic": "/imu_raw",
+      "Topic": "/simulator/ground_truth/imu_raw",
       "Frame": "imu"
     },
     "transform": {
@@ -131,7 +188,7 @@
     "name": "IMU",
     "parent": "GPS Odometry",
     "pluginId": "9c34ec28-627d-4e73-9bb0-9c2aa7e978f5",
-    "sortKey": 2,
+    "sortKey": 3,
     "plugin": {
       "isFavored": true,
       "isShared": false,
@@ -173,6 +230,62 @@
   },
   {
     "params": {
+      "Topic": "/simulator/ground_truth/clock",
+      "Frame": "base_link"
+    },
+    "transform": {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "pitch": 0,
+      "yaw": 0,
+      "roll": 0
+    },
+    "name": "Clock Sensor",
+    "parent": "GPS Odometry",
+    "pluginId": "968f386f-dc0b-485d-ba33-5bb71bff93ef",
+    "sortKey": 4,
+    "plugin": {
+      "isFavored": true,
+      "isShared": false,
+      "isOwned": false,
+      "accessInfo": {
+        "userAccessType": "favored",
+        "owner": {
+          "id": "0d888b00-fa53-47c1-882a-b68391268a11",
+          "firstName": "SVL",
+          "lastName": "Content"
+        }
+      },
+      "supportedSimulatorVersions": [
+        "2021.3",
+        "2021.2",
+        "2021.2.2",
+        "2021.1",
+        "2021.1.1"
+      ],
+      "id": "968f386f-dc0b-485d-ba33-5bb71bff93ef",
+      "name": "Clock Sensor",
+      "type": "ClockSensor",
+      "category": "sensor",
+      "ownerId": "0d888b00-fa53-47c1-882a-b68391268a11",
+      "accessType": "public",
+      "description": "This sensor outputs simulated time to ROS as rosgraph_msgs/Clock message, or to CyberRT as clock message. The only parameter to use is topic/channel name.\nSee https://www.svlsimulator.com/docs/simulation-content/sensors-list/#clock for more details.",
+      "copyright": "LG Electronics Inc.",
+      "licenseName": "LG Content",
+      "imageUrl": "/api/v1/assets/download/preview/fb75d445-2e83-440f-8268-c9d4e65024ae",
+      "status": "active",
+      "owner": {
+        "id": "0d888b00-fa53-47c1-882a-b68391268a11",
+        "firstName": "SVL",
+        "lastName": "Content"
+      },
+      "shareRequests": []
+    },
+    "type": "ClockSensor"
+  },
+  {
+    "params": {
       "LaserCount": 32,
       "MinDistance": 0.5,
       "MaxDistance": 200,
@@ -196,72 +309,7 @@
     "name": "Center Lidar (Velodyne 32C)",
     "parent": null,
     "pluginId": "b30d0478-8c7b-4687-bfc2-b3cdb3f5faff",
-    "sortKey": 3,
-    "plugin": {
-      "isFavored": true,
-      "isShared": false,
-      "isOwned": false,
-      "accessInfo": {
-        "userAccessType": "favored",
-        "owner": {
-          "id": "0d888b00-fa53-47c1-882a-b68391268a11",
-          "firstName": "SVL",
-          "lastName": "Content"
-        }
-      },
-      "supportedSimulatorVersions": [
-        "2021.3",
-        "2021.2",
-        "2021.2.2",
-        "2021.1",
-        "2021.1.1"
-      ],
-      "id": "b30d0478-8c7b-4687-bfc2-b3cdb3f5faff",
-      "name": "Lidar Sensor",
-      "type": "LidarSensor",
-      "category": "sensor",
-      "ownerId": "0d888b00-fa53-47c1-882a-b68391268a11",
-      "accessType": "public",
-      "description": "This sensor returns a point cloud after 1 revolution.\nSee https://www.svlsimulator.com/docs/simulation-content/sensors-list/#lidar for more details.",
-      "copyright": "LG Electronics Inc.",
-      "licenseName": "LG Content",
-      "imageUrl": "/api/v1/assets/download/preview/dd44a969-c038-4966-a39f-a445ab3b6c00",
-      "status": "active",
-      "owner": {
-        "id": "0d888b00-fa53-47c1-882a-b68391268a11",
-        "firstName": "SVL",
-        "lastName": "Content"
-      },
-      "shareRequests": []
-    },
-    "type": "LidarSensor"
-  },
-  {
-    "params": {
-      "LaserCount": 32,
-      "MinDistance": 0.5,
-      "MaxDistance": 200,
-      "RotationFrequency": 10,
-      "MeasurementsPerRotation": 360,
-      "FieldOfView": 40,
-      "CenterAngle": -5,
-      "Compensated": true,
-      "PointColor": "#ff000000",
-      "Topic": "/simulator/ground_truth/points_front_raw",
-      "Frame": "lidar_front"
-    },
-    "transform": {
-      "x": 0,
-      "y": 1.35,
-      "z": 1.7,
-      "pitch": 15,
-      "yaw": 0,
-      "roll": 0
-    },
-    "name": "Front Lidar (Velodyne 32C)",
-    "parent": null,
-    "pluginId": "b30d0478-8c7b-4687-bfc2-b3cdb3f5faff",
-    "sortKey": 4,
+    "sortKey": 5,
     "plugin": {
       "isFavored": true,
       "isShared": false,
@@ -319,7 +367,7 @@
     "name": "3D Ground Truth Sensor",
     "parent": "Center Lidar (Velodyne 32C)",
     "pluginId": "e3fef197-9724-48ec-b98e-c5a0892d09c4",
-    "sortKey": 5,
+    "sortKey": 6,
     "plugin": {
       "isFavored": true,
       "isShared": false,
@@ -361,6 +409,71 @@
   },
   {
     "params": {
+      "LaserCount": 32,
+      "MinDistance": 0.5,
+      "MaxDistance": 200,
+      "RotationFrequency": 10,
+      "MeasurementsPerRotation": 360,
+      "FieldOfView": 40,
+      "CenterAngle": -5,
+      "Compensated": true,
+      "PointColor": "#ff000000",
+      "Topic": "/simulator/ground_truth/points_front_raw",
+      "Frame": "lidar_front"
+    },
+    "transform": {
+      "x": 0,
+      "y": 1.35,
+      "z": 1.7,
+      "pitch": 15,
+      "yaw": 0,
+      "roll": 0
+    },
+    "name": "Front Lidar (Velodyne 32C)",
+    "parent": null,
+    "pluginId": "b30d0478-8c7b-4687-bfc2-b3cdb3f5faff",
+    "sortKey": 7,
+    "plugin": {
+      "isFavored": true,
+      "isShared": false,
+      "isOwned": false,
+      "accessInfo": {
+        "userAccessType": "favored",
+        "owner": {
+          "id": "0d888b00-fa53-47c1-882a-b68391268a11",
+          "firstName": "SVL",
+          "lastName": "Content"
+        }
+      },
+      "supportedSimulatorVersions": [
+        "2021.3",
+        "2021.2",
+        "2021.2.2",
+        "2021.1",
+        "2021.1.1"
+      ],
+      "id": "b30d0478-8c7b-4687-bfc2-b3cdb3f5faff",
+      "name": "Lidar Sensor",
+      "type": "LidarSensor",
+      "category": "sensor",
+      "ownerId": "0d888b00-fa53-47c1-882a-b68391268a11",
+      "accessType": "public",
+      "description": "This sensor returns a point cloud after 1 revolution.\nSee https://www.svlsimulator.com/docs/simulation-content/sensors-list/#lidar for more details.",
+      "copyright": "LG Electronics Inc.",
+      "licenseName": "LG Content",
+      "imageUrl": "/api/v1/assets/download/preview/dd44a969-c038-4966-a39f-a445ab3b6c00",
+      "status": "active",
+      "owner": {
+        "id": "0d888b00-fa53-47c1-882a-b68391268a11",
+        "firstName": "SVL",
+        "lastName": "Content"
+      },
+      "shareRequests": []
+    },
+    "type": "LidarSensor"
+  },
+  {
+    "params": {
       "Width": 1920,
       "Height": 1080,
       "Frequency": 15,
@@ -382,7 +495,7 @@
     "name": "Main Camera",
     "parent": null,
     "pluginId": "3d4f1e08-4c62-4e9f-b859-b26d4910b85e",
-    "sortKey": 6,
+    "sortKey": 8,
     "plugin": {
       "isFavored": true,
       "isShared": false,
@@ -431,7 +544,7 @@
     "name": "2D Ground Truth Sensor",
     "parent": "Main Camera",
     "pluginId": "e0bfb6cc-a8f0-425e-9b6c-a643ca1e255a",
-    "sortKey": 7,
+    "sortKey": 9,
     "plugin": {
       "isFavored": true,
       "isShared": false,
@@ -473,13 +586,69 @@
   },
   {
     "params": {
+      "Topic": "/simulator/control/vehicle_cmd",
+      "Frame": "base_link"
+    },
+    "name": "LGSVL Control Sensor",
+    "parent": null,
+    "pluginId": "a5696615-d3e2-45e9-afa3-9b5ae7359e02",
+    "sortKey": 10,
+    "plugin": {
+      "isFavored": true,
+      "isShared": false,
+      "isOwned": false,
+      "accessInfo": {
+        "userAccessType": "favored",
+        "owner": {
+          "id": "0d888b00-fa53-47c1-882a-b68391268a11",
+          "firstName": "SVL",
+          "lastName": "Content"
+        }
+      },
+      "supportedSimulatorVersions": [
+        "2021.3",
+        "2021.2",
+        "2021.2.2",
+        "2021.1",
+        "2021.1.1"
+      ],
+      "id": "a5696615-d3e2-45e9-afa3-9b5ae7359e02",
+      "name": "LGSVL Control Sensor",
+      "type": "LGSVLControlSensor",
+      "category": "sensor",
+      "ownerId": "0d888b00-fa53-47c1-882a-b68391268a11",
+      "accessType": "public",
+      "description": "Example template of a sensor for vehicle Control information.",
+      "copyright": "LG Electronics Inc.",
+      "licenseName": "LG Content",
+      "imageUrl": "/api/v1/assets/download/preview/02e462ce-c1ad-448d-9c24-df8a05a7c09a",
+      "status": "active",
+      "owner": {
+        "id": "0d888b00-fa53-47c1-882a-b68391268a11",
+        "firstName": "SVL",
+        "lastName": "Content"
+      },
+      "shareRequests": []
+    },
+    "type": "LGSVLControlSensor"
+  },
+  {
+    "params": {
       "Topic": "/simulator/keyboard_cmd",
       "Frame": "base_link"
     },
+    "transform": {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "pitch": 0,
+      "yaw": 0,
+      "roll": 0
+    },
     "name": "Keyboard Car Control",
-    "parent": null,
+    "parent": "LGSVL Control Sensor",
     "pluginId": "a2ff904a-ff06-4f06-9e45-cb58217a7142",
-    "sortKey": 8,
+    "sortKey": 11,
     "plugin": {
       "isFavored": true,
       "isShared": false,
@@ -524,10 +693,18 @@
       "Topic": "/vehicle_cmd",
       "Frame": "base_link"
     },
+    "transform": {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "pitch": 0,
+      "yaw": 0,
+      "roll": 0
+    },
     "name": "Autoware Car Control",
-    "parent": null,
+    "parent": "LGSVL Control Sensor",
     "pluginId": "76ff7bd1-81bf-4284-b9bf-e8173dc6053e",
-    "sortKey": 9,
+    "sortKey": 12,
     "plugin": {
       "isFavored": true,
       "isShared": false,
@@ -566,61 +743,5 @@
       "shareRequests": []
     },
     "type": "AutowareAiControlSensor"
-  },
-  {
-    "params": {
-      "Topic": "/clock",
-      "Frame": "base_link"
-    },
-    "transform": {
-      "x": 0,
-      "y": 0,
-      "z": 0,
-      "pitch": 0,
-      "yaw": 0,
-      "roll": 0
-    },
-    "name": "Clock Sensor",
-    "parent": "GPS Odometry",
-    "pluginId": "968f386f-dc0b-485d-ba33-5bb71bff93ef",
-    "sortKey": 10,
-    "plugin": {
-      "isFavored": true,
-      "isShared": false,
-      "isOwned": false,
-      "accessInfo": {
-        "userAccessType": "favored",
-        "owner": {
-          "id": "0d888b00-fa53-47c1-882a-b68391268a11",
-          "firstName": "SVL",
-          "lastName": "Content"
-        }
-      },
-      "supportedSimulatorVersions": [
-        "2021.3",
-        "2021.2",
-        "2021.2.2",
-        "2021.1",
-        "2021.1.1"
-      ],
-      "id": "968f386f-dc0b-485d-ba33-5bb71bff93ef",
-      "name": "Clock Sensor",
-      "type": "ClockSensor",
-      "category": "sensor",
-      "ownerId": "0d888b00-fa53-47c1-882a-b68391268a11",
-      "accessType": "public",
-      "description": "This sensor outputs simulated time to ROS as rosgraph_msgs/Clock message, or to CyberRT as clock message. The only parameter to use is topic/channel name.\nSee https://www.svlsimulator.com/docs/simulation-content/sensors-list/#clock for more details.",
-      "copyright": "LG Electronics Inc.",
-      "licenseName": "LG Content",
-      "imageUrl": "/api/v1/assets/download/preview/fb75d445-2e83-440f-8268-c9d4e65024ae",
-      "status": "active",
-      "owner": {
-        "id": "0d888b00-fa53-47c1-882a-b68391268a11",
-        "firstName": "SVL",
-        "lastName": "Content"
-      },
-      "shareRequests": []
-    },
-    "type": "ClockSensor"
   }
 ]

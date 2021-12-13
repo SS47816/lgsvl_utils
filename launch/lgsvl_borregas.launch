@@ -19,7 +19,7 @@
 
   <!-- Localizer -->
   <node ns="lgsvl_utils" pkg="lgsvl_utils" type="localizer_node" name="localizer_node" output="screen">
-    <param name="lgsvl_odom_topic"            value="/odom" />
+    <param name="lgsvl_odom_topic"            value="/simulator/ground_truth/odom" />
     <param name="odom_frame"                  value="odom" />
     <param name="baselink_frame"              value="base_link" />
   </node>
@@ -86,6 +86,5 @@
     <remap from="~debug/route_marker"         to="/planning/mission_planning/route_marker" />
     <remap from="~output/global_path"         to="/planning/mission_planning/global_path" />
   </node>
-
 
 </launch>
