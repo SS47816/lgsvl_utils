@@ -32,7 +32,6 @@ private:
   // double max_speed_fwd_;                // [m/s]
   // double max_speed_rev_;                // [m/s]
   double max_steering_angle_;           // [deg]
-  double steering_rate_;                // [deg/s]
   std::string joy_type_;
   std::string control_setting_;
   NavMode current_nav_mode_;
@@ -66,11 +65,7 @@ JoystickTeleop::JoystickTeleop()
   ROS_ASSERT(private_nh.getParam("vehicle_cmd_topic", vehicle_cmd_topic));
   ROS_ASSERT(private_nh.getParam("autonomous_cmd_topic", autonomous_cmd_topic));
   // ROS_ASSERT(private_nh.getParam("health_monitor_topic", health_monitor_topic));
-
-  // ROS_ASSERT(private_nh.getParam("max_speed_fwd", max_speed_fwd_));
-  // ROS_ASSERT(private_nh.getParam("max_speed_rev", max_speed_rev_));
   ROS_ASSERT(private_nh.getParam("max_steering_angle", max_steering_angle_));
-  ROS_ASSERT(private_nh.getParam("steering_rate", steering_rate_));
 
   joystick_sub = nh.subscribe(joy_topic, 1, &JoystickTeleop::joystickCallback, this);
   autonomous_cmd_sub = nh.subscribe(autonomous_cmd_topic, 1, &JoystickTeleop::autonomousCmdVelCallback, this);
@@ -168,13 +163,13 @@ void JoystickTeleop::joystickCallback(const sensor_msgs::Joy::ConstPtr& joy_msg)
   }
   else if (gear_ == lgsvl_msgs::VehicleControlData::GEAR_REVERSE)
   {
-    vehicle_cmd.acceleration_pct = -reverse_axes;
+    vehicle_cmd.acceleration_pct = reverse_axes;
     vehicle_cmd.braking_pct = forward_axes;
     vehicle_cmd.target_gear = gear_;
   }
   vehicle_cmd.target_gear = gear_;
-  vehicle_cmd.target_wheel_angle = -steering_axes*max_steering_angle_;
-  vehicle_cmd.target_wheel_angular_rate = steering_rate_;
+  vehicle_cmd.target_wheel_angle = -steering_axes*max_steering_angle_/180.0*M_PI;
+  vehicle_cmd.target_wheel_angular_rate = 0.0;
 
   // Switch between Forward and Reverse
   if (Y)
@@ -232,7 +227,7 @@ void JoystickTeleop::joystickCallback(const sensor_msgs::Joy::ConstPtr& joy_msg)
   {
     vehicle_cmd_pub.publish(vehicle_cmd);
     ROS_INFO("[Manual Mode] %s: Steering Goal Angle: %.1f [deg] Throttle Value: %.2f", 
-              joy_type_.c_str(), vehicle_cmd.target_wheel_angle, vehicle_cmd.acceleration_pct);
+              joy_type_.c_str(), vehicle_cmd.target_wheel_angle*180.0/M_PI, vehicle_cmd.acceleration_pct);
     return;
   }
   else if (current_nav_mode_ == NavMode::Autonomous)
@@ -263,7 +258,7 @@ void JoystickTeleop::autonomousCmdVelCallback(const autoware_msgs::VehicleCmd::C
   {
     vehicle_cmd_pub.publish(vehicle_cmd);
     ROS_INFO("[ Auto Mode ] %s: Steering Goal Angle: %.1f [deg] Throttle Value: %.2f", 
-              joy_type_.c_str(), vehicle_cmd.target_wheel_angle, vehicle_cmd.acceleration_pct);
+              joy_type_.c_str(), vehicle_cmd.target_wheel_angle*180.0/M_PI, vehicle_cmd.acceleration_pct);
     return;
   }
   else 

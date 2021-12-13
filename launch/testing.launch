@@ -15,8 +15,7 @@
     <param name="vehicle_cmd_topic"           value="/simulator/control/vehicle_cmd" />
     <param name="max_speed_fwd"               value="20" />
     <param name="max_speed_rev"               value="10" />
-    <param name="max_steering_angle"          value="35" />
-    <param name="steering_rate"               value="0.001" />
+    <param name="max_steering_angle"          value="45" />
   </node>
 
 </launch>
