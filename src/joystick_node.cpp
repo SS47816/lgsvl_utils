@@ -44,11 +44,9 @@ private:
   bool is_healthy_ = true;
   double max_speed_fwd_;                        // [m/s]
   double max_speed_rev_;                        // [m/s]
-  double max_speed_fwd_allowed_;                // [m/s]
-  double max_speed_rev_allowed_;                // [m/s]
   double max_steering_angle_;                   // [deg]
-  double max_steering_angle_allowed_;           // [deg]
   double speed_limit_;                          // [m/s]
+  autoware_msgs::Gear gear_;
   
   void joystickCallback(const sensor_msgs::Joy::ConstPtr& joy_msg);
   void autonomousCmdVelCallback(const geometry_msgs::Twist::ConstPtr& autonomous_vel_msg);
@@ -76,13 +74,8 @@ JoystickTeleop::JoystickTeleop()
 
   ROS_ASSERT(private_nh.getParam("max_speed_fwd", max_speed_fwd_));
   ROS_ASSERT(private_nh.getParam("max_speed_rev", max_speed_rev_));
-  ROS_ASSERT(private_nh.getParam("max_speed_fwd_allowed", max_speed_fwd_allowed_));
-  ROS_ASSERT(private_nh.getParam("max_speed_rev_allowed", max_speed_rev_allowed_));
   ROS_ASSERT(private_nh.getParam("max_steering_angle", max_steering_angle_));
-  ROS_ASSERT(private_nh.getParam("max_steering_angle_allowed", max_steering_angle_allowed_));
 
-  speed_limit_ = max_speed_fwd_allowed_;
-  
   joystick_sub = nh.subscribe(joy_topic, 1, &JoystickTeleop::joystickCallback, this);
   autonomous_cmd_sub = nh.subscribe(autonomous_cmd_topic, 1, &JoystickTeleop::autonomousCmdVelCallback, this);
   // health_monitor_sub = nh.subscribe(health_monitor_topic, 1, &JoystickTeleop::healthMonitorCallback, this);
@@ -90,6 +83,8 @@ JoystickTeleop::JoystickTeleop()
   vehicle_cmd_pub = nh.advertise<autoware_msgs::VehicleCmd>(vehicle_cmd_topic, 1);
 
   ROS_INFO("joy_type: using %s\n", joy_type.c_str());
+
+  speed_limit_ = 0.0;
   current_nav_mode = NavMode::Brake;
 }
 
@@ -203,27 +198,11 @@ void JoystickTeleop::joystickCallback(const sensor_msgs::Joy::ConstPtr& joy_msg)
   // Switch Speed Limit
   if (forward_axes >= 0.0)
   {
-    if (RT == true)
-    {
-      // ROS_INFO("[joystick_node] %s: Entering Full Speed Forward", joy_type.c_str());
-      speed_limit_ = max_speed_fwd_;
-    }
-    else
-    {
-      speed_limit_ = max_speed_fwd_allowed_;
-    }
+    speed_limit_ = max_speed_fwd_;
   }
   else
   {
-    if (RT == true)
-    {
-      // ROS_INFO("[joystick_node] %s: Entering Full Speed Reverse", joy_type.c_str());
-      speed_limit_ = max_speed_rev_;
-    }
-    else
-    {
-      speed_limit_ = max_speed_rev_allowed_;
-    }
+    speed_limit_ = max_speed_rev_;
   }
 
   if (current_nav_mode == NavMode::Autonomous)
@@ -234,35 +213,16 @@ void JoystickTeleop::joystickCallback(const sensor_msgs::Joy::ConstPtr& joy_msg)
   }
   else if (current_nav_mode == NavMode::Manual)
   {
-    // Throttle
-    if (fabs(forward_axes) > 0.05)  // set range for throttle
-    {
-      cmd_vel_out.linear.x = forward_axes * speed_limit_; // Speed: proportional.
-    }
-    else
-    {
-      cmd_vel_out.linear.x = 0; // within no throttle range
-    }
-
-    // Steering 
-    // Switch Steering Limit
-    if (LT == true)
-    {
-      // ROS_INFO("[joystick_node] %s: Entering Full Steering Range", joy_type.c_str());
-      cmd_vel_out.angular.z = steering_axes;
-    }
-    else
-    {
-      cmd_vel_out.angular.z = steering_axes * max_steering_angle_allowed_ / max_steering_angle_;
-    }
-    // cmd_vel_out.angular.z = steering_axes;
-    cmd_vel_out.linear.z = (double)current_nav_mode;
+    // Throttle & Steering 
+    cmd_vel_out.linear.x = forward_axes * speed_limit_; // Speed: proportional.
+    cmd_vel_out.angular.z = steering_axes;
+    vehicle_cmd.mode = (int)current_nav_mode;
   }
   else 
   {
     cmd_vel_out.linear.x = 0; //set speed to 0
     cmd_vel_out.angular.z = 0; //set steering to 0
-    cmd_vel_out.linear.z = (double)current_nav_mode;
+    vehicle_cmd.mode = (int)current_nav_mode;
   }
 
   // Publish the final cmd_vel_out msg
@@ -270,9 +230,19 @@ void JoystickTeleop::joystickCallback(const sensor_msgs::Joy::ConstPtr& joy_msg)
 
   vehicle_cmd.header = joy_msg->header;
   vehicle_cmd.header.frame_id = "base_link";
+  
+  
   vehicle_cmd.twist_cmd.twist = cmd_vel_out;
-  // vehicle_cmd.steer_cmd.steer = 0;
-  // vehicle_cmd.accel_cmd.accel = 0;
+  vehicle_cmd.twist_cmd.twist.angular.z *= M_PI*max_steering_angle_/180;
+  
+  // 
+  vehicle_cmd.steer_cmd.steer = -1;
+  vehicle_cmd.accel_cmd.accel = 1;
+
+  // Try using accel and steer
+  vehicle_cmd.ctrl_cmd.linear_acceleration = forward_axes * 3;
+  vehicle_cmd.ctrl_cmd.linear_velocity = forward_axes * speed_limit_;
+  vehicle_cmd.ctrl_cmd.steering_angle = steering_axes * max_steering_angle_;
   vehicle_cmd_pub.publish(vehicle_cmd);
   ROS_INFO("[joystick_node] %s: Steering Goal Angle: %.2f [deg]  Throttle Goal Speed: %.2f [m/s]", joy_type.c_str(), cmd_vel_out.angular.z * max_steering_angle_, cmd_vel_out.linear.x);
   
