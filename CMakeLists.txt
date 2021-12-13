@@ -2,13 +2,12 @@ cmake_minimum_required(VERSION 3.0.2)
 project(lgsvl_utils)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
-# add_compile_options(-std=c++11)
+add_compile_options(-std=c++11)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  lgsvl_msgs
   jsk_recognition_msgs
   autoware_msgs
   lgsvl_msgs
@@ -116,7 +115,7 @@ generate_messages(
 catkin_package(
   # INCLUDE_DIRS include
   # LIBRARIES lgsvl_utils
-  CATKIN_DEPENDS lgsvl_msgs jsk_recognition_msgs autoware_msgs roscpp rospy std_msgs
+  CATKIN_DEPENDS lanelet2 lgsvl_msgs jsk_recognition_msgs autoware_msgs roscpp rospy std_msgs
   # DEPENDS system_lib
 )
 

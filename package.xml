@@ -49,10 +49,10 @@
   <!-- Use doc_depend for packages you need only for building documentation: -->
   <!--   <doc_depend>doxygen</doc_depend> -->
   <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>lanelet2</build_depend>
   <build_depend>lgsvl_msgs</build_depend>
   <build_depend>jsk_recognition_msgs</build_depend>
   <build_depend>autoware_msgs</build_depend>
-  <build_depend>lgsvl_msgs</build_depend>
   <build_depend>nav_msgs</build_depend>
   <build_depend>std_msgs</build_depend>
   <build_depend>roscpp</build_depend>
@@ -60,10 +60,10 @@
   <build_depend>tf2_ros</build_depend>
   <build_depend>tf</build_depend>
   
+  <build_export_depend>lanelet2</build_export_depend>
   <build_export_depend>lgsvl_msgs</build_export_depend>
   <build_export_depend>jsk_recognition_msgs</build_export_depend>
   <build_export_depend>autoware_msgs</build_export_depend>
-  <build_export_depend>lgsvl_msgs</build_export_depend>
   <build_export_depend>nav_msgs</build_export_depend>
   <build_export_depend>std_msgs</build_export_depend>
   <build_export_depend>roscpp</build_export_depend>
@@ -71,10 +71,10 @@
   <build_export_depend>tf2_ros</build_export_depend>
   <build_export_depend>tf</build_export_depend>
   
+  <exec_depend>lanelet2</exec_depend>
   <exec_depend>lgsvl_msgs</exec_depend>
   <exec_depend>jsk_recognition_msgs</exec_depend>
   <exec_depend>autoware_msgs</exec_depend>
-  <exec_depend>lgsvl_msgs</exec_depend>
   <exec_depend>nav_msgs</exec_depend>
   <exec_depend>std_msgs</exec_depend>
   <exec_depend>roscpp</exec_depend>
