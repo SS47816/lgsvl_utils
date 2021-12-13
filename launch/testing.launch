@@ -4,7 +4,7 @@
   <node pkg="joy" type="joy_node" name="joy_node" respawn="true" >
     <param name="dev"                         value="/dev/input/js0" />
     <param name="deadzone"                    value="0.05" />
-    <param name="autorepeat_rate"             value="20" />
+    <param name="autorepeat_rate"             value="10" />
   </node>
 
   <node ns="lgsvl_utils" pkg="lgsvl_utils" type="joystick_node" name="joystick_node" output="screen" >
@@ -12,11 +12,11 @@
     <param name="joy_type"                    value="Xbox" />
     <param name="joy_topic"                   value="/joy" />
     <param name="autonomous_cmd_topic"        value="/auto_cmd" />
-    <param name="vehicle_cmd_topic"           value="/vehicle_cmd" />
-    <!-- <param name="health_monitor_topic"        value="/health_monitor" /> -->
+    <param name="vehicle_cmd_topic"           value="/simulator/control/vehicle_cmd" />
     <param name="max_speed_fwd"               value="20" />
     <param name="max_speed_rev"               value="10" />
-    <param name="max_steering_angle"          value="180" />
+    <param name="max_steering_angle"          value="35" />
+    <param name="steering_rate"               value="0.001" />
   </node>
 
 </launch>

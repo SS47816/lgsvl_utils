@@ -10,9 +10,9 @@
 #include <math.h>
 #include <ros/ros.h>
 #include <ros/console.h>
-#include <geometry_msgs/Twist.h>
-#include <autoware_msgs/VehicleCmd.h>
 #include <sensor_msgs/Joy.h>
+#include <lgsvl_msgs/VehicleControlData.h>
+#include <autoware_msgs/VehicleCmd.h>
 
 enum class NavMode
 {
@@ -29,12 +29,14 @@ public:
 
 private:
   bool is_healthy_ = true;
-  double max_speed_fwd_;                // [m/s]
-  double max_speed_rev_;                // [m/s]
+  // double max_speed_fwd_;                // [m/s]
+  // double max_speed_rev_;                // [m/s]
   double max_steering_angle_;           // [deg]
+  double steering_rate_;                // [deg/s]
   std::string joy_type_;
   std::string control_setting_;
   NavMode current_nav_mode_;
+  int gear_;
 
   ros::NodeHandle nh;
   ros::Subscriber joystick_sub;
@@ -65,16 +67,18 @@ JoystickTeleop::JoystickTeleop()
   ROS_ASSERT(private_nh.getParam("autonomous_cmd_topic", autonomous_cmd_topic));
   // ROS_ASSERT(private_nh.getParam("health_monitor_topic", health_monitor_topic));
 
-  ROS_ASSERT(private_nh.getParam("max_speed_fwd", max_speed_fwd_));
-  ROS_ASSERT(private_nh.getParam("max_speed_rev", max_speed_rev_));
+  // ROS_ASSERT(private_nh.getParam("max_speed_fwd", max_speed_fwd_));
+  // ROS_ASSERT(private_nh.getParam("max_speed_rev", max_speed_rev_));
   ROS_ASSERT(private_nh.getParam("max_steering_angle", max_steering_angle_));
+  ROS_ASSERT(private_nh.getParam("steering_rate", steering_rate_));
 
   joystick_sub = nh.subscribe(joy_topic, 1, &JoystickTeleop::joystickCallback, this);
   autonomous_cmd_sub = nh.subscribe(autonomous_cmd_topic, 1, &JoystickTeleop::autonomousCmdVelCallback, this);
   // health_monitor_sub = nh.subscribe(health_monitor_topic, 1, &JoystickTeleop::healthMonitorCallback, this);
-  vehicle_cmd_pub = nh.advertise<autoware_msgs::VehicleCmd>(vehicle_cmd_topic, 1);
+  vehicle_cmd_pub = nh.advertise<lgsvl_msgs::VehicleControlData>(vehicle_cmd_topic, 1);
 
   current_nav_mode_ = NavMode::Brake;
+  gear_ == lgsvl_msgs::VehicleControlData::GEAR_DRIVE;
   ROS_INFO("joy_type: using %s\n", joy_type_.c_str());
 }
 
@@ -85,10 +89,9 @@ void JoystickTeleop::joystickCallback(const sensor_msgs::Joy::ConstPtr& joy_msg)
   double LT, RT, LR_axis_stick_L, UD_axis_stick_L, LR_axis_stick_R, UD_axis_stick_R, cross_key_LR, cross_key_UD;
   double forward_axes, reverse_axes, steering_axes;
 
-  autoware_msgs::VehicleCmd vehicle_cmd;
+  lgsvl_msgs::VehicleControlData vehicle_cmd;
   vehicle_cmd.header = joy_msg->header;
   vehicle_cmd.header.frame_id = "base_link";
-  // vehicle_cmd.gear_cmd.gear = autoware_msgs::Gear::NONE;
   
   // Select the joystick type used
   if (joy_type_.compare("F710") == 0) // Logitech F710 XInput Mode
@@ -157,60 +160,65 @@ void JoystickTeleop::joystickCallback(const sensor_msgs::Joy::ConstPtr& joy_msg)
   }
 
   // Construct the control message
-  if (reverse_axes > 0.05)
+  if (gear_ == lgsvl_msgs::VehicleControlData::GEAR_DRIVE)
   {
-    if (forward_axes > 0.05)
+    vehicle_cmd.acceleration_pct = forward_axes;
+    vehicle_cmd.braking_pct = reverse_axes;
+    vehicle_cmd.target_gear = gear_;
+  }
+  else if (gear_ == lgsvl_msgs::VehicleControlData::GEAR_REVERSE)
+  {
+    vehicle_cmd.acceleration_pct = -reverse_axes;
+    vehicle_cmd.braking_pct = forward_axes;
+    vehicle_cmd.target_gear = gear_;
+  }
+  vehicle_cmd.target_gear = gear_;
+  vehicle_cmd.target_wheel_angle = -steering_axes*max_steering_angle_;
+  vehicle_cmd.target_wheel_angular_rate = steering_rate_;
+
+  // Switch between Forward and Reverse
+  if (Y)
+  {
+    if (gear_ == lgsvl_msgs::VehicleControlData::GEAR_DRIVE)
     {
-      // Brake
-      vehicle_cmd.twist_cmd.twist.linear.x = 0.0;
-      // vehicle_cmd.gear_cmd.gear = autoware_msgs::Gear::NONE;
-      ROS_WARN("BRAKE");
+      // Reverse Gear
+      ROS_WARN("REVERSE");
+      gear_ = lgsvl_msgs::VehicleControlData::GEAR_REVERSE;
     }
     else
     {
-      // Reverse Gear
-      vehicle_cmd.twist_cmd.twist.linear.x = reverse_axes * max_speed_rev_;
-      // vehicle_cmd.gear_cmd.gear = autoware_msgs::Gear::NEUTRAL;
-      ROS_WARN("REVERSE");
+      // Forward Gear
+      ROS_WARN("FORWARD");
+      gear_ = lgsvl_msgs::VehicleControlData::GEAR_DRIVE;
     }
   }
-  else
-  {
-    // Forward Gear
-    vehicle_cmd.twist_cmd.twist.linear.x = forward_axes * max_speed_fwd_;
-    // vehicle_cmd.gear_cmd.gear = autoware_msgs::Gear::NONE;
-    ROS_WARN("FORWARD");
-  }
-  vehicle_cmd.twist_cmd.twist.angular.z = steering_axes * max_steering_angle_/180.0*M_PI;
-  // vehicle_cmd.twist_cmd.twist.angular.z = steering_axes;
-  vehicle_cmd.mode = (int)current_nav_mode_;
 
   // Switch NavMode
-  if (B == true)
+  if (B)
   {
     current_nav_mode_ = NavMode::Brake;
     ROS_INFO("[Brake Mode ] %s: Entered Brake Mode", joy_type_.c_str());
   }
-  else if (X == true)
+  else if (X)
   {
     current_nav_mode_ = NavMode::Manual;
     ROS_INFO("[Manual Mode] %s: Entered Manual Mode", joy_type_.c_str());
   }
-  else if (A == true)
+  else if (A)
   {
     if (is_healthy_ == false)
     {
       current_nav_mode_ = NavMode::FailSafe;
-      ROS_ERROR("[joystick_node] %s: Unhealthy vehicle! Going to FailSafe Mode", joy_type_.c_str());
+      ROS_ERROR("[ Safe Mode ] %s: Unhealthy vehicle! Going to FailSafe Mode", joy_type_.c_str());
     }
     else if (current_nav_mode_ == NavMode::Brake)
     {
       current_nav_mode_ = NavMode::Autonomous;
-      ROS_INFO("[joystick_node] %s: Entered Autonomous Mode", joy_type_.c_str());
+      ROS_INFO("[Brake Mode ] %s: Entered Autonomous Mode", joy_type_.c_str());
     }
     else if (current_nav_mode_ == NavMode::Autonomous)
     {
-      ROS_INFO("[joystick_node] %s: Already in Autonomous Mode", joy_type_.c_str());
+      ROS_INFO("[ Auto Mode ] %s: Already in Autonomous Mode", joy_type_.c_str());
     }
     else
     {
@@ -223,8 +231,8 @@ void JoystickTeleop::joystickCallback(const sensor_msgs::Joy::ConstPtr& joy_msg)
   if (current_nav_mode_ == NavMode::Manual)
   {
     vehicle_cmd_pub.publish(vehicle_cmd);
-    ROS_INFO("[Manual Mode] %s: Steering Goal Angle: %.2f [deg] Throttle Goal Speed: %.2f [m/s]", 
-              joy_type_.c_str(), vehicle_cmd.twist_cmd.twist.angular.z*180.0/M_PI, vehicle_cmd.twist_cmd.twist.linear.x);
+    ROS_INFO("[Manual Mode] %s: Steering Goal Angle: %.1f [deg] Throttle Value: %.2f", 
+              joy_type_.c_str(), vehicle_cmd.target_wheel_angle, vehicle_cmd.acceleration_pct);
     return;
   }
   else if (current_nav_mode_ == NavMode::Autonomous)
@@ -235,7 +243,6 @@ void JoystickTeleop::joystickCallback(const sensor_msgs::Joy::ConstPtr& joy_msg)
   else 
   {
     current_nav_mode_ = NavMode::FailSafe;
-    // vehicle_cmd_pub.publish(autoware_msgs::VehicleCmd());
     return;
   }
 }
@@ -247,21 +254,22 @@ void JoystickTeleop::autonomousCmdVelCallback(const autoware_msgs::VehicleCmd::C
     return;
   }
 
-  autoware_msgs::VehicleCmd vehicle_cmd = *auto_cmd_msg.get();
+  lgsvl_msgs::VehicleControlData vehicle_cmd;
+  vehicle_cmd.header = auto_cmd_msg->header;
   vehicle_cmd.header.frame_id = "base_link";
+  vehicle_cmd.target_gear = lgsvl_msgs::VehicleControlData::GEAR_NEUTRAL;
   
   if (is_healthy_)
   {
     vehicle_cmd_pub.publish(vehicle_cmd);
-    ROS_INFO("[ Auto Mode ] %s: Steering Goal Angle: %.2f [deg]  Throttle Goal Speed: %.2f [m/s]", joy_type_.c_str(), 
-              vehicle_cmd.twist_cmd.twist.angular.z*180.0/M_PI, vehicle_cmd.twist_cmd.twist.linear.x);
+    ROS_INFO("[ Auto Mode ] %s: Steering Goal Angle: %.1f [deg] Throttle Value: %.2f", 
+              joy_type_.c_str(), vehicle_cmd.target_wheel_angle, vehicle_cmd.acceleration_pct);
     return;
   }
   else 
   {
-    //if we are unhealthy and in autonomous mode, go to soft brake mode.
+    // if we are unhealthy and in autonomous mode, go to soft brake mode.
     current_nav_mode_ = NavMode::FailSafe;
-    // vehicle_cmd_pub.publish(autoware_msgs::VehicleCmd());
     ROS_ERROR("[ Safe Mode ] %s: Unhealthy vehicle! Check sensors! Going to Soft Brake Mode.", joy_type_.c_str());
     return;
   }
