@@ -86,7 +86,7 @@ void JoystickTeleop::joystickCallback(const sensor_msgs::Joy::ConstPtr& joy_msg)
 {
   bool A, B, X, Y, LB, RB, button_stick_left, button_stick_right;
   double LT, RT, LR_axis_stick_L, UD_axis_stick_L, LR_axis_stick_R, UD_axis_stick_R, cross_key_LR, cross_key_UD;
-  double forward_axes, reverse_axes, steering_axes;
+  double accel_axes, brake_axes, steer_axes;
 
   lgsvl_msgs::VehicleControlData vehicle_cmd;
   vehicle_cmd.header = joy_msg->header;
@@ -154,21 +154,36 @@ void JoystickTeleop::joystickCallback(const sensor_msgs::Joy::ConstPtr& joy_msg)
   }
 
   // Select the joystick control setting used
-  if (control_setting_.compare("RightHand") == 0)
+  
+  if (control_setting_.compare("ForzaHorizon") == 0)
   {
-    forward_axes = UD_axis_stick_R;
-    reverse_axes = -forward_axes;
-    steering_axes = LR_axis_stick_R;
+    accel_axes = (-RT + 1.0)/2.0;
+    brake_axes = (-LT + 1.0)/2.0;
+    steer_axes = LR_axis_stick_L;
+
+    // Switch between Forward and Reverse
+    
   }
-  else if (control_setting_.compare("ForzaHorizon") == 0)
+  else if (control_setting_.compare("JapanHand") == 0)
   {
-    forward_axes = (-RT + 1.0)/2.0;
-    reverse_axes = (-LT + 1.0)/2.0;
-    steering_axes = LR_axis_stick_L;
+    accel_axes = UD_axis_stick_R;
+    brake_axes = -accel_axes;
+    steer_axes = LR_axis_stick_L;
+
+    // Switch between Forward and Reverse
+  }
+  else if (control_setting_.compare("USAHand") == 0)
+  {
+    accel_axes = UD_axis_stick_L;
+    brake_axes = -accel_axes;
+    steer_axes = LR_axis_stick_R;
+
+    // Switch between Forward and Reverse
   }
   else
   {
-    ROS_ERROR("[joystick_node]: Invalid control setting (%s) used, 'RightHand' or 'ForzaHorizon' expected", control_setting_.c_str());
+    ROS_ERROR("[joystick_node]: Invalid control setting (%s) used, 'ForzaHorizon' or 'JapanHand' or 'USAHand' expected", control_setting_.c_str());
+    return;
   }
 
   // Switch between Forward and Reverse
@@ -191,23 +206,23 @@ void JoystickTeleop::joystickCallback(const sensor_msgs::Joy::ConstPtr& joy_msg)
   // Construct the control message
   if (gear_ == lgsvl_msgs::VehicleControlData::GEAR_DRIVE)
   {
-    vehicle_cmd.acceleration_pct = forward_axes;
-    vehicle_cmd.braking_pct = reverse_axes;
+    vehicle_cmd.acceleration_pct = accel_axes;
+    vehicle_cmd.braking_pct = brake_axes;
   }
   else if (gear_ == lgsvl_msgs::VehicleControlData::GEAR_REVERSE)
   {
-    vehicle_cmd.acceleration_pct = reverse_axes;
-    vehicle_cmd.braking_pct = forward_axes;
+    vehicle_cmd.acceleration_pct = brake_axes;
+    vehicle_cmd.braking_pct = accel_axes;
   }
   
   // Map steering axes output
   if (control_setting_.compare("Quadratic") == 0)
   {
-    vehicle_cmd.target_wheel_angle = -(steering_axes*steering_axes)*steering_limit_/180.0*M_PI;
+    vehicle_cmd.target_wheel_angle = -(steer_axes*steer_axes)*steering_limit_/180.0*M_PI;
   }
   else
   {
-    vehicle_cmd.target_wheel_angle = -steering_axes*steering_limit_/180.0*M_PI;
+    vehicle_cmd.target_wheel_angle = -steer_axes*steering_limit_/180.0*M_PI;
   }
 
   // Switch NavMode
