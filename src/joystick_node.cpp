@@ -34,6 +34,7 @@ private:
   double max_steering_angle_;           // [deg]
   std::string joy_type_;
   std::string control_setting_;
+  std::string steering_mapping_;
   NavMode current_nav_mode_;
   int gear_;
 
@@ -61,6 +62,7 @@ JoystickTeleop::JoystickTeleop()
   ROS_ASSERT(private_nh.getParam("joy_topic", joy_topic));
   ROS_ASSERT(private_nh.getParam("joy_type", joy_type_));
   ROS_ASSERT(private_nh.getParam("control_setting", control_setting_));
+  ROS_ASSERT(private_nh.getParam("steering_mapping", steering_mapping_));
   
   ROS_ASSERT(private_nh.getParam("vehicle_cmd_topic", vehicle_cmd_topic));
   ROS_ASSERT(private_nh.getParam("autonomous_cmd_topic", autonomous_cmd_topic));
@@ -167,8 +169,17 @@ void JoystickTeleop::joystickCallback(const sensor_msgs::Joy::ConstPtr& joy_msg)
     vehicle_cmd.braking_pct = forward_axes;
     vehicle_cmd.target_gear = gear_;
   }
+  
+  // Map steering axes output
+  if (control_setting_.compare("Quadratic") == 0)
+  {
+    vehicle_cmd.target_wheel_angle = -(steering_axes*steering_axes)*max_steering_angle_/180.0*M_PI;
+  }
+  else
+  {
+    vehicle_cmd.target_wheel_angle = -steering_axes*max_steering_angle_/180.0*M_PI;
+  }
   vehicle_cmd.target_gear = gear_;
-  vehicle_cmd.target_wheel_angle = -steering_axes*max_steering_angle_/180.0*M_PI;
   vehicle_cmd.target_wheel_angular_rate = 0.0;
 
   // Switch between Forward and Reverse
