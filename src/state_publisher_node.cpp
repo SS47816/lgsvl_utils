@@ -17,6 +17,7 @@
 #include <tf2_ros/transform_broadcaster.h>
 #include <tf2_geometry_msgs/tf2_geometry_msgs.h>
 
+#include <std_msgs/Float32.h>
 #include <nav_msgs/Odometry.h>
 #include <visualization_msgs/MarkerArray.h>
 #include <lgsvl_msgs/CanBusData.h>
@@ -38,10 +39,11 @@ class StatePublisherNode
 
   ros::NodeHandle nh;
   tf2_ros::TransformBroadcaster tf2_broadcaster;
-  // ros::Publisher pub_speed;
-  // ros::Publisher pub_accel;
-  // ros::Publisher pub_steer;
   ros::Publisher pub_vehicle_state;
+  ros::Publisher pub_curr_accel;
+  ros::Publisher pub_curr_brake;
+  ros::Publisher pub_curr_steer;
+  ros::Publisher pub_curr_speed;
   ros::Subscriber sub_lgsvl_odom;
   ros::Subscriber sub_lgsvl_can_bus;
   
@@ -55,12 +57,19 @@ StatePublisherNode::StatePublisherNode()
   
   std::string lgsvl_odom_topic;
   std::string lgsvl_can_bus_topic;
-  std::string speed_topic;
   std::string vehicle_state_topic;
+  std::string curr_accel_topic;
+  std::string curr_brake_topic;
+  std::string curr_steer_topic;
+  std::string curr_speed_topic;
   
   ROS_ASSERT(private_nh.getParam("lgsvl_odom_topic", lgsvl_odom_topic));
   ROS_ASSERT(private_nh.getParam("lgsvl_can_bus_topic", lgsvl_can_bus_topic));
   ROS_ASSERT(private_nh.getParam("vehicle_state_topic", vehicle_state_topic));
+  ROS_ASSERT(private_nh.getParam("curr_accel_topic", curr_accel_topic));
+  ROS_ASSERT(private_nh.getParam("curr_brake_topic", curr_brake_topic));
+  ROS_ASSERT(private_nh.getParam("curr_steer_topic", curr_steer_topic));
+  ROS_ASSERT(private_nh.getParam("curr_speed_topic", curr_speed_topic));
   ROS_ASSERT(private_nh.getParam("odom_frame", odom_frame_));
   ROS_ASSERT(private_nh.getParam("baselink_frame", baselink_frame_));
   ROS_ASSERT(private_nh.getParam("steering_limit", steering_limit_));
@@ -69,6 +78,10 @@ StatePublisherNode::StatePublisherNode()
   sub_lgsvl_can_bus = nh.subscribe(lgsvl_can_bus_topic, 1, &StatePublisherNode::canBusCallback, this);
 
   pub_vehicle_state = nh.advertise<autoware_msgs::VehicleStatus>(vehicle_state_topic, 1);
+  pub_curr_accel = nh.advertise<std_msgs::Float32>(curr_accel_topic, 1);
+  pub_curr_brake = nh.advertise<std_msgs::Float32>(curr_brake_topic, 1);
+  pub_curr_steer = nh.advertise<std_msgs::Float32>(curr_steer_topic, 1);
+  pub_curr_speed = nh.advertise<std_msgs::Float32>(curr_speed_topic, 1);
 }
 
 void StatePublisherNode::odomCallback(const nav_msgs::Odometry::ConstPtr& lgsvl_odom_msg)
@@ -95,6 +108,7 @@ void StatePublisherNode::canBusCallback(const lgsvl_msgs::CanBusData::ConstPtr& 
   vehicle_status_msg.drivepedal = lgsvl_can_bus_msg->throttle_pct >= 0.05? 1 : 0;
   vehicle_status_msg.brakepedal = lgsvl_can_bus_msg->brake_pct >= 0.05? 1 : 0;
   vehicle_status_msg.angle = lgsvl_can_bus_msg->steer_pct*steering_limit_;
+
   // Map Gear Options
   if (lgsvl_can_bus_msg->reverse_gear_active)
   {
@@ -123,6 +137,16 @@ void StatePublisherNode::canBusCallback(const lgsvl_msgs::CanBusData::ConstPtr& 
   }
   vehicle_status_msg.light = lgsvl_can_bus_msg->fog_lights_active;
 
+  std_msgs::Float32 curr_accel, curr_brake, curr_steer, curr_speed;
+  curr_accel.data = lgsvl_can_bus_msg->throttle_pct;
+  curr_brake.data = lgsvl_can_bus_msg->brake_pct;
+  curr_steer.data = vehicle_status_msg.angle;
+  curr_speed.data = vehicle_status_msg.speed;
+  
+  pub_curr_accel.publish(std::move(curr_accel));
+  pub_curr_brake.publish(std::move(curr_brake));
+  pub_curr_steer.publish(std::move(curr_steer));
+  pub_curr_speed.publish(std::move(curr_speed));
   pub_vehicle_state.publish(std::move(vehicle_status_msg));
 }
 

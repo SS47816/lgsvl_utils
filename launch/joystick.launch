@@ -8,15 +8,15 @@
   </node>
 
   <node ns="lgsvl_utils" pkg="lgsvl_utils" type="joystick_node" name="joystick_node" output="screen" >
-    <param name="joy_type"                    value="Xbox" />
     <param name="joy_topic"                   value="/joy" />
+    <param name="joy_type"                    value="Xbox" />
     <param name="control_setting"             value="ForzaHorizon" />
     <param name="steering_mapping"            value="Quadratic" />
     <param name="autonomous_cmd_topic"        value="/auto_cmd" />
     <param name="vehicle_cmd_topic"           value="/simulator/control/vehicle_cmd" />
-    <param name="max_speed_fwd"               value="20" />
-    <param name="max_speed_rev"               value="10" />
-    <param name="max_steering_angle"          value="45" />
+    <param name="vehicle_state_topic"         value="/simulator/control/vehicle_state" />
+    <param name="steering_limit"              value="45" />
+    <param name="deadzone"                    value="0.05" />
   </node>
 
 </launch>
