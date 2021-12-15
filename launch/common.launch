@@ -2,7 +2,59 @@
 
   <!-- ROS-Bridge node for Simulator connection -->
   <node name="websocket_bridge" pkg="rosbridge_server" type="rosbridge_websocket" output="screen" clear_params="true" required="true" />
+
+  <!-- Robot Model -->
+  <param name="robot_description"             textfile="$(find lgsvl_utils)/urdf/lexus.urdf" />
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen" />
+
+  <!-- TF -->
+  <node ns="tf_static" pkg="tf" type="static_transform_publisher" name="world_to_map" args="0 0 0 0 0 0 /world /map 10" />
+  <node ns="tf_static" pkg="tf" type="static_transform_publisher" name="map_to_odom"  args="0 0 0 0 0 0 /map /odom 10" />
+
   <!-- Re-publishing simulator/camera_node/image/compressed topic to /image_raw as expected by Autoware -->
   <node name="republish" type="republish" pkg="image_transport" output="screen" args="compressed in:=/simulator/camera_node/image raw out:=/image_raw" />
+
+  <!-- Vehicle State Publisher  -->
+  <node ns="lgsvl_utils" pkg="lgsvl_utils" type="state_publisher_node" name="state_publisher_node" output="screen">
+    <param name="lgsvl_odom_topic"            value="/simulator/ground_truth/odom" />
+    <param name="lgsvl_can_bus_topic"         value="/simulator/ground_truth/can_bus" />
+    <param name="vehicle_state_topic"         value="/simulator/ground_truth/vehicle_state" />
+    <param name="odom_frame"                  value="odom" />
+    <param name="baselink_frame"              value="base_link" />
+    <param name="steering_limit"              value="45.0" />
+  </node>
+
+  <!-- Ground Truth Viewer -->
+  <node ns="lgsvl_utils" pkg="lgsvl_utils" type="gt_viewer_node" name="gt_viewer_node" output="screen">
+    <param name="lgsvl_gt2d_topic"            value="/simulator/ground_truth/2d_detections" />
+    <param name="lgsvl_gt3d_topic"            value="/simulator/ground_truth/3d_detections" />
+    <param name="jsk_bboxes_topic"            value="/simulator/ground_truth/jsk_bounding_boxes" />
+    <param name="autoware_objects_topic"      value="/simulator/ground_truth/objects" />
+    <param name="bbox_target_frame"           value="base_link" />
+    <param name="bbox_filter_size"            value="10.0" />
+  </node>
+
+  <node pkg="detected_objects_visualizer" type="visualize_detected_objects" name="detected_objects_visualizer"
+    output="screen" ns="simulator/ground_truth"/>
+
+  <!-- Joystick Teleop -->
+  <node pkg="joy" type="joy_node" name="joy_node" respawn="true" >
+    <param name="dev"                         value="/dev/input/js0" />
+    <param name="deadzone"                    value="0.05" />
+    <param name="autorepeat_rate"             value="10" />
+  </node>
+
+  <node ns="lgsvl_utils" pkg="lgsvl_utils" type="joystick_node" name="joystick_node" output="screen" >
+    <param name="joy_type"                    value="Xbox" />
+    <param name="joy_topic"                   value="/joy" />
+    <param name="control_setting"             value="ForzaHorizon" />
+    <param name="steering_mapping"            value="Quadratic" />
+    <param name="autonomous_cmd_topic"        value="/auto_cmd" />
+    <param name="vehicle_cmd_topic"           value="/simulator/control/vehicle_cmd" />
+    <param name="steering_limit"              value="45" />
+  </node>
+
+  <!-- Rviz -->
+  <node type="rviz" name="rviz" pkg="rviz" args="-d $(find lgsvl_utils)/rviz/lgsvl.rviz" />
 
 </launch>

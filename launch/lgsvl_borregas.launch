@@ -1,41 +1,8 @@
 
 <launch>
-  <!-- ROS-Bridge node for Simulator connection -->
-  <node name="websocket_bridge" pkg="rosbridge_server" type="rosbridge_websocket" output="screen" clear_params="true" required="true" />
 
-  <!-- Rviz -->
-  <node type="rviz" name="rviz" pkg="rviz" args="-d $(find lgsvl_utils)/rviz/lgsvl.rviz" />
-
-  <!-- Robot Model -->
-  <param name="robot_description"             textfile="$(find lgsvl_utils)/urdf/lexus.urdf" />
-  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen" />
-
-  <!-- TF -->
-  <node ns="tf_static" pkg="tf" type="static_transform_publisher" name="world_to_map" args="0 0 0 0 0 0 /world /map 10" />
-  <node ns="tf_static" pkg="tf" type="static_transform_publisher" name="map_to_odom"  args="0 0 0 0 0 0 /map /odom 10" />
-
-  <!-- Re-publishing simulator/camera_node/image/compressed topic to /image_raw as expected by Autoware -->
-  <node name="republish" type="republish" pkg="image_transport" output="screen" args="compressed in:=/simulator/camera_node/image raw out:=/image_raw" />
-
-  <!-- Localizer -->
-  <node ns="lgsvl_utils" pkg="lgsvl_utils" type="localizer_node" name="localizer_node" output="screen">
-    <param name="lgsvl_odom_topic"            value="/simulator/ground_truth/odom" />
-    <param name="odom_frame"                  value="odom" />
-    <param name="baselink_frame"              value="base_link" />
-  </node>
-
-  <!-- Ground Truth Viewer -->
-  <node ns="lgsvl_utils" pkg="lgsvl_utils" type="gt_viewer_node" name="gt_viewer_node" output="screen">
-    <param name="lgsvl_gt2d_topic"            value="/simulator/ground_truth/2d_detections" />
-    <param name="lgsvl_gt3d_topic"            value="/simulator/ground_truth/3d_detections" />
-    <param name="jsk_bboxes_topic"            value="/simulator/ground_truth/jsk_bounding_boxes" />
-    <param name="autoware_objects_topic"      value="/simulator/ground_truth/objects" />
-    <param name="bbox_target_frame"           value="base_link" />
-    <param name="bbox_filter_size"            value="10.0" />
-  </node>
-
-  <node pkg="detected_objects_visualizer" type="visualize_detected_objects" name="detected_objects_visualizer"
-    output="screen" ns="simulator/ground_truth"/>
+  <!-- Common Modules -->
+  <include file="$(find lgsvl_utils)/launch/common.launch" />
 
   <!-- Map Files Settings -->
   <arg name="map_name" default="BorregasAve" />
