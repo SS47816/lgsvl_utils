@@ -32,7 +32,7 @@ class StatePublisherNode
   virtual ~StatePublisherNode() {};
 
  private:
-  double steering_limit_;
+  float steering_limit_;
   std::string odom_frame_;
   std::string baselink_frame_;
 

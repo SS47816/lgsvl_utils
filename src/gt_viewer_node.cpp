@@ -34,7 +34,7 @@ class GTViwerNode
   virtual ~GTViwerNode() {};
 
  private:
-  double bbox_filter_size_;
+  float bbox_filter_size_;
   std::string bbox_target_frame_;
   ros::NodeHandle nh;
   tf2_ros::Buffer tf2_buffer;

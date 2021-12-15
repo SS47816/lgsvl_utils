@@ -29,12 +29,14 @@ public:
 
 private:
   bool is_healthy_ = true;
-  double steering_limit_;           // [deg]
+  int gear_;
+  float deadzone_;
+  float steering_limit_;           // [deg]
+  float curr_speed_;
   std::string joy_type_;
   std::string control_setting_;
   std::string steering_mapping_;
   NavMode current_nav_mode_;
-  int gear_;
 
   ros::NodeHandle nh;
   ros::Subscriber joystick_sub;
@@ -69,6 +71,7 @@ JoystickTeleop::JoystickTeleop()
   ROS_ASSERT(private_nh.getParam("vehicle_state_topic", vehicle_state_topic));
   // ROS_ASSERT(private_nh.getParam("health_monitor_topic", health_monitor_topic));
   ROS_ASSERT(private_nh.getParam("steering_limit", steering_limit_));
+  ROS_ASSERT(private_nh.getParam("deadzone", deadzone_));
 
   joystick_sub = nh.subscribe(joy_topic, 1, &JoystickTeleop::joystickCallback, this);
   autonomous_cmd_sub = nh.subscribe(autonomous_cmd_topic, 1, &JoystickTeleop::autonomousCmdCallback, this);
@@ -85,8 +88,8 @@ JoystickTeleop::JoystickTeleop()
 void JoystickTeleop::joystickCallback(const sensor_msgs::Joy::ConstPtr& joy_msg)
 {
   bool A, B, X, Y, LB, RB, button_stick_left, button_stick_right;
-  double LT, RT, LR_axis_stick_L, UD_axis_stick_L, LR_axis_stick_R, UD_axis_stick_R, cross_key_LR, cross_key_UD;
-  double accel_axes, brake_axes, steer_axes;
+  float LT, RT, LR_axis_stick_L, UD_axis_stick_L, LR_axis_stick_R, UD_axis_stick_R, cross_key_LR, cross_key_UD;
+  float accel_axes, brake_axes, steer_axes;
 
   lgsvl_msgs::VehicleControlData vehicle_cmd;
   vehicle_cmd.header = joy_msg->header;
@@ -162,6 +165,13 @@ void JoystickTeleop::joystickCallback(const sensor_msgs::Joy::ConstPtr& joy_msg)
     steer_axes = LR_axis_stick_L;
 
     // Switch between Forward and Reverse
+    // if (brake_axes >= deadzone_)
+    // {
+    //   if (curr_speed_ < deadzone_)
+    //   {
+
+    //   }
+    // }
     
   }
   else if (control_setting_.compare("JapanHand") == 0)
