@@ -1,9 +1,11 @@
-/* localization.cpp
+/* localizer_node.cpp
 
-  Copyright (C) 2021 SS47816 & Advanced Robotics Center, National University of Singapore
+ * Copyright (C) 2021 SS47816
 
-  Localizing Ego Vehicle in LGSVL Simulator using Ground Truth Pose
-*/
+ * ROS Node for Localizing the Ego Vehicle in LGSVL Simulator using the Ground Truth Pose
+ * Publish frame transform between odom and baselink
+ 
+**/
 
 #include <iostream>
 #include <string>

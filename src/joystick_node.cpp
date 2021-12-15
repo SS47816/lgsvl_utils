@@ -1,11 +1,10 @@
-/*
- * Joystick Teleop for mapping desired values
- * Output message is of type geometry_msgs::Twist
- * Mapping for output message:
- * linear.x => desired_velocity [0.0 - 1.0] in propotional
- * linear.z => NavMode
- * angular.z => steering angle [0.0 - 1.0] in propotional
-**/ 
+/* joystick_node.cpp
+
+ * Copyright (C) 2021 SS47816
+
+ * ROS Node for controlling the vehicle using joysticks
+ 
+**/
 
 #include <math.h>
 #include <ros/ros.h>

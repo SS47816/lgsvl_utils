@@ -1,9 +1,10 @@
 /* gt_viewer_node.cpp
 
-  Copyright (C) 2021 SS47816 & Advanced Robotics Center, National University of Singapore
+ * Copyright (C) 2021 SS47816
 
-  LGSVL Simulator 3D Objects Ground Truth Viewer ROS Node
-*/
+ * ROS Node for viewing 3D Ground Truth Objects from LGSVL Simulator
+
+**/
 
 #include <iostream>
 #include <string>
