@@ -274,9 +274,9 @@ void JoystickTeleop::joystickCallback(const sensor_msgs::Joy::ConstPtr& joy_msg)
   {
     vehicle_cmd.target_gear = gear_;
     vehicle_cmd.target_wheel_angular_rate = 0.0;
-    vehicle_cmd_pub.publish(vehicle_cmd);
+    vehicle_cmd_pub.publish(std::move(vehicle_cmd));
     vehicle_state.current_gear = gear_;
-    vehicle_state_pub.publish(vehicle_state);
+    vehicle_state_pub.publish(std::move(vehicle_state));
     ROS_INFO("[Manual Mode] %s: Steering Goal Angle: %.1f [deg] Throttle Value: %.2f", 
               joy_type_.c_str(), vehicle_cmd.target_wheel_angle*180.0/M_PI, vehicle_cmd.acceleration_pct);
     return;
@@ -292,7 +292,7 @@ void JoystickTeleop::joystickCallback(const sensor_msgs::Joy::ConstPtr& joy_msg)
     gear_ = lgsvl_msgs::VehicleControlData::GEAR_NEUTRAL;
     vehicle_state.current_gear = gear_;
     vehicle_state.vehicle_mode = lgsvl_msgs::VehicleStateData::VEHICLE_MODE_EMERGENCY_MODE;
-    vehicle_state_pub.publish(vehicle_state);
+    vehicle_state_pub.publish(std::move(vehicle_state));
     return;
   }
 }
@@ -324,8 +324,8 @@ void JoystickTeleop::autonomousCmdCallback(const autoware_msgs::VehicleCmd::Cons
   if (is_healthy_)
   {
     gear_ = lgsvl_msgs::VehicleControlData::GEAR_DRIVE;
-    vehicle_cmd_pub.publish(vehicle_cmd);
-    vehicle_state_pub.publish(vehicle_state);
+    vehicle_cmd_pub.publish(std::move(vehicle_cmd));
+    vehicle_state_pub.publish(std::move(vehicle_state));
     ROS_INFO("[ Auto Mode ] %s: Steering Goal Angle: %.1f [deg] Throttle Value: %.2f", 
               joy_type_.c_str(), vehicle_cmd.target_wheel_angle*180.0/M_PI, vehicle_cmd.acceleration_pct);
     return;
@@ -336,7 +336,7 @@ void JoystickTeleop::autonomousCmdCallback(const autoware_msgs::VehicleCmd::Cons
     current_nav_mode_ = NavMode::FailSafe;
     gear_ = lgsvl_msgs::VehicleControlData::GEAR_NEUTRAL;
     vehicle_state.hand_brake_active = 1;
-    vehicle_state_pub.publish(vehicle_state);
+    vehicle_state_pub.publish(std::move(vehicle_state));
     ROS_ERROR("[ Safe Mode ] %s: Unhealthy vehicle! Check sensors! Going to Soft Brake Mode.", joy_type_.c_str());
     return;
   }

@@ -174,8 +174,8 @@ void GTViwerNode::detections3DCallback(const lgsvl_msgs::Detection3DArray::Const
       autoware_objects.objects.emplace_back(transformAutowareObject(lgsvl_detection3d_ptr, pose_transformed));
     }
   }
-  jsk_bboxes_pub.publish(jsk_bboxes);
-  autoware_objects_pub.publish(autoware_objects);
+  jsk_bboxes_pub.publish(std::move(jsk_bboxes));
+  autoware_objects_pub.publish(std::move(autoware_objects));
 }
 
 } // namespace lgsvl_utils
