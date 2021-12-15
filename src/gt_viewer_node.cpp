@@ -34,18 +34,17 @@ class GTViwerNode
   virtual ~GTViwerNode() {};
 
  private:
+  double bbox_filter_size_;
+  std::string bbox_target_frame_;
   ros::NodeHandle nh;
+  tf2_ros::Buffer tf2_buffer;
+  tf2_ros::TransformListener tf2_listener;
+
   ros::Subscriber lgsvl_gt2d_sub;
   ros::Subscriber lgsvl_gt3d_sub;
   ros::Publisher jsk_bboxes_pub;
   ros::Publisher autoware_objects_pub;
 
-  tf2_ros::Buffer tf2_buffer;
-  tf2_ros::TransformListener tf2_listener;
-
-  std::string bbox_target_frame_;
-  double bbox_filter_size_;
-  
   void detections2DCallback(const lgsvl_msgs::Detection2DArray::ConstPtr& lgsvl_detections2d);
   void detections3DCallback(const lgsvl_msgs::Detection3DArray::ConstPtr& lgsvl_detections3d);
   jsk_recognition_msgs::BoundingBox transformJskBbox(const lgsvl_msgs::Detection3D::ConstPtr& lgsvl_detection3d, const geometry_msgs::Pose& pose_transformed);
