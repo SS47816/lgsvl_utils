@@ -147,9 +147,9 @@ add_executable(gt_viewer_node src/gt_viewer_node.cpp)
 target_link_libraries(gt_viewer_node ${catkin_LIBRARIES})
 add_dependencies(gt_viewer_node ${catkin_EXPORTED_TARGETS} ${${PROJECT_NAME}_EXPORTED_TARGETS})
 
-add_executable(localizer_node src/localizer_node.cpp)
-target_link_libraries(localizer_node ${catkin_LIBRARIES})
-add_dependencies(localizer_node ${catkin_EXPORTED_TARGETS} ${${PROJECT_NAME}_EXPORTED_TARGETS})
+add_executable(state_publisher_node src/state_publisher_node.cpp)
+target_link_libraries(state_publisher_node ${catkin_LIBRARIES})
+add_dependencies(state_publisher_node ${catkin_EXPORTED_TARGETS} ${${PROJECT_NAME}_EXPORTED_TARGETS})
 
 add_executable(joystick_node src/joystick_node.cpp)
 target_link_libraries(joystick_node ${catkin_LIBRARIES})
