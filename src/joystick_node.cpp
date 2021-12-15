@@ -30,7 +30,7 @@ private:
   bool is_healthy_ = true;
   // double max_speed_fwd_;                // [m/s]
   // double max_speed_rev_;                // [m/s]
-  double max_steering_angle_;           // [deg]
+  double steering_limit_;           // [deg]
   std::string joy_type_;
   std::string control_setting_;
   std::string steering_mapping_;
@@ -66,7 +66,7 @@ JoystickTeleop::JoystickTeleop()
   ROS_ASSERT(private_nh.getParam("vehicle_cmd_topic", vehicle_cmd_topic));
   ROS_ASSERT(private_nh.getParam("autonomous_cmd_topic", autonomous_cmd_topic));
   // ROS_ASSERT(private_nh.getParam("health_monitor_topic", health_monitor_topic));
-  ROS_ASSERT(private_nh.getParam("max_steering_angle", max_steering_angle_));
+  ROS_ASSERT(private_nh.getParam("steering_limit", steering_limit_));
 
   joystick_sub = nh.subscribe(joy_topic, 1, &JoystickTeleop::joystickCallback, this);
   autonomous_cmd_sub = nh.subscribe(autonomous_cmd_topic, 1, &JoystickTeleop::autonomousCmdVelCallback, this);
@@ -172,15 +172,13 @@ void JoystickTeleop::joystickCallback(const sensor_msgs::Joy::ConstPtr& joy_msg)
   // Map steering axes output
   if (control_setting_.compare("Quadratic") == 0)
   {
-    vehicle_cmd.target_wheel_angle = -(steering_axes*steering_axes)*max_steering_angle_/180.0*M_PI;
+    vehicle_cmd.target_wheel_angle = -(steering_axes*steering_axes)*steering_limit_/180.0*M_PI;
   }
   else
   {
-    vehicle_cmd.target_wheel_angle = -steering_axes*max_steering_angle_/180.0*M_PI;
+    vehicle_cmd.target_wheel_angle = -steering_axes*steering_limit_/180.0*M_PI;
   }
-  vehicle_cmd.target_gear = gear_;
-  vehicle_cmd.target_wheel_angular_rate = 0.0;
-
+  
   // Switch between Forward and Reverse
   if (Y)
   {
@@ -189,14 +187,19 @@ void JoystickTeleop::joystickCallback(const sensor_msgs::Joy::ConstPtr& joy_msg)
       // Reverse Gear
       ROS_WARN("REVERSE");
       gear_ = lgsvl_msgs::VehicleControlData::GEAR_REVERSE;
+      // gear_ = 64;
     }
     else
     {
       // Forward Gear
       ROS_WARN("FORWARD");
       gear_ = lgsvl_msgs::VehicleControlData::GEAR_DRIVE;
+      // gear_ = 64;
     }
   }
+
+  vehicle_cmd.target_gear = gear_;
+  vehicle_cmd.target_wheel_angular_rate = 0.0;
 
   // Switch NavMode
   if (B)
@@ -262,7 +265,7 @@ void JoystickTeleop::autonomousCmdVelCallback(const autoware_msgs::VehicleCmd::C
   lgsvl_msgs::VehicleControlData vehicle_cmd;
   vehicle_cmd.header = auto_cmd_msg->header;
   vehicle_cmd.header.frame_id = "base_link";
-  vehicle_cmd.target_gear = lgsvl_msgs::VehicleControlData::GEAR_NEUTRAL;
+  vehicle_cmd.target_gear = lgsvl_msgs::VehicleControlData::GEAR_DRIVE;
   
   if (is_healthy_)
   {
