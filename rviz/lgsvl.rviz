@@ -8,9 +8,11 @@ Panels:
         - /TF1/Tree1
         - /Sensors1
         - /Perception1
+        - /Perception1/Odometry1/Status1
         - /Maps1
         - /Maps1/Lanelet2 Map1/Namespaces1
         - /Planning1
+        - /Plots1
       Splitter Ratio: 0.6609686613082886
     Tree Height: 1005
   - Class: rviz/Selection
@@ -161,9 +163,9 @@ Visualization Manager:
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
-          Max Intensity: 255
+          Max Intensity: -999999
           Min Color: 0; 0; 0
-          Min Intensity: 3
+          Min Intensity: 999999
           Name: Lidar Center
           Position Transformer: XYZ
           Queue Size: 10
@@ -191,7 +193,7 @@ Visualization Manager:
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
-          Max Intensity: 255
+          Max Intensity: 172
           Min Color: 0; 0; 0
           Min Intensity: 0
           Name: Lidar Front
@@ -381,73 +383,152 @@ Visualization Manager:
           Value: true
       Enabled: true
       Name: Planning
-    - Align Bottom: false
-      Background Alpha: 0.800000011920929
-      Background Color: 0; 0; 0
-      Class: jsk_rviz_plugin/String
+    - Class: rviz/Group
+      Displays:
+        - Buffer length: 100
+          Class: jsk_rviz_plugin/Plotter2D
+          Enabled: true
+          Name: Accel Pedal
+          Show Value: true
+          Topic: /simulator/ground_truth/plot/curr_accel
+          Value: true
+          auto color change: true
+          auto scale: false
+          background color: 0; 0; 0
+          backround alpha: 0
+          border: true
+          foreground alpha: 0.699999988079071
+          foreground color: 25; 255; 240
+          height: 128
+          left: 20
+          linewidth: 1
+          max color: 0; 255; 0
+          max value: 1
+          min value: -1
+          show caption: true
+          text size: 12
+          top: 20
+          update interval: 0.05000000074505806
+          width: 128
+        - Buffer length: 100
+          Class: jsk_rviz_plugin/Plotter2D
+          Enabled: true
+          Name: Brake Pedal
+          Show Value: true
+          Topic: /simulator/ground_truth/plot/curr_brake
+          Value: true
+          auto color change: true
+          auto scale: false
+          background color: 0; 0; 0
+          backround alpha: 0
+          border: true
+          foreground alpha: 0.699999988079071
+          foreground color: 25; 255; 240
+          height: 128
+          left: 20
+          linewidth: 1
+          max color: 255; 0; 0
+          max value: 1
+          min value: 0
+          show caption: true
+          text size: 12
+          top: 180
+          update interval: 0.05000000074505806
+          width: 128
+        - Buffer length: 100
+          Class: jsk_rviz_plugin/Plotter2D
+          Enabled: true
+          Name: Steering [deg]
+          Show Value: true
+          Topic: /simulator/ground_truth/plot/curr_steer
+          Value: true
+          auto color change: false
+          auto scale: false
+          background color: 0; 0; 0
+          backround alpha: 0
+          border: true
+          foreground alpha: 0.699999988079071
+          foreground color: 25; 255; 240
+          height: 128
+          left: 180
+          linewidth: 1
+          max color: 245; 121; 0
+          max value: 45
+          min value: -45
+          show caption: true
+          text size: 12
+          top: 20
+          update interval: 0.05000000074505806
+          width: 128
+        - Buffer length: 100
+          Class: jsk_rviz_plugin/Plotter2D
+          Enabled: true
+          Name: Speed [m/s]
+          Show Value: true
+          Topic: /simulator/ground_truth/plot/curr_speed
+          Value: true
+          auto color change: true
+          auto scale: false
+          background color: 0; 0; 0
+          backround alpha: 0
+          border: true
+          foreground alpha: 0.699999988079071
+          foreground color: 25; 255; 240
+          height: 128
+          left: 180
+          linewidth: 1
+          max color: 255; 0; 0
+          max value: 20
+          min value: 0
+          show caption: true
+          text size: 12
+          top: 180
+          update interval: 0.05000000074505806
+          width: 128
+        - Align Bottom: false
+          Background Alpha: 0.800000011920929
+          Background Color: 0; 0; 0
+          Class: jsk_rviz_plugin/String
+          Enabled: true
+          Foreground Alpha: 0.800000011920929
+          Foreground Color: 25; 255; 240
+          Name: String
+          Overtake Color Properties: false
+          Overtake Position Properties: false
+          Topic: ""
+          Value: true
+          font: DejaVu Sans Mono
+          height: 128
+          left: 0
+          line width: 2
+          text size: 12
+          top: 0
+          width: 128
+        - Alpha: 1
+          Buffer Length: 1
+          Class: rviz/Path
+          Color: 25; 255; 0
+          Enabled: true
+          Head Diameter: 0.30000001192092896
+          Head Length: 0.20000000298023224
+          Length: 0.30000001192092896
+          Line Style: Lines
+          Line Width: 0.029999999329447746
+          Name: Path
+          Offset:
+            X: 0
+            Y: 0
+            Z: 0
+          Pose Color: 255; 85; 255
+          Pose Style: None
+          Radius: 0.029999999329447746
+          Shaft Diameter: 0.10000000149011612
+          Shaft Length: 0.10000000149011612
+          Topic: ""
+          Unreliable: false
+          Value: true
       Enabled: true
-      Foreground Alpha: 0.800000011920929
-      Foreground Color: 25; 255; 240
-      Name: String
-      Overtake Color Properties: false
-      Overtake Position Properties: false
-      Topic: ""
-      Value: true
-      font: DejaVu Sans Mono
-      height: 128
-      left: 0
-      line width: 2
-      text size: 12
-      top: 0
-      width: 128
-    - Buffer length: 100
-      Class: jsk_rviz_plugin/Plotter2D
-      Enabled: true
-      Name: Plotter2D
-      Show Value: true
-      Topic: ""
-      Value: true
-      auto color change: false
-      auto scale: true
-      background color: 0; 0; 0
-      backround alpha: 0
-      border: true
-      foreground alpha: 0.699999988079071
-      foreground color: 25; 255; 240
-      height: 128
-      left: 128
-      linewidth: 1
-      max color: 255; 0; 0
-      max value: 1
-      min value: -1
-      show caption: true
-      text size: 12
-      top: 128
-      update interval: 0.03999999910593033
-      width: 128
-    - Alpha: 1
-      Buffer Length: 1
-      Class: rviz/Path
-      Color: 25; 255; 0
-      Enabled: true
-      Head Diameter: 0.30000001192092896
-      Head Length: 0.20000000298023224
-      Length: 0.30000001192092896
-      Line Style: Lines
-      Line Width: 0.029999999329447746
-      Name: Path
-      Offset:
-        X: 0
-        Y: 0
-        Z: 0
-      Pose Color: 255; 85; 255
-      Pose Style: None
-      Radius: 0.029999999329447746
-      Shaft Diameter: 0.10000000149011612
-      Shaft Length: 0.10000000149011612
-      Topic: ""
-      Unreliable: false
-      Value: true
+      Name: Plots
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -491,10 +572,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.5347971320152283
+      Pitch: 0.5597972273826599
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 3.121894121170044
+      Yaw: 3.076894521713257
     Saved: ~
 Window Geometry:
   Displays:
