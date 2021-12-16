@@ -8,11 +8,11 @@ Panels:
         - /TF1/Tree1
         - /Sensors1
         - /Perception1
-        - /Perception1/Odometry1/Status1
         - /Maps1
         - /Maps1/Lanelet2 Map1/Namespaces1
         - /Planning1
-        - /Plots1
+        - /Vehicle Status1
+        - /Vehicle Status1/Gear1
       Splitter Ratio: 0.6609686613082886
     Tree Height: 1005
   - Class: rviz/Selection
@@ -163,15 +163,15 @@ Visualization Manager:
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
-          Max Intensity: -999999
+          Max Intensity: 255
           Min Color: 0; 0; 0
-          Min Intensity: 999999
+          Min Intensity: 1
           Name: Lidar Center
           Position Transformer: XYZ
           Queue Size: 10
           Selectable: true
           Size (Pixels): 3
-          Size (m): 0.15000000596046448
+          Size (m): 0.10000000149011612
           Style: Flat Squares
           Topic: /simulator/ground_truth/points_center_raw
           Unreliable: false
@@ -193,7 +193,7 @@ Visualization Manager:
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
-          Max Intensity: 172
+          Max Intensity: 255
           Min Color: 0; 0; 0
           Min Intensity: 0
           Name: Lidar Front
@@ -201,7 +201,7 @@ Visualization Manager:
           Queue Size: 10
           Selectable: true
           Size (Pixels): 3
-          Size (m): 0.15000000596046448
+          Size (m): 0.10000000149011612
           Style: Flat Squares
           Topic: /simulator/ground_truth/points_front_raw
           Unreliable: false
@@ -226,11 +226,11 @@ Visualization Manager:
     - Class: rviz/Group
       Displays:
         - Class: jsk_rviz_plugin/BoundingBoxArray
-          Enabled: true
+          Enabled: false
           Name: BoundingBoxArray
           Topic: /simulator/ground_truth/jsk_bounding_boxes
           Unreliable: false
-          Value: true
+          Value: false
           alpha: 0.800000011920929
           color: 25; 255; 0
           coloring: Auto
@@ -249,40 +249,6 @@ Visualization Manager:
             /simulator/ground_truth/model_markers: true
           Queue Size: 100
           Value: true
-        - Angle Tolerance: 0.10000000149011612
-          Class: rviz/Odometry
-          Covariance:
-            Orientation:
-              Alpha: 0.5
-              Color: 255; 255; 127
-              Color Style: Unique
-              Frame: Local
-              Offset: 1
-              Scale: 1
-              Value: true
-            Position:
-              Alpha: 0.30000001192092896
-              Color: 204; 51; 204
-              Scale: 1
-              Value: true
-            Value: true
-          Enabled: true
-          Keep: 1
-          Name: Odometry
-          Position Tolerance: 0.10000000149011612
-          Shape:
-            Alpha: 1
-            Axes Length: 1
-            Axes Radius: 0.10000000149011612
-            Color: 255; 25; 0
-            Head Length: 0.30000001192092896
-            Head Radius: 0.10000000149011612
-            Shaft Length: 1
-            Shaft Radius: 0.05000000074505806
-            Value: Arrow
-          Topic: /simulator/ground_truth/odom
-          Unreliable: false
-          Value: true
       Enabled: true
       Name: Perception
     - Class: rviz/Group
@@ -290,8 +256,8 @@ Visualization Manager:
         - Alpha: 1
           Autocompute Intensity Bounds: true
           Autocompute Value Bounds:
-            Max Value: 14.651647567749023
-            Min Value: -2.1920576095581055
+            Max Value: 14.47598648071289
+            Min Value: -4.169062614440918
             Value: true
           Axis: Z
           Channel Name: intensity
@@ -299,7 +265,7 @@ Visualization Manager:
           Color: 255; 255; 255
           Color Transformer: AxisColor
           Decay Time: 0
-          Enabled: false
+          Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
           Max Intensity: 255
@@ -316,7 +282,7 @@ Visualization Manager:
           Unreliable: false
           Use Fixed Frame: true
           Use rainbow: true
-          Value: false
+          Value: true
         - Class: rviz/MarkerArray
           Enabled: true
           Marker Topic: /vector_map
@@ -355,7 +321,10 @@ Visualization Manager:
           Marker Topic: /planning/mission_planning/route_marker
           Name: Global Plan
           Namespaces:
-            {}
+            goal_lanelets: true
+            left_lane_bound: true
+            right_lane_bound: true
+            route_lanelets: true
           Queue Size: 100
           Value: true
         - Alpha: 1
@@ -478,7 +447,7 @@ Visualization Manager:
           left: 180
           linewidth: 1
           max color: 255; 0; 0
-          max value: 20
+          max value: 30
           min value: 0
           show caption: true
           text size: 12
@@ -492,7 +461,7 @@ Visualization Manager:
           Enabled: true
           Foreground Alpha: 0.800000011920929
           Foreground Color: 25; 255; 240
-          Name: String
+          Name: Gear
           Overtake Color Properties: false
           Overtake Position Properties: false
           Topic: ""
@@ -508,7 +477,7 @@ Visualization Manager:
           Buffer Length: 1
           Class: rviz/Path
           Color: 25; 255; 0
-          Enabled: true
+          Enabled: false
           Head Diameter: 0.30000001192092896
           Head Length: 0.20000000298023224
           Length: 0.30000001192092896
@@ -524,11 +493,45 @@ Visualization Manager:
           Radius: 0.029999999329447746
           Shaft Diameter: 0.10000000149011612
           Shaft Length: 0.10000000149011612
-          Topic: ""
+          Topic: /planning/mission_planning/global_path
+          Unreliable: false
+          Value: false
+        - Angle Tolerance: 0.10000000149011612
+          Class: rviz/Odometry
+          Covariance:
+            Orientation:
+              Alpha: 0.5
+              Color: 255; 255; 127
+              Color Style: Unique
+              Frame: Local
+              Offset: 1
+              Scale: 1
+              Value: true
+            Position:
+              Alpha: 0.30000001192092896
+              Color: 204; 51; 204
+              Scale: 1
+              Value: true
+            Value: true
+          Enabled: true
+          Keep: 1
+          Name: Odometry
+          Position Tolerance: 0.10000000149011612
+          Shape:
+            Alpha: 1
+            Axes Length: 1
+            Axes Radius: 0.10000000149011612
+            Color: 255; 25; 0
+            Head Length: 0.30000001192092896
+            Head Radius: 0.10000000149011612
+            Shaft Length: 1
+            Shaft Radius: 0.05000000074505806
+            Value: Arrow
+          Topic: /simulator/ground_truth/odom
           Unreliable: false
           Value: true
       Enabled: true
-      Name: Plots
+      Name: Vehicle Status
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -557,7 +560,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 41.22298049926758
+      Distance: 51.684837341308594
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -572,10 +575,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.5597972273826599
+      Pitch: 0.5947968363761902
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 3.076894521713257
+      Yaw: 3.1769025325775146
     Saved: ~
 Window Geometry:
   Displays:
