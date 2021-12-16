@@ -21,7 +21,7 @@
     <param name="autorepeat_rate"             value="10" />
   </node>
 
-  <node ns="lgsvl_utils" pkg="lgsvl_utils" type="joystick_node" name="joystick_node" output="log" respawn="true" >
+  <node ns="lgsvl_utils" pkg="lgsvl_utils" type="joystick_node" name="joystick_node" output="screen" respawn="true" >
     <param name="joy_topic"                   value="/joy" />
     <param name="joy_type"                    value="Xbox" />
     <param name="control_setting"             value="ForzaHorizon" />
@@ -62,6 +62,6 @@
   <node ns="lgsvl_utils/ground_truth" pkg="lgsvl_utils" type="detected_objects_visualizer" name="autoware_objects_visualizer" output="log" respawn="true" />
 
   <!-- Rviz -->
-  <node type="rviz" name="rviz" pkg="rviz" args="-d $(find lgsvl_utils)/rviz/lgsvl.rviz" respawn="true" />
+  <node type="rviz" name="rviz" pkg="rviz" args="-d $(find lgsvl_utils)/rviz/lgsvl.rviz" output="log" respawn="true" />
 
 </launch>
