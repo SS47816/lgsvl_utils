@@ -12,7 +12,6 @@ Panels:
         - /Maps1/Lanelet2 Map1/Namespaces1
         - /Planning1
         - /Vehicle Status1
-        - /Vehicle Status1/Gear1
       Splitter Ratio: 0.6609686613082886
     Tree Height: 1005
   - Class: rviz/Selection
@@ -165,7 +164,7 @@ Visualization Manager:
           Max Color: 255; 255; 255
           Max Intensity: 255
           Min Color: 0; 0; 0
-          Min Intensity: 1
+          Min Intensity: 0
           Name: Lidar Center
           Position Transformer: XYZ
           Queue Size: 10
@@ -265,7 +264,7 @@ Visualization Manager:
           Color: 255; 255; 255
           Color Transformer: AxisColor
           Decay Time: 0
-          Enabled: true
+          Enabled: false
           Invert Rainbow: false
           Max Color: 255; 255; 255
           Max Intensity: 255
@@ -282,25 +281,23 @@ Visualization Manager:
           Unreliable: false
           Use Fixed Frame: true
           Use rainbow: true
-          Value: true
+          Value: false
         - Class: rviz/MarkerArray
-          Enabled: true
+          Enabled: false
           Marker Topic: /vector_map
           Name: VectorMap
           Namespaces:
-            signal: true
-            stop_line: true
-            white_line: true
+            {}
           Queue Size: 0
-          Value: true
+          Value: false
         - Class: rviz/MarkerArray
-          Enabled: true
+          Enabled: false
           Marker Topic: /vector_map_center_lines_rviz
           Name: VectorMapCenterline
           Namespaces:
             {}
           Queue Size: 100
-          Value: true
+          Value: false
         - Class: rviz/MarkerArray
           Enabled: true
           Marker Topic: /lanelet2_map_viz
@@ -337,7 +334,7 @@ Visualization Manager:
           Length: 0.30000001192092896
           Line Style: Lines
           Line Width: 0.029999999329447746
-          Name: Path
+          Name: Global Reference
           Offset:
             X: 0
             Y: 0
@@ -347,7 +344,7 @@ Visualization Manager:
           Radius: 0.029999999329447746
           Shaft Diameter: 0.10000000149011612
           Shaft Length: 0.10000000149011612
-          Topic: /mission_planner/global_path
+          Topic: /planning/mission_planning/global_path
           Unreliable: false
           Value: true
       Enabled: true
@@ -496,40 +493,6 @@ Visualization Manager:
           Topic: /planning/mission_planning/global_path
           Unreliable: false
           Value: false
-        - Angle Tolerance: 0.10000000149011612
-          Class: rviz/Odometry
-          Covariance:
-            Orientation:
-              Alpha: 0.5
-              Color: 255; 255; 127
-              Color Style: Unique
-              Frame: Local
-              Offset: 1
-              Scale: 1
-              Value: true
-            Position:
-              Alpha: 0.30000001192092896
-              Color: 204; 51; 204
-              Scale: 1
-              Value: true
-            Value: true
-          Enabled: true
-          Keep: 1
-          Name: Odometry
-          Position Tolerance: 0.10000000149011612
-          Shape:
-            Alpha: 1
-            Axes Length: 1
-            Axes Radius: 0.10000000149011612
-            Color: 255; 25; 0
-            Head Length: 0.30000001192092896
-            Head Radius: 0.10000000149011612
-            Shaft Length: 1
-            Shaft Radius: 0.05000000074505806
-            Value: Arrow
-          Topic: /simulator/ground_truth/odom
-          Unreliable: false
-          Value: true
       Enabled: true
       Name: Vehicle Status
   Enabled: true
@@ -560,7 +523,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 51.684837341308594
+      Distance: 60.107330322265625
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -575,10 +538,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.5947968363761902
+      Pitch: 0.4397975206375122
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 3.1769025325775146
+      Yaw: 3.1568984985351562
     Saved: ~
 Window Geometry:
   Displays:
