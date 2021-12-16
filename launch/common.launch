@@ -13,6 +13,27 @@
 
   <!-- Re-publishing simulator/camera_node/image/compressed topic to /image_raw as expected by Autoware -->
   <node name="republish" type="republish" pkg="image_transport" output="screen" args="compressed in:=/simulator/camera_node/image raw out:=/image_raw" />
+  
+  <!-- Joystick Teleop -->
+  <node pkg="joy" type="joy_node" name="joy_node" output="log" respawn="true" >
+    <param name="dev"                         value="/dev/input/js0" />
+    <param name="deadzone"                    value="0.05" />
+    <param name="autorepeat_rate"             value="10" />
+  </node>
+
+  <node ns="lgsvl_utils" pkg="lgsvl_utils" type="joystick_node" name="joystick_node" output="log" respawn="true" >
+    <param name="joy_topic"                   value="/joy" />
+    <param name="joy_type"                    value="Xbox" />
+    <param name="control_setting"             value="ForzaHorizon" />
+    <param name="steering_mapping"            value="Quadratic" />
+    <param name="autonomous_cmd_topic"        value="/auto_cmd" />
+    <param name="vehicle_cmd_topic"           value="/simulator/control/vehicle_cmd" />
+    <param name="vehicle_state_topic"         value="/simulator/control/vehicle_state" />
+    <param name="curr_mode_topic"             value="/lgsvl_utils/vehicle_state/curr_mode" />
+    <param name="curr_gear_topic"             value="/lgsvl_utils/vehicle_state/curr_gear" />
+    <param name="steering_limit"              value="45" />
+    <param name="deadzone"                    value="0.05" />
+  </node>
 
   <!-- Vehicle State Publisher  -->
   <node ns="lgsvl_utils" pkg="lgsvl_utils" type="state_publisher_node" name="state_publisher_node" output="screen" >
@@ -39,25 +60,6 @@
   </node>
   <!-- Autoware Object Visualizer -->
   <node ns="lgsvl_utils/ground_truth" pkg="lgsvl_utils" type="detected_objects_visualizer" name="autoware_objects_visualizer" output="log" respawn="true" />
-
-  <!-- Joystick Teleop -->
-  <node pkg="joy" type="joy_node" name="joy_node" output="log" respawn="true" >
-    <param name="dev"                         value="/dev/input/js0" />
-    <param name="deadzone"                    value="0.05" />
-    <param name="autorepeat_rate"             value="10" />
-  </node>
-
-  <node ns="lgsvl_utils" pkg="lgsvl_utils" type="joystick_node" name="joystick_node" output="log" respawn="true" >
-    <param name="joy_topic"                   value="/joy" />
-    <param name="joy_type"                    value="Xbox" />
-    <param name="control_setting"             value="ForzaHorizon" />
-    <param name="steering_mapping"            value="Quadratic" />
-    <param name="autonomous_cmd_topic"        value="/auto_cmd" />
-    <param name="vehicle_cmd_topic"           value="/simulator/control/vehicle_cmd" />
-    <param name="vehicle_state_topic"         value="/simulator/control/vehicle_state" />
-    <param name="steering_limit"              value="45" />
-    <param name="deadzone"                    value="0.05" />
-  </node>
 
   <!-- Rviz -->
   <node type="rviz" name="rviz" pkg="rviz" args="-d $(find lgsvl_utils)/rviz/lgsvl.rviz" respawn="true" />
