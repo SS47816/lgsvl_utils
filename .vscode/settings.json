@@ -1,0 +1,16 @@
+{
+  "python.autoComplete.extraPaths": [
+    "/home/ss/planner_ws/devel/lib/python2.7/dist-packages",
+    "/opt/carla-ros-bridge/melodic/lib/python2.7/dist-packages",
+    "/opt/ros/melodic/lib/python2.7/dist-packages",
+    "/opt/carla-simulator/PythonAPI/carla/dist/carla-0.9.12-py3.7-linux-x86_64.egg",
+    "/opt/carla-simulator/PythonAPI/carla"
+  ],
+  "python.analysis.extraPaths": [
+    "/home/ss/planner_ws/devel/lib/python2.7/dist-packages",
+    "/opt/carla-ros-bridge/melodic/lib/python2.7/dist-packages",
+    "/opt/ros/melodic/lib/python2.7/dist-packages",
+    "/opt/carla-simulator/PythonAPI/carla/dist/carla-0.9.12-py3.7-linux-x86_64.egg",
+    "/opt/carla-simulator/PythonAPI/carla"
+  ]
+}
