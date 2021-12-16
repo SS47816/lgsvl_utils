@@ -11,9 +11,8 @@ Panels:
         - /Maps1
         - /Maps1/Lanelet2 Map1/Namespaces1
         - /Planning1
-        - /Planning1/Global Path1/Status1
         - /Vehicle Status1
-      Splitter Ratio: 0.6609686613082886
+      Splitter Ratio: 0.7606837749481201
     Tree Height: 1005
   - Class: rviz/Selection
     Name: Selection
@@ -165,7 +164,7 @@ Visualization Manager:
           Max Color: 255; 255; 255
           Max Intensity: 255
           Min Color: 0; 0; 0
-          Min Intensity: 1
+          Min Intensity: 0
           Name: Lidar Center
           Position Transformer: XYZ
           Queue Size: 10
@@ -193,7 +192,7 @@ Visualization Manager:
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
-          Max Intensity: 255
+          Max Intensity: 194
           Min Color: 0; 0; 0
           Min Intensity: 0
           Name: Lidar Front
@@ -228,7 +227,7 @@ Visualization Manager:
         - Class: jsk_rviz_plugin/BoundingBoxArray
           Enabled: false
           Name: BoundingBoxArray
-          Topic: /simulator/ground_truth/jsk_bounding_boxes
+          Topic: /lgsvl_utils/ground_truth/jsk_bounding_boxes
           Unreliable: false
           Value: false
           alpha: 0.800000011920929
@@ -239,14 +238,14 @@ Visualization Manager:
           show coords: false
         - Class: rviz/MarkerArray
           Enabled: true
-          Marker Topic: /simulator/ground_truth/objects_markers
+          Marker Topic: /lgsvl_utils/ground_truth/objects_markers
           Name: AutowareObjectMarkers
           Namespaces:
-            /simulator/ground_truth/arrow_markers: true
-            /simulator/ground_truth/box_markers: true
-            /simulator/ground_truth/centroid_markers: true
-            /simulator/ground_truth/label_markers: true
-            /simulator/ground_truth/model_markers: true
+            /lgsvl_utils/ground_truth/arrow_markers: true
+            /lgsvl_utils/ground_truth/box_markers: true
+            /lgsvl_utils/ground_truth/centroid_markers: true
+            /lgsvl_utils/ground_truth/label_markers: true
+            /lgsvl_utils/ground_truth/model_markers: true
           Queue Size: 100
           Value: true
       Enabled: true
@@ -304,10 +303,7 @@ Visualization Manager:
           Marker Topic: /lanelet2_map_viz
           Name: Lanelet2 Map
           Namespaces:
-            center_lane_line: true
-            left_lane_bound: true
-            right_lane_bound: true
-            road_lanelets: true
+            {}
           Queue Size: 0
           Value: true
       Enabled: true
@@ -319,10 +315,7 @@ Visualization Manager:
           Marker Topic: /planning/mission_planning/route_marker
           Name: Global Marker
           Namespaces:
-            goal_lanelets: true
-            left_lane_bound: true
-            right_lane_bound: true
-            route_lanelets: true
+            {}
           Queue Size: 100
           Value: true
         - Alpha: 1
@@ -357,7 +350,7 @@ Visualization Manager:
           Enabled: true
           Name: Accel Pedal
           Show Value: true
-          Topic: /simulator/ground_truth/plot/curr_accel
+          Topic: /lgsvl_utils/vehicle_state/curr_accel
           Value: true
           auto color change: true
           auto scale: false
@@ -382,7 +375,7 @@ Visualization Manager:
           Enabled: true
           Name: Brake Pedal
           Show Value: true
-          Topic: /simulator/ground_truth/plot/curr_brake
+          Topic: /lgsvl_utils/vehicle_state/curr_brake
           Value: true
           auto color change: true
           auto scale: false
@@ -407,7 +400,7 @@ Visualization Manager:
           Enabled: true
           Name: Steering [deg]
           Show Value: true
-          Topic: /simulator/ground_truth/plot/curr_steer
+          Topic: /lgsvl_utils/vehicle_state/curr_steer
           Value: true
           auto color change: false
           auto scale: false
@@ -432,7 +425,7 @@ Visualization Manager:
           Enabled: true
           Name: Speed [m/s]
           Show Value: true
-          Topic: /simulator/ground_truth/plot/curr_speed
+          Topic: /lgsvl_utils/vehicle_state/curr_speed
           Value: true
           auto color change: true
           auto scale: false
@@ -524,7 +517,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 48.87112045288086
+      Distance: 58.69356155395508
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
