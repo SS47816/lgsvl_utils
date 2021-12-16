@@ -38,7 +38,7 @@
     <param name="bbox_filter_size"            value="10.0" />
   </node>
 
-  <node pkg="detected_objects_visualizer" type="visualize_detected_objects" name="detected_objects_visualizer"
+  <node pkg="lgsvl_utils" type="detected_objects_visualizer" name="autoware_objects_visualizer"
     output="screen" ns="simulator/ground_truth"/>
 
   <!-- Joystick Teleop -->

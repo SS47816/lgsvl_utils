@@ -11,13 +11,30 @@ find_package(catkin REQUIRED COMPONENTS
   jsk_recognition_msgs
   autoware_msgs
   lgsvl_msgs
+  visualization_msgs
+  geometry_msgs
+  sensor_msgs
   nav_msgs
   std_msgs
   roscpp
   rospy
   tf2_ros
   tf
+  cv_bridge
+  image_transport
 )
+
+find_package(OpenCV REQUIRED)
+
+find_package(Eigen3 QUIET)
+if(NOT EIGEN3_FOUND)
+  find_package(cmake_modules REQUIRED)
+  find_package(Eigen REQUIRED)
+  set(EIGEN3_INCLUDE_DIRS ${EIGEN_INCLUDE_DIRS})
+  set(EIGEN3_LIBRARIES ${EIGEN_LIBRARIES})
+else()
+  set(EIGEN3_INCLUDE_DIRS ${EIGEN3_INCLUDE_DIR})
+endif()
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -74,14 +91,14 @@ find_package(catkin REQUIRED COMPONENTS
 # )
 
 ## Generate added messages and services with any dependencies listed here
-generate_messages(
-  DEPENDENCIES
-  lgsvl_msgs
-  jsk_recognition_msgs
-  autoware_msgs
-  nav_msgs
-  std_msgs
-)
+# generate_messages(
+#   DEPENDENCIES
+#   lgsvl_msgs
+#   jsk_recognition_msgs
+#   autoware_msgs
+#   nav_msgs
+#   std_msgs
+# )
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -115,7 +132,7 @@ generate_messages(
 catkin_package(
   # INCLUDE_DIRS include
   # LIBRARIES lgsvl_utils
-  CATKIN_DEPENDS lanelet2 lgsvl_msgs jsk_recognition_msgs autoware_msgs roscpp rospy std_msgs
+  # CATKIN_DEPENDS lanelet2 lgsvl_msgs jsk_recognition_msgs autoware_msgs roscpp rospy std_msgs
   # DEPENDS system_lib
 )
 
@@ -143,17 +160,60 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
+
+# Ground Truth Viewer Node
 add_executable(gt_viewer_node src/gt_viewer_node.cpp)
 target_link_libraries(gt_viewer_node ${catkin_LIBRARIES})
 add_dependencies(gt_viewer_node ${catkin_EXPORTED_TARGETS} ${${PROJECT_NAME}_EXPORTED_TARGETS})
 
+# State Publisher Node
 add_executable(state_publisher_node src/state_publisher_node.cpp)
 target_link_libraries(state_publisher_node ${catkin_LIBRARIES})
 add_dependencies(state_publisher_node ${catkin_EXPORTED_TARGETS} ${${PROJECT_NAME}_EXPORTED_TARGETS})
 
+# Joystick Node
 add_executable(joystick_node src/joystick_node.cpp)
 target_link_libraries(joystick_node ${catkin_LIBRARIES})
-add_dependencies(joystick_node ${agv_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS} )
+add_dependencies(joystick_node ${agv_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+
+# Autoware Object Marker Visualization
+add_executable(detected_objects_visualizer
+  include/detected_objects_visualizer.h
+  src/detected_objects_visualizer.cpp
+)
+target_include_directories(detected_objects_visualizer PRIVATE
+  include
+  ${OpenCV_INCLUDE_DIR}
+  ${catkin_INCLUDE_DIRS}
+  ${Boost_INCLUDE_DIRS}
+  ${EIGEN3_INCLUDE_DIRS}
+)
+target_link_libraries(detected_objects_visualizer
+  ${OpenCV_LIBRARIES}
+  ${EIGEN3_LIBRARIES}
+  ${catkin_LIBRARIES}
+)
+add_dependencies(detected_objects_visualizer
+  ${catkin_EXPORTED_TARGETS}
+)
+
+# Autoware Image Object Visualization
+add_executable(rects_visualizer
+  include/rects_visualizer.h
+  src/rects_visualizer.cpp
+)
+target_include_directories(rects_visualizer PRIVATE
+  include
+  ${OpenCV_INCLUDE_DIR}
+  ${catkin_INCLUDE_DIRS}
+)
+target_link_libraries(rects_visualizer
+  ${OpenCV_LIBRARIES}
+  ${catkin_LIBRARIES}
+)
+add_dependencies(rects_visualizer
+  ${catkin_EXPORTED_TARGETS}
+)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -173,6 +233,18 @@ add_dependencies(joystick_node ${agv_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS
 #############
 ## Install ##
 #############
+
+install(
+  TARGETS
+    detected_objects_visualizer
+    rects_visualizer
+  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+install(DIRECTORY models/
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/models
+)
 
 # all install targets should use catkin DESTINATION variables
 # See http://ros.org/doc/api/catkin/html/adv_user_guide/variables.html
