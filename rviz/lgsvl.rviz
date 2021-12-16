@@ -11,6 +11,7 @@ Panels:
         - /Maps1
         - /Maps1/Lanelet2 Map1/Namespaces1
         - /Planning1
+        - /Planning1/Global Path1/Status1
         - /Vehicle Status1
       Splitter Ratio: 0.6609686613082886
     Tree Height: 1005
@@ -164,7 +165,7 @@ Visualization Manager:
           Max Color: 255; 255; 255
           Max Intensity: 255
           Min Color: 0; 0; 0
-          Min Intensity: 0
+          Min Intensity: 1
           Name: Lidar Center
           Position Transformer: XYZ
           Queue Size: 10
@@ -316,7 +317,7 @@ Visualization Manager:
         - Class: rviz/MarkerArray
           Enabled: true
           Marker Topic: /planning/mission_planning/route_marker
-          Name: Global Plan
+          Name: Global Marker
           Namespaces:
             goal_lanelets: true
             left_lane_bound: true
@@ -330,20 +331,20 @@ Visualization Manager:
           Color: 25; 255; 0
           Enabled: true
           Head Diameter: 0.30000001192092896
-          Head Length: 0.20000000298023224
+          Head Length: 0.5
           Length: 0.30000001192092896
           Line Style: Lines
           Line Width: 0.029999999329447746
-          Name: Global Reference
+          Name: Global Path
           Offset:
             X: 0
             Y: 0
             Z: 0
           Pose Color: 255; 85; 255
-          Pose Style: None
+          Pose Style: Arrows
           Radius: 0.029999999329447746
           Shaft Diameter: 0.10000000149011612
-          Shaft Length: 0.10000000149011612
+          Shaft Length: 0.5
           Topic: /planning/mission_planning/global_path
           Unreliable: false
           Value: true
@@ -523,25 +524,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 60.107330322265625
+      Distance: 48.87112045288086
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.06440891325473785
-        Y: 0.03620140627026558
-        Z: -0.15917810797691345
+        X: 0
+        Y: 0
+        Z: 0
       Focal Shape Fixed Size: false
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.4397975206375122
+      Pitch: 0.525398313999176
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 3.1568984985351562
+      Yaw: 3.1354024410247803
     Saved: ~
 Window Geometry:
   Displays:

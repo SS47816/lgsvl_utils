@@ -14,7 +14,7 @@
       "roll": 0
     },
     "name": "CAN Bus Sensor",
-    "parent": "GPS Odometry",
+    "parent": null,
     "pluginId": "b0bdc474-ac09-4355-901d-d7012a8c57a8",
     "sortKey": 0,
     "plugin": {
@@ -58,6 +58,62 @@
   },
   {
     "params": {
+      "Topic": "/simulator/control/vehicle_state",
+      "Frame": "base_link"
+    },
+    "transform": {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "pitch": 0,
+      "yaw": 0,
+      "roll": 0
+    },
+    "name": "Vehicle State Sensor",
+    "parent": "CAN Bus Sensor",
+    "pluginId": "8aff00f2-a5e4-4bd3-a778-517f9307fa99",
+    "sortKey": 1,
+    "plugin": {
+      "isFavored": true,
+      "isShared": false,
+      "isOwned": false,
+      "accessInfo": {
+        "userAccessType": "favored",
+        "owner": {
+          "id": "0d888b00-fa53-47c1-882a-b68391268a11",
+          "firstName": "SVL",
+          "lastName": "Content"
+        }
+      },
+      "supportedSimulatorVersions": [
+        "2021.3",
+        "2021.2",
+        "2021.2.2",
+        "2021.1",
+        "2021.1.1"
+      ],
+      "id": "8aff00f2-a5e4-4bd3-a778-517f9307fa99",
+      "name": "Vehicle State Sensor",
+      "type": "VehicleStateSensor",
+      "category": "sensor",
+      "ownerId": "0d888b00-fa53-47c1-882a-b68391268a11",
+      "accessType": "public",
+      "description": "Example of a sensor to get state of different parts of vehicle.",
+      "copyright": "LG Electronics Inc.",
+      "licenseName": "LG Content",
+      "imageUrl": "/api/v1/assets/download/preview/4e098c4c-8294-4714-88f2-7b790951381a",
+      "status": "active",
+      "owner": {
+        "id": "0d888b00-fa53-47c1-882a-b68391268a11",
+        "firstName": "SVL",
+        "lastName": "Content"
+      },
+      "shareRequests": []
+    },
+    "type": "VehicleStateSensor"
+  },
+  {
+    "params": {
       "Frequency": 20,
       "Topic": "/simulator/ground_truth/odom",
       "Frame": "map",
@@ -72,9 +128,9 @@
       "roll": 0
     },
     "name": "GPS Odometry",
-    "parent": null,
+    "parent": "CAN Bus Sensor",
     "pluginId": "483f7b90-2f76-42ee-82c1-22f02f25f924",
-    "sortKey": 1,
+    "sortKey": 2,
     "plugin": {
       "isFavored": true,
       "isShared": false,
@@ -132,7 +188,7 @@
     "name": "GPS",
     "parent": "GPS Odometry",
     "pluginId": "75bbcbfa-fdca-4703-8e82-abf8078f7991",
-    "sortKey": 2,
+    "sortKey": 3,
     "plugin": {
       "isFavored": true,
       "isShared": false,
@@ -188,7 +244,7 @@
     "name": "IMU",
     "parent": "GPS Odometry",
     "pluginId": "9c34ec28-627d-4e73-9bb0-9c2aa7e978f5",
-    "sortKey": 3,
+    "sortKey": 4,
     "plugin": {
       "isFavored": true,
       "isShared": false,
@@ -231,7 +287,7 @@
   {
     "params": {
       "Topic": "/simulator/ground_truth/clock",
-      "Frame": "base_link"
+      "Frame": "gps"
     },
     "transform": {
       "x": 0,
@@ -244,7 +300,7 @@
     "name": "Clock Sensor",
     "parent": "GPS Odometry",
     "pluginId": "968f386f-dc0b-485d-ba33-5bb71bff93ef",
-    "sortKey": 4,
+    "sortKey": 5,
     "plugin": {
       "isFavored": true,
       "isShared": false,
@@ -286,6 +342,119 @@
   },
   {
     "params": {
+      "Topic": "/simulator/ground_truth/traffic_lights",
+      "MaxDistance": 200,
+      "Frame": "base_link"
+    },
+    "transform": {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "pitch": 0,
+      "yaw": 0,
+      "roll": 0
+    },
+    "name": "Signal Sensor",
+    "parent": "CAN Bus Sensor",
+    "pluginId": "c4ba9b81-b274-4c05-b78e-636e61b4590e",
+    "sortKey": 6,
+    "plugin": {
+      "isFavored": true,
+      "isShared": false,
+      "isOwned": false,
+      "accessInfo": {
+        "userAccessType": "favored",
+        "owner": {
+          "id": "0d888b00-fa53-47c1-882a-b68391268a11",
+          "firstName": "SVL",
+          "lastName": "Content"
+        }
+      },
+      "supportedSimulatorVersions": [
+        "2021.3",
+        "2021.2",
+        "2021.2.2",
+        "2021.1",
+        "2021.1.1"
+      ],
+      "id": "c4ba9b81-b274-4c05-b78e-636e61b4590e",
+      "name": "Signal Sensor",
+      "type": "SignalSensor",
+      "category": "sensor",
+      "ownerId": "0d888b00-fa53-47c1-882a-b68391268a11",
+      "accessType": "public",
+      "description": "This sensor returns ground truth data for traffic light signals connected to the current lane of ego vehicle and creates bounding boxes around the detected signals. The color of the bounding box corresponds to the signal's type:\n\t[\n\t\t\"Green\": \"Green\"\n\t\t\"Yellow\": \"Yellow\"\n\t\t\"Red\": \"Red\"\n\t]\nSee https://www.svlsimulator.com/docs/simulation-content/sensors-list/#signal-sensor for more details.",
+      "copyright": "LG Electronics Inc.",
+      "licenseName": "LG Content",
+      "imageUrl": "/api/v1/assets/download/preview/b96c848a-056f-4961-9bcd-4c885e2b083d",
+      "status": "active",
+      "owner": {
+        "id": "0d888b00-fa53-47c1-882a-b68391268a11",
+        "firstName": "SVL",
+        "lastName": "Content"
+      },
+      "shareRequests": []
+    },
+    "type": "SignalSensor"
+  },
+  {
+    "params": {
+      "Frame": "base_link",
+      "Topic": "/simulator/ground_truth/stop_line"
+    },
+    "transform": {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "pitch": 0,
+      "yaw": 0,
+      "roll": 0
+    },
+    "name": "Stop Line Sensor",
+    "parent": "CAN Bus Sensor",
+    "pluginId": "1b94ebcd-0057-4ef5-a9de-23e7f0628e19",
+    "sortKey": 7,
+    "plugin": {
+      "isFavored": true,
+      "isShared": false,
+      "isOwned": false,
+      "accessInfo": {
+        "userAccessType": "favored",
+        "owner": {
+          "id": "0d888b00-fa53-47c1-882a-b68391268a11",
+          "firstName": "SVL",
+          "lastName": "Content"
+        }
+      },
+      "supportedSimulatorVersions": [
+        "2021.3",
+        "2021.2",
+        "2021.2.2",
+        "2021.1",
+        "2021.1.1"
+      ],
+      "id": "1b94ebcd-0057-4ef5-a9de-23e7f0628e19",
+      "name": "Stop Line Sensor",
+      "type": "StopLineSensor",
+      "category": "sensor",
+      "ownerId": "0d888b00-fa53-47c1-882a-b68391268a11",
+      "accessType": "public",
+      "description": "This sensor detects stop lines and stop line violations",
+      "copyright": "LG Electronics Inc.",
+      "licenseName": "LG Content",
+      "imageUrl": "/api/v1/assets/download/preview/9907ff05-567c-46c4-a055-ca6f8be20880",
+      "status": "active",
+      "owner": {
+        "id": "0d888b00-fa53-47c1-882a-b68391268a11",
+        "firstName": "SVL",
+        "lastName": "Content"
+      },
+      "shareRequests": []
+    },
+    "type": "StopLineSensor"
+  },
+  {
+    "params": {
       "LaserCount": 32,
       "MinDistance": 0.5,
       "MaxDistance": 200,
@@ -309,7 +478,7 @@
     "name": "Center Lidar (Velodyne 32C)",
     "parent": null,
     "pluginId": "b30d0478-8c7b-4687-bfc2-b3cdb3f5faff",
-    "sortKey": 5,
+    "sortKey": 8,
     "plugin": {
       "isFavored": true,
       "isShared": false,
@@ -367,7 +536,7 @@
     "name": "3D Ground Truth Sensor",
     "parent": "Center Lidar (Velodyne 32C)",
     "pluginId": "e3fef197-9724-48ec-b98e-c5a0892d09c4",
-    "sortKey": 6,
+    "sortKey": 9,
     "plugin": {
       "isFavored": true,
       "isShared": false,
@@ -432,7 +601,7 @@
     "name": "Front Lidar (Velodyne 32C)",
     "parent": null,
     "pluginId": "b30d0478-8c7b-4687-bfc2-b3cdb3f5faff",
-    "sortKey": 7,
+    "sortKey": 10,
     "plugin": {
       "isFavored": true,
       "isShared": false,
@@ -495,7 +664,7 @@
     "name": "Main Camera",
     "parent": null,
     "pluginId": "3d4f1e08-4c62-4e9f-b859-b26d4910b85e",
-    "sortKey": 8,
+    "sortKey": 11,
     "plugin": {
       "isFavored": true,
       "isShared": false,
@@ -544,7 +713,7 @@
     "name": "2D Ground Truth Sensor",
     "parent": "Main Camera",
     "pluginId": "e0bfb6cc-a8f0-425e-9b6c-a643ca1e255a",
-    "sortKey": 9,
+    "sortKey": 12,
     "plugin": {
       "isFavored": true,
       "isShared": false,
@@ -592,7 +761,7 @@
     "name": "LGSVL Control Sensor",
     "parent": null,
     "pluginId": "a5696615-d3e2-45e9-afa3-9b5ae7359e02",
-    "sortKey": 10,
+    "sortKey": 13,
     "plugin": {
       "isFavored": true,
       "isShared": false,
@@ -648,7 +817,7 @@
     "name": "Keyboard Car Control",
     "parent": "LGSVL Control Sensor",
     "pluginId": "a2ff904a-ff06-4f06-9e45-cb58217a7142",
-    "sortKey": 11,
+    "sortKey": 14,
     "plugin": {
       "isFavored": true,
       "isShared": false,
@@ -690,7 +859,7 @@
   },
   {
     "params": {
-      "Topic": "/vehicle_cmd",
+      "Topic": "/simulator/control/autoware_cmd",
       "Frame": "base_link"
     },
     "transform": {
@@ -704,7 +873,7 @@
     "name": "Autoware Car Control",
     "parent": "LGSVL Control Sensor",
     "pluginId": "76ff7bd1-81bf-4284-b9bf-e8173dc6053e",
-    "sortKey": 12,
+    "sortKey": 15,
     "plugin": {
       "isFavored": true,
       "isShared": false,
