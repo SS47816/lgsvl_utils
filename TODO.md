@@ -7,13 +7,15 @@ ROS Helper Nodes for utilising LGSVL Simulator in Autonomous Vehicles Developmen
 ### Todo
 
 - [ ] Find neighbouring lanes in lanelet2  
-- [ ] Fix global planed route output  
+- [ ] Modify reverse control  
+- [ ] Control Vehicle States using Joystick  
+- [ ] Add Multi-cam view  
 
 ### In Progress
 
-- [ ] Modify reverse control  
-- [ ] Control Vehicle States using Joystick  
+- [ ] Re-pkg this repo  
 
 ### Done ✓
 
+- [x] Fix global planed route output  
 
