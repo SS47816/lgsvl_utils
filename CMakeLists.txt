@@ -234,17 +234,17 @@ add_dependencies(rects_visualizer
 ## Install ##
 #############
 
-install(
-  TARGETS
-    detected_objects_visualizer
-    rects_visualizer
-  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-)
-install(DIRECTORY models/
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/models
-)
+# install(
+#   TARGETS
+#     detected_objects_visualizer
+#     rects_visualizer
+#   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+#   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+#   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+# )
+# install(DIRECTORY models/
+#   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/models
+# )
 
 # all install targets should use catkin DESTINATION variables
 # See http://ros.org/doc/api/catkin/html/adv_user_guide/variables.html

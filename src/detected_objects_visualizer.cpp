@@ -263,27 +263,27 @@ DetectedObjectsVisualizer::ObjectsToModels(const autoware_msgs::DetectedObjectAr
       model.color = model_color_;
       if(object.label == "car")
       {
-        model.mesh_resource = "package://detected_objects_visualizer/models/car.dae";
+        model.mesh_resource = "package://lgsvl_utils/models/car.dae";
       }
       else if (object.label == "person")
       {
-        model.mesh_resource = "package://detected_objects_visualizer/models/person.dae";
+        model.mesh_resource = "package://lgsvl_utils/models/person.dae";
       }
       else if (object.label == "bicycle" || object.label == "bike")
       {
-        model.mesh_resource = "package://detected_objects_visualizer/models/bike.dae";
+        model.mesh_resource = "package://lgsvl_utils/models/bike.dae";
       }
       else if (object.label == "bus")
       {
-        model.mesh_resource = "package://detected_objects_visualizer/models/bus.dae";
+        model.mesh_resource = "package://lgsvl_utils/models/bus.dae";
       }
       else if(object.label == "truck")
       {
-        model.mesh_resource = "package://detected_objects_visualizer/models/truck.dae";
+        model.mesh_resource = "package://lgsvl_utils/models/truck.dae";
       }
       else
       {
-        model.mesh_resource = "package://detected_objects_visualizer/models/box.dae";
+        model.mesh_resource = "package://lgsvl_utils/models/box.dae";
       }
       model.scale.x = 1;
       model.scale.y = 1;
