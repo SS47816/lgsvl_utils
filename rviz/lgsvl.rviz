@@ -8,6 +8,7 @@ Panels:
         - /TF1/Tree1
         - /Sensors1
         - /Perception1
+        - /Perception1/BoundingBoxArray2
         - /Maps1
         - /Maps1/Lanelet2 Map1/Namespaces1
         - /Planning1
@@ -236,17 +237,13 @@ Visualization Manager:
           only edge: false
           show coords: false
         - Class: rviz/MarkerArray
-          Enabled: true
+          Enabled: false
           Marker Topic: /lgsvl_utils/ground_truth/objects_markers
           Name: AutowareObjectMarkers
           Namespaces:
-            /lgsvl_utils/ground_truth/arrow_markers: true
-            /lgsvl_utils/ground_truth/box_markers: true
-            /lgsvl_utils/ground_truth/centroid_markers: true
-            /lgsvl_utils/ground_truth/label_markers: true
-            /lgsvl_utils/ground_truth/model_markers: true
+            {}
           Queue Size: 100
-          Value: true
+          Value: false
         - Alpha: 1
           Autocompute Intensity Bounds: true
           Autocompute Value Bounds:
@@ -315,7 +312,7 @@ Visualization Manager:
           Value: true
           alpha: 0.800000011920929
           color: 25; 255; 0
-          coloring: Auto
+          coloring: Label
           line width: 0.10000000149011612
           only edge: false
           show coords: false
@@ -629,7 +626,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 65.62726593017578
+      Distance: 67.01216888427734
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -644,10 +641,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.39039772748947144
+      Pitch: 0.4447973370552063
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 3.105412006378174
+      Yaw: 3.1154043674468994
     Saved: ~
 Window Geometry:
   Displays:
