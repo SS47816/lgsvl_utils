@@ -2,12 +2,7 @@
 
 ROS Helper Nodes for utilising LGSVL Simulator in Autonomous Vehicles Development
 
-![cover_image](media/demo.png)
-
-<video controls="controls">
-  <source type="video/mp4" src="media/demo.mp4"></source>
-  <p>Your browser does not support the video element.</p>
-</video>
+![cover_image](media/demo.gif)
 
 ## Features
 * **Ground Truth Objects**: Convert `lgsvl` 3D ground truth objects to `autoware` and `jsk_recognition` messages and visualize them in Rviz
@@ -20,16 +15,13 @@ ROS Helper Nodes for utilising LGSVL Simulator in Autonomous Vehicles Developmen
 * **Vehicle Model**: Display the ego vehicle model in Rviz
 
 **TODOs**
-* feat: Control vehicle states using joystick
-* fix: Global Plan to `nav_msgs::Path` centerline coordinates
 * feat: Packing functions into this pkg
 * feat: 2D Ground Truth Objects
 * feat: Support for Other Sensors
 * feat: Relocalization?
 
 **Known Issues**
-* Global Plan to `nav_msgs::Path` centerline coordinates wrong
-* BorregasAve lanelet2 map connection errors
+* BorregasAve lanelet2 map contains minor connection errors
 * PCD Map stays idle during driving (suspected to be the publishing rate issue)
 
 ## Dependencies
@@ -53,15 +45,27 @@ source devel/setup.bash
 
 ## Usage
 ### Example BorregasAve Map in LGSVL
-**Step 1**: download 
+**Step 1**: Download LGSVL Simulator and register an account
 
+**Step 2**: Select a the `UT Lexus` Vehicle and upload the sensor configuration provided in `lgsvl_utils/lgsvl_assets/sensor_config/[Custom] Autoware AI.json`
+
+**Step 3**: Select the BorregasAve Map and start the simulation
+
+**Step 4**: Launch the nodes in this `lgsvl_utils` pkg using the `lgsvl_utils/launch/lgsvl_borregas.launch`
 ```bash
-# launch the example BorregasAve Map
+# launch the all the nodes on the example BorregasAve Map
 roslaunch lgsvl_utils lgsvl_borregas.launch 
 ```
 
+![demo_image](media/demo.png)
 
 ## Contribution
+You are welcome contributing to the package by opening a pull-request
+
+We are following: 
+[Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html), 
+[C++ Core Guidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#main), 
+and [ROS C++ Style Guide](http://wiki.ros.org/CppStyleGuide)
 
 ## License
 MIT License
