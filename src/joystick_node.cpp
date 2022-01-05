@@ -15,13 +15,6 @@
 #include <lgsvl_msgs/VehicleStateData.h>
 #include <autoware_msgs/VehicleCmd.h>
 
-// enum class NavMode
-// {
-//   Brake,
-//   FailSafe,
-//   Manual,
-//   Autonomous
-// };
 
 class JoystickTeleop
 {
@@ -34,7 +27,6 @@ private:
   int curr_gear_;
   float deadzone_;
   float steering_limit_;           // [deg]
-  float curr_speed_;
   std::string joy_type_;
   std::string control_setting_;
   std::string steering_mapping_;
