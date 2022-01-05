@@ -111,20 +111,21 @@ Visualization Manager:
       Show Axes: true
       Show Names: true
       Tree:
+        base_link:
+          camera:
+            {}
+          gps:
+            {}
+          imu:
+            {}
+          lidar_center:
+            {}
+          lidar_front:
+            {}
         world:
           map:
             odom:
-              base_link:
-                camera:
-                  {}
-                gps:
-                  {}
-                imu:
-                  {}
-                lidar_center:
-                  {}
-                lidar_front:
-                  {}
+              {}
       Update Interval: 0
       Value: true
     - Alpha: 0.5
@@ -162,9 +163,9 @@ Visualization Manager:
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
-          Max Intensity: 255
+          Max Intensity: -999999
           Min Color: 0; 0; 0
-          Min Intensity: 0
+          Min Intensity: 999999
           Name: Lidar Center
           Position Transformer: XYZ
           Queue Size: 10
@@ -192,7 +193,7 @@ Visualization Manager:
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
-          Max Intensity: 222
+          Max Intensity: 172
           Min Color: 0; 0; 0
           Min Intensity: 0
           Name: Lidar Front
@@ -371,7 +372,6 @@ Visualization Manager:
           Marker Topic: /vector_map
           Name: VectorMap
           Namespaces:
-            signal: true
             stop_line: true
             white_line: true
           Queue Size: 0
@@ -531,11 +531,11 @@ Visualization Manager:
           top: 20
         - Buffer length: 100
           Class: jsk_rviz_plugin/Plotter2D
-          Enabled: false
-          Name: Speed [m/s]
+          Enabled: true
+          Name: Speed [km/h]
           Show Value: true
           Topic: /lgsvl_utils/vehicle_state/curr_speed
-          Value: false
+          Value: true
           auto color change: true
           auto scale: false
           background color: 0; 0; 0
@@ -547,7 +547,7 @@ Visualization Manager:
           left: 180
           linewidth: 1
           max color: 255; 0; 0
-          max value: 30
+          max value: 120
           min value: 0
           show caption: true
           text size: 12
@@ -556,7 +556,7 @@ Visualization Manager:
           width: 128
         - Class: jsk_rviz_plugin/PieChart
           Enabled: true
-          Name: Speed [m/s]
+          Name: Speed [km/h]
           Topic: /lgsvl_utils/vehicle_state/curr_speed
           Value: true
           auto color change: true
@@ -568,7 +568,7 @@ Visualization Manager:
           foreground color: 25; 255; 240
           left: 180
           max color: 255; 0; 0
-          max value: 30
+          max value: 120
           min value: 0
           show caption: true
           size: 128
@@ -642,7 +642,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 52.42332458496094
+      Distance: 41.07833480834961
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -657,10 +657,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.33479800820350647
+      Pitch: 0.4797978699207306
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 3.135448455810547
+      Yaw: 3.155447483062744
     Saved: ~
 Window Geometry:
   Displays:

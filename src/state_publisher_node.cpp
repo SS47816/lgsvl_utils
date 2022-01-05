@@ -141,7 +141,7 @@ void StatePublisherNode::canBusCallback(const lgsvl_msgs::CanBusData::ConstPtr& 
   curr_accel.data = lgsvl_can_bus_msg->throttle_pct;
   curr_brake.data = lgsvl_can_bus_msg->brake_pct;
   curr_steer.data = vehicle_status_msg.angle;
-  curr_speed.data = vehicle_status_msg.speed;
+  curr_speed.data = vehicle_status_msg.speed*3.6; // convert from m/s to km/h
   
   pub_curr_accel.publish(std::move(curr_accel));
   pub_curr_brake.publish(std::move(curr_brake));
