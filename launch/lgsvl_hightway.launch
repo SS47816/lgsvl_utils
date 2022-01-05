@@ -1,0 +1,57 @@
+
+<launch>
+
+  <!-- Common Modules -->
+  <include file="$(find lgsvl_utils)/launch/common.launch" />
+
+  <!-- Map Files Settings -->
+  <arg name="map_name" default="Highway101GLE" />
+  <arg name="map_file_path" default="$(env HOME)/shared_dir/autoware-data/$(arg map_name)/data/map" />
+  <arg name="pcd_map_path" default="$(arg map_file_path)/pointcloud_map/$(arg map_name).pcd" />
+  <arg name="lanelet2_map_path" default="$(arg map_file_path)/lanelet2_map/$(arg map_name)_no_proj.osm" />
+  <arg name="vector_map_folder" default="$(arg map_file_path)/vector_map" />
+
+  <!-- Point Cloud Map -->
+  <!-- <arg name="scene_num" default="noupdate" />
+  <arg name="path_area_list" default='""' />
+  <node pkg="map_file" type="points_map_loader" name="points_map_loader" output="log">
+    <rosparam subst_value="true">
+      area: $(arg scene_num)
+      arealist_path: $(arg path_area_list)
+      pcd_paths: [ $(arg pcd_map_path) ]
+    </rosparam>
+  </node> -->
+
+  <!-- Vector Map -->
+  <node pkg="map_file" type="vector_map_loader" name="vector_map_loader" output="log" args="
+    $(arg vector_map_folder)/lane.csv
+    $(arg vector_map_folder)/dtlane.csv
+    $(arg vector_map_folder)/point.csv
+    $(arg vector_map_folder)/line.csv
+    $(arg vector_map_folder)/pole.csv
+    $(arg vector_map_folder)/signaldata.csv
+    $(arg vector_map_folder)/stopline.csv
+    $(arg vector_map_folder)/vector.csv
+    $(arg vector_map_folder)/whiteline.csv
+    $(arg vector_map_folder)/node.csv" 
+  />
+
+  <!-- lanelet2 Map -->
+  <node pkg="map_file" type="lanelet2_map_loader" name="lanelet2_map_loader" output="log">
+    <param name="lanelet2_path" value="$(arg lanelet2_map_path)" />
+  </node>
+  <node pkg="map_file" type="lanelet2_map_visualization" name="lanelet2_map_visualization" output="log" />
+
+  <!-- lanelet2 Global Planner -->
+  <node pkg="mission_planner" type="mission_planner" name="mission_planner" output="screen">
+    <param name="map_frame"                   value="map" />
+    <param name="base_link_frame"             value="base_link" />
+    <remap from="~input/vector_map"           to="/lanelet_map_bin" />
+    <remap from="~input/goal_pose"            to="/move_base_simple/goal" />
+    <remap from="~input/checkpoint"           to="/move_base_simple/fake_goal" />
+    <remap from="~output/route"               to="/planning/mission_planning/route" />
+    <remap from="~debug/route_marker"         to="/planning/mission_planning/route_marker" />
+    <remap from="~output/global_path"         to="/planning/mission_planning/global_path" />
+  </node>
+
+</launch>
