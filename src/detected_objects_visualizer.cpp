@@ -80,7 +80,6 @@ DetectedObjectsVisualizer::DetectedObjectsVisualizer() : arrow_height_(0.5), lab
   publisher_markers_ = node_handle_.advertise<visualization_msgs::MarkerArray>(
     markers_out_topic, 1);
   ROS_INFO("[%s] markers_out_topic: %s", __APP_NAME__, markers_out_topic.c_str());
-
 }
 
 std::string DetectedObjectsVisualizer::ColorToString(const std_msgs::ColorRGBA &in_color)
@@ -162,7 +161,6 @@ void DetectedObjectsVisualizer::DetectedObjectsCallback(const autoware_msgs::Det
                                        centroid_markers.markers.begin(), centroid_markers.markers.end());
 
   publisher_markers_.publish(visualization_markers);
-
 }
 
 visualization_msgs::MarkerArray

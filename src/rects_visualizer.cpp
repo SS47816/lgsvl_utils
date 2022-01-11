@@ -62,7 +62,6 @@ VisualizeRects::VisualizeRects()
   publisher_image_ = node_handle_.advertise<sensor_msgs::Image>(
     image_out_topic, 1);
   ROS_INFO("[%s] image_out: %s", __APP_NAME__, image_out_topic.c_str());
-
 }
 
 void
@@ -148,7 +147,6 @@ VisualizeRects::ObjectsToRects(cv::Mat in_image, const autoware_msgs::DetectedOb
                   thickness,
                   cv::LINE_AA,
                   false);
-
     }
   }
   return final_image;
