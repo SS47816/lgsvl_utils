@@ -109,7 +109,6 @@ autoware_msgs::DetectedObject GTViwerNode::transformAutowareObject(const lgsvl_m
   autoware_object.header = lgsvl_detection3d->header;
   autoware_object.header.frame_id = bbox_target_frame_;
   autoware_object.id = lgsvl_detection3d->id;
-  autoware_object.label = lgsvl_detection3d->label;
   autoware_object.score = lgsvl_detection3d->score;
   autoware_object.pose = pose_transformed;
   autoware_object.pose.position.z += lgsvl_detection3d->bbox.size.z/2;

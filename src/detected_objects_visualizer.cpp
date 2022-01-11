@@ -120,7 +120,6 @@ float DetectedObjectsVisualizer::CheckAlpha(double value)
 std_msgs::ColorRGBA DetectedObjectsVisualizer::ParseColor(const std::vector<double> &in_color)
 {
   std_msgs::ColorRGBA color;
-  float r,g,b,a;
   if (in_color.size() == 4) //r,g,b,a
   {
     color.r = CheckColor(in_color[0]);
@@ -243,7 +242,6 @@ visualization_msgs::MarkerArray
 DetectedObjectsVisualizer::ObjectsToModels(const autoware_msgs::DetectedObjectArray &in_objects)
 {
   visualization_msgs::MarkerArray object_models;
-
   for (auto const &object: in_objects.objects)
   {
     if (IsObjectValid(object) &&
@@ -251,7 +249,6 @@ DetectedObjectsVisualizer::ObjectsToModels(const autoware_msgs::DetectedObjectAr
         (object.dimensions.x + object.dimensions.y + object.dimensions.z) < object_max_linear_size_)
     {
       visualization_msgs::Marker model;
-
       model.lifetime = ros::Duration(marker_display_duration_);
       model.header = in_objects.header;
       model.type = visualization_msgs::Marker::MESH_RESOURCE;
