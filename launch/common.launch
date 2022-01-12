@@ -26,7 +26,7 @@
     <param name="joy_type"                    value="Xbox" />
     <param name="control_setting"             value="ForzaHorizon" />
     <param name="steering_mapping"            value="Quadratic" />
-    <param name="autonomous_cmd_topic"        value="/auto_cmd" />
+    <param name="autonomous_cmd_topic"        value="/auto_vehicle_cmd" />
     <param name="vehicle_cmd_topic"           value="/simulator/control/vehicle_cmd" />
     <param name="vehicle_state_topic"         value="/simulator/control/vehicle_state" />
     <param name="curr_mode_topic"             value="/lgsvl_utils/vehicle_state/curr_mode" />

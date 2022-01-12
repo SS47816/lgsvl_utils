@@ -12,7 +12,6 @@ Panels:
         - /Maps1
         - /Maps1/Lanelet2 Map1/Namespaces1
         - /Planning1
-        - /Planning1/Global Path1
         - /Vehicle Status1
         - /Local Planner1
         - /Local Planner1/Reference Path1
@@ -418,7 +417,7 @@ Visualization Manager:
           Buffer Length: 1
           Class: rviz/Path
           Color: 25; 255; 0
-          Enabled: true
+          Enabled: false
           Head Diameter: 0.30000001192092896
           Head Length: 0.5
           Length: 0.30000001192092896
@@ -436,7 +435,7 @@ Visualization Manager:
           Shaft Length: 0.5
           Topic: /planning/mission_planning/global_path
           Unreliable: true
-          Value: true
+          Value: false
       Enabled: true
       Name: Planning
     - Class: rviz/Group
@@ -628,7 +627,7 @@ Visualization Manager:
           Marker Topic: /candidate_paths
           Name: Candidate Trajectories
           Namespaces:
-            unsafe: true
+            {}
           Queue Size: 100
           Value: true
         - Alpha: 1
@@ -730,7 +729,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 36.43968200683594
+      Distance: 43.01667785644531
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -745,10 +744,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.46979865431785583
+      Pitch: 0.5547990202903748
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 3.1622867584228516
+      Yaw: 3.1172876358032227
     Saved: ~
 Window Geometry:
   Displays:

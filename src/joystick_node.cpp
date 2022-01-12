@@ -53,7 +53,6 @@ JoystickTeleop::JoystickTeleop()
 
   std::string joy_topic;
   std::string autonomous_cmd_topic;
-  std::string cmd_vel_out_topic;
   std::string vehicle_cmd_topic;
   std::string vehicle_state_topic;
   std::string curr_mode_topic;
@@ -129,7 +128,7 @@ void JoystickTeleop::joystickCallback(const sensor_msgs::Joy::ConstPtr& joy_msg)
     LR_axis_stick_R = joy_msg->axes[3];
     UD_axis_stick_R = joy_msg->axes[4];
     RT = joy_msg->axes[5];                      // [0, 1], release the full power
-    
+
     // LR_axis_stick_L = joy_msg->axes[6];         // doing nothing
     // UD_axis_stick_L = joy_msg->axes[7];         // doing nothing
   }
@@ -344,6 +343,9 @@ void JoystickTeleop::autonomousCmdCallback(const autoware_msgs::VehicleCmd::Cons
   {
     curr_gear_ = lgsvl_msgs::VehicleControlData::GEAR_DRIVE;
     curr_gear_name_.data = "DRIVE";
+    vehicle_cmd.acceleration_pct = std::max(0.0, auto_cmd_msg->twist_cmd.twist.linear.x);
+    vehicle_cmd.braking_pct = std::min(0.0, auto_cmd_msg->twist_cmd.twist.linear.x);
+    vehicle_cmd.target_wheel_angle = -(auto_cmd_msg->twist_cmd.twist.angular.z);
   }
   else if (auto_cmd_msg->gear_cmd.gear == autoware_msgs::Gear::REVERSE)
   {
