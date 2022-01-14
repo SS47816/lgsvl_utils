@@ -98,6 +98,8 @@ void JoystickTeleop::joystickCallback(const sensor_msgs::Joy::ConstPtr& joy_msg)
   vehicle_cmd.header = joy_msg->header;
   vehicle_cmd.header.frame_id = "base_link";
   vehicle_cmd.target_wheel_angular_rate = 0.0;
+  vehicle_cmd.acceleration_pct = 0.0;
+  vehicle_cmd.braking_pct = 1.0;
 
   lgsvl_msgs::VehicleStateData vehicle_state;
   vehicle_state.header = joy_msg->header;
@@ -227,11 +229,9 @@ void JoystickTeleop::joystickCallback(const sensor_msgs::Joy::ConstPtr& joy_msg)
     else if (curr_mode_ == lgsvl_msgs::VehicleStateData::VEHICLE_MODE_COMPLETE_MANUAL 
           && curr_gear_ == lgsvl_msgs::VehicleControlData::GEAR_PARKING)
     {
-      // Autonomous Mode, Drive Gear
+      // Autonomous Mode, Drive TBD
       curr_mode_name_.data = "AUTONOMOUS";
       curr_mode_ = lgsvl_msgs::VehicleStateData::VEHICLE_MODE_COMPLETE_AUTO_DRIVE;
-      // curr_gear_name_.data = "DRIVE";
-      // curr_gear_ = lgsvl_msgs::VehicleControlData::GEAR_DRIVE;
     }
     else if (curr_mode_ == lgsvl_msgs::VehicleStateData::VEHICLE_MODE_COMPLETE_AUTO_DRIVE)
     {
@@ -343,8 +343,8 @@ void JoystickTeleop::autonomousCmdCallback(const autoware_msgs::VehicleCmd::Cons
   {
     curr_gear_ = lgsvl_msgs::VehicleControlData::GEAR_DRIVE;
     curr_gear_name_.data = "DRIVE";
-    vehicle_cmd.acceleration_pct = std::max(0.0, auto_cmd_msg->twist_cmd.twist.linear.x);
-    vehicle_cmd.braking_pct = std::min(0.0, auto_cmd_msg->twist_cmd.twist.linear.x);
+    vehicle_cmd.acceleration_pct = std::fabs(std::max(0.0, auto_cmd_msg->twist_cmd.twist.linear.x));
+    vehicle_cmd.braking_pct = std::fabs(std::min(0.0, auto_cmd_msg->twist_cmd.twist.linear.x));
     vehicle_cmd.target_wheel_angle = -(auto_cmd_msg->twist_cmd.twist.angular.z);
   }
   else if (auto_cmd_msg->gear_cmd.gear == autoware_msgs::Gear::REVERSE)
