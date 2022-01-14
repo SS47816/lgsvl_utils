@@ -5,6 +5,12 @@ ROS Helper Nodes for utilising LGSVL Simulator in Autonomous Vehicles Developmen
 [![CodeFactor](https://www.codefactor.io/repository/github/ss47816/lgsvl_utils/badge)](https://www.codefactor.io/repository/github/ss47816/lgsvl_utils)
 ![Code Grade](https://api.codiga.io/project/30669/status/svg)
 ![Code Quality Score](https://api.codiga.io/project/30669/score/svg)
+![GitHub Repo stars](https://img.shields.io/github/stars/ss47816/lgsvl_utils)
+![GitHub Repo forks](https://img.shields.io/github/forks/ss47816/lgsvl_utils)
+
+![Ubuntu](https://img.shields.io/badge/OS-Ubuntu-informational?style=flat&logo=ubuntu&logoColor=white&color=2bbc8a)
+![ROS](https://img.shields.io/badge/Tools-ROS-informational?style=flat&logo=ROS&logoColor=white&color=2bbc8a)
+![C++](https://img.shields.io/badge/Code-C++-informational?style=flat&logo=c%2B%2B&logoColor=white&color=2bbc8a)
 
 ![cover_image](media/demo.gif)
 
