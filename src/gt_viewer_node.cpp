@@ -13,6 +13,8 @@
 #include <ros/ros.h>
 #include <ros/console.h>
 
+#include <Eigen/Geometry>
+#include <tf2_eigen/tf2_eigen.h>
 #include <tf2_ros/transform_listener.h>
 #include <tf2_geometry_msgs/tf2_geometry_msgs.h>
 #include <geometry_msgs/PoseStamped.h>
@@ -136,6 +138,28 @@ autoware_msgs::DetectedObject GTViwerNode::transformAutowareObject(const lgsvl_m
   else 
   { 
     autoware_object.label = "car";
+  }
+
+  // Convex hull
+  autoware_object.convex_hull.header = autoware_object.header;
+
+  Eigen::Isometry3d T_wo;
+  tf2::fromMsg(autoware_object.pose, T_wo);
+
+  const auto dims = autoware_object.dimensions;
+  Eigen::Vector3d fl_pt{dims.x/2, dims.y/2, -dims.z/2};
+  Eigen::Vector3d fr_pt{dims.x/2, -dims.y/2, -dims.z/2};
+  Eigen::Vector3d rr_pt{-dims.x/2, -dims.y/2, -dims.z/2};
+  Eigen::Vector3d rl_pt{-dims.x/2, dims.y/2, -dims.z/2};
+  std::vector<Eigen::Vector3d> rect{std::move(fl_pt), std::move(fr_pt), std::move(rr_pt), std::move(rl_pt)};
+  for (size_t i = 0; i < 4; i++)
+  {
+    Eigen::Vector3d pt = T_wo * rect[i];
+    geometry_msgs::Point32 point;
+    point.x = pt.x();
+    point.y = pt.y();
+    point.z = pt.z();
+    autoware_object.convex_hull.polygon.points.emplace_back(point);
   }
 
   return std::move(autoware_object);

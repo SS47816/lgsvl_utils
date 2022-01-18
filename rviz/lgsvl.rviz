@@ -14,7 +14,6 @@ Panels:
         - /Planning1
         - /Vehicle Status1
         - /Local Planner1
-        - /Local Planner1/Reference Path1
       Splitter Ratio: 0.615730345249176
     Tree Height: 1005
   - Class: rviz/Selection
@@ -244,11 +243,7 @@ Visualization Manager:
           Marker Topic: /lgsvl_utils/ground_truth/objects_markers
           Name: AutowareObjectMarkers
           Namespaces:
-            /lgsvl_utils/ground_truth/arrow_markers: true
-            /lgsvl_utils/ground_truth/box_markers: true
-            /lgsvl_utils/ground_truth/centroid_markers: true
-            /lgsvl_utils/ground_truth/label_markers: true
-            /lgsvl_utils/ground_truth/model_markers: true
+            {}
           Queue Size: 100
           Value: true
         - Class: rviz/Group
@@ -537,11 +532,11 @@ Visualization Manager:
           top: 20
         - Buffer length: 100
           Class: jsk_rviz_plugin/Plotter2D
-          Enabled: true
+          Enabled: false
           Name: Speed [km/h]
           Show Value: true
           Topic: /lgsvl_utils/vehicle_state/curr_speed
-          Value: true
+          Value: false
           auto color change: true
           auto scale: false
           background color: 0; 0; 0
@@ -729,7 +724,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 26.34128761291504
+      Distance: 30.187976837158203
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -744,10 +739,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.5697996020317078
+      Pitch: 0.6847968697547913
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 3.5222976207733154
+      Yaw: 3.1723854541778564
     Saved: ~
 Window Geometry:
   Displays:
