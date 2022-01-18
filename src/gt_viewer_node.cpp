@@ -162,6 +162,8 @@ autoware_msgs::DetectedObject GTViwerNode::transformAutowareObject(const lgsvl_m
     autoware_object.convex_hull.polygon.points.emplace_back(point);
   }
 
+  autoware_object.convex_hull.polygon.points.push_back(autoware_object.convex_hull.polygon.points.front());
+
   return std::move(autoware_object);
 }
 

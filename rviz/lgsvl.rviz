@@ -239,13 +239,13 @@ Visualization Manager:
           only edge: false
           show coords: false
         - Class: rviz/MarkerArray
-          Enabled: true
+          Enabled: false
           Marker Topic: /lgsvl_utils/ground_truth/objects_markers
           Name: AutowareObjectMarkers
           Namespaces:
             {}
           Queue Size: 100
-          Value: true
+          Value: false
         - Class: rviz/Group
           Displays:
             - Alpha: 1
@@ -619,7 +619,7 @@ Visualization Manager:
       Displays:
         - Class: rviz/MarkerArray
           Enabled: true
-          Marker Topic: /candidate_paths
+          Marker Topic: /local_planner/candidate_paths
           Name: Candidate Trajectories
           Namespaces:
             unsafe: true
@@ -694,6 +694,19 @@ Visualization Manager:
           Topic: /local_planner/next_path
           Unreliable: false
           Value: true
+        - Class: rviz/MarkerArray
+          Enabled: true
+          Marker Topic: /local_planner/objects_markers
+          Name: MarkerArray
+          Namespaces:
+            /local_planner/arrow_markers: true
+            /local_planner/box_markers: true
+            /local_planner/centroid_markers: true
+            /local_planner/hull_markers: true
+            /local_planner/label_markers: true
+            /local_planner/model_markers: true
+          Queue Size: 100
+          Value: true
       Enabled: true
       Name: Local Planner
   Enabled: true
@@ -724,7 +737,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 30.187976837158203
+      Distance: 37.19225311279297
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -739,10 +752,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.6847968697547913
+      Pitch: 0.569797694683075
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 3.1723854541778564
+      Yaw: 3.127460479736328
     Saved: ~
 Window Geometry:
   Displays:
