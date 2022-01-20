@@ -239,13 +239,18 @@ Visualization Manager:
           only edge: false
           show coords: false
         - Class: rviz/MarkerArray
-          Enabled: false
+          Enabled: true
           Marker Topic: /lgsvl_utils/ground_truth/objects_markers
           Name: AutowareObjectMarkers
           Namespaces:
-            {}
+            /lgsvl_utils/ground_truth/arrow_markers: true
+            /lgsvl_utils/ground_truth/box_markers: true
+            /lgsvl_utils/ground_truth/centroid_markers: true
+            /lgsvl_utils/ground_truth/hull_markers: true
+            /lgsvl_utils/ground_truth/label_markers: true
+            /lgsvl_utils/ground_truth/model_markers: true
           Queue Size: 100
-          Value: false
+          Value: true
         - Class: rviz/Group
           Displays:
             - Alpha: 1
@@ -732,7 +737,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 44.54656982421875
+      Distance: 103.23619079589844
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -747,10 +752,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.3597973585128784
+      Pitch: 0.5747966766357422
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 3.072489023208618
+      Yaw: 3.152496576309204
     Saved: ~
 Window Geometry:
   Displays:
