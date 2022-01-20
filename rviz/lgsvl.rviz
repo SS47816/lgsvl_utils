@@ -658,7 +658,7 @@ Visualization Manager:
           Length: 0.30000001192092896
           Line Style: Lines
           Line Width: 0.029999999329447746
-          Name: Output Path
+          Name: Current Trajectory
           Offset:
             X: 0
             Y: 0
@@ -668,7 +668,7 @@ Visualization Manager:
           Radius: 0.029999999329447746
           Shaft Diameter: 0.10000000149011612
           Shaft Length: 0.10000000149011612
-          Topic: /local_planner/output_path
+          Topic: /local_planner/current_trajectory
           Unreliable: false
           Value: true
         - Alpha: 1
@@ -681,7 +681,7 @@ Visualization Manager:
           Length: 0.30000001192092896
           Line Style: Lines
           Line Width: 0.029999999329447746
-          Name: Next Path
+          Name: Next Trajectory
           Offset:
             X: 0
             Y: 0
@@ -691,7 +691,7 @@ Visualization Manager:
           Radius: 0.029999999329447746
           Shaft Diameter: 0.10000000149011612
           Shaft Length: 0.10000000149011612
-          Topic: /local_planner/next_path
+          Topic: /local_planner/next_trajectory
           Unreliable: false
           Value: true
         - Class: rviz/MarkerArray
@@ -699,12 +699,7 @@ Visualization Manager:
           Marker Topic: /local_planner/objects_markers
           Name: MarkerArray
           Namespaces:
-            /local_planner/arrow_markers: true
-            /local_planner/box_markers: true
-            /local_planner/centroid_markers: true
-            /local_planner/hull_markers: true
-            /local_planner/label_markers: true
-            /local_planner/model_markers: true
+            {}
           Queue Size: 100
           Value: true
       Enabled: true
@@ -737,7 +732,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 37.19225311279297
+      Distance: 44.54656982421875
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -752,10 +747,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.569797694683075
+      Pitch: 0.3597973585128784
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 3.127460479736328
+      Yaw: 3.072489023208618
     Saved: ~
 Window Geometry:
   Displays:
