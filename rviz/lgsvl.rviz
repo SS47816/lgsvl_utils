@@ -14,6 +14,8 @@ Panels:
         - /Planning1
         - /Vehicle Status1
         - /Local Planner1
+        - /Local Planner1/Candidate Trajectories1
+        - /Local Planner1/Candidate Trajectories1/Namespaces1
       Splitter Ratio: 0.615730345249176
     Tree Height: 1005
   - Class: rviz/Selection
@@ -627,7 +629,8 @@ Visualization Manager:
           Marker Topic: /local_planner/candidate_paths
           Name: Candidate Trajectories
           Namespaces:
-            unsafe: true
+            safe: true
+            unsmooth: true
           Queue Size: 100
           Value: true
         - Alpha: 1
@@ -700,13 +703,13 @@ Visualization Manager:
           Unreliable: false
           Value: true
         - Class: rviz/MarkerArray
-          Enabled: true
+          Enabled: false
           Marker Topic: /local_planner/objects_markers
           Name: MarkerArray
           Namespaces:
             {}
           Queue Size: 100
-          Value: true
+          Value: false
       Enabled: true
       Name: Local Planner
   Enabled: true
@@ -737,7 +740,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 103.23619079589844
+      Distance: 37.0268669128418
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -752,10 +755,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.5747966766357422
+      Pitch: 0.3397957384586334
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 3.152496576309204
+      Yaw: 3.1375083923339844
     Saved: ~
 Window Geometry:
   Displays:
