@@ -1,0 +1,6 @@
+<launch>
+
+  <!-- ROS-Bridge node for Simulator connection -->
+  <node name="websocket_bridge" pkg="rosbridge_server" type="rosbridge_websocket" output="screen" clear_params="true" required="true" />
+
+</launch>

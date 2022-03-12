@@ -4,10 +4,10 @@
   <include file="$(find lgsvl_utils)/launch/common.launch" />
 
   <!-- Map Files Settings -->
-  <arg name="map_name" default="BorregasAve" />
+  <arg name="map_name" default="SanFrancisco" />
   <arg name="map_file_path" default="$(env HOME)/shared_dir/autoware-data/$(arg map_name)/data/map" />
   <arg name="pcd_map_path" default="$(arg map_file_path)/pointcloud_map/$(arg map_name).pcd" />
-  <arg name="lanelet2_map_path" default="$(arg map_file_path)/lanelet2_map/$(arg map_name)_no_proj.osm" />
+  <arg name="lanelet2_map_path" default="$(arg map_file_path)/lanelet2_map/$(arg map_name)_no_proj2.osm" />
   <arg name="vector_map_folder" default="$(arg map_file_path)/vector_map" />
 
   <!-- Point Cloud Map -->

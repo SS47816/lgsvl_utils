@@ -17,7 +17,7 @@
   <!-- Joystick Teleop -->
   <node pkg="joy" type="joy_node" name="joy_node" output="log" respawn="true" >
     <param name="dev"                         value="/dev/input/js0" />
-    <param name="deadzone"                    value="0.05" />
+    <param name="deadzone"                    value="0.00" />
     <param name="autorepeat_rate"             value="10" />
   </node>
 
@@ -32,7 +32,7 @@
     <param name="curr_mode_topic"             value="/lgsvl_utils/vehicle_state/curr_mode" />
     <param name="curr_gear_topic"             value="/lgsvl_utils/vehicle_state/curr_gear" />
     <param name="steering_limit"              value="45" />
-    <param name="deadzone"                    value="0.05" />
+    <param name="deadzone"                    value="0.00" />
   </node>
 
   <!-- Vehicle State Publisher  -->
