@@ -2,7 +2,7 @@
 
   <!-- Point Downsampler (CPU Usage: ~2.5%) -->
   <node pkg="ndt_localizer" name="voxel_grid_filter" type="voxel_grid_filter" output="screen">
-    <param name="points_topic" value="/simulator/ground_truth/points_center_64_raw" />
+    <param name="points_topic" value="/simulator/ground_truth/points_center_32_raw" />
     <param name="output_log" value="false" />
     <param name="leaf_size" value="2.0" />
   </node>
