@@ -8,8 +8,8 @@
   <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="log" />
 
   <!-- TF -->
-  <node ns="tf_static" pkg="tf" type="static_transform_publisher" name="world_to_map" args="0 0 0 0 0 0 /world /map 10" />
-  <node ns="tf_static" pkg="tf" type="static_transform_publisher" name="map_to_odom"  args="0 0 0 0 0 0 /map /odom 10" />
+  <!-- <node ns="tf_static" pkg="tf" type="static_transform_publisher" name="world_to_map" args="0 0 0 0 0 0 /world /map 10" />
+  <node ns="tf_static" pkg="tf" type="static_transform_publisher" name="map_to_odom"  args="0 0 0 0 0 0 /map /odom 10" /> -->
 
   <!-- Re-publishing simulator/camera_node/image/compressed topic to /image_raw as expected by Autoware -->
   <node name="republish" type="republish" pkg="image_transport" output="screen" args="compressed in:=/simulator/camera_node/image raw out:=/image_raw" />
@@ -44,7 +44,7 @@
     <param name="curr_brake_topic"            value="/lgsvl_utils/vehicle_state/curr_brake" />
     <param name="curr_steer_topic"            value="/lgsvl_utils/vehicle_state/curr_steer" />
     <param name="curr_speed_topic"            value="/lgsvl_utils/vehicle_state/curr_speed" />
-    <param name="odom_frame"                  value="odom" />
+    <param name="odom_frame"                  value="map" />
     <param name="baselink_frame"              value="base_link" />
     <param name="steering_limit"              value="45.0" />
   </node>
@@ -55,7 +55,7 @@
     <param name="lgsvl_gt3d_topic"            value="/simulator/ground_truth/3d_detections" />
     <param name="jsk_bboxes_topic"            value="/lgsvl_utils/ground_truth/jsk_bounding_boxes" />
     <param name="autoware_objects_topic"      value="/lgsvl_utils/ground_truth/objects" />
-    <param name="bbox_target_frame"           value="base_link" />
+    <param name="bbox_target_frame"           value="map" />
     <param name="bbox_filter_size"            value="10.0" />
   </node>
   <!-- Autoware Object Visualizer -->
