@@ -22,8 +22,10 @@ find_package(catkin REQUIRED COMPONENTS
   tf2_eigen
   tf2_geometry_msgs
   tf
+  joy
   cv_bridge
   image_transport
+  rosbridge_server
 )
 
 find_package(OpenCV REQUIRED)
