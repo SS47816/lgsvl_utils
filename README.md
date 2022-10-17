@@ -64,10 +64,12 @@ source devel/setup.bash
 **Step 4**: Launch the nodes in this `lgsvl_utils` pkg using the `lgsvl_utils/launch/lgsvl_borregas.launch`
 ```bash
 # launch the all the nodes on the example BorregasAve Map
-roslaunch lgsvl_utils lgsvl_borregas.launch 
+roslaunch lgsvl_utils borregas.launch 
 ```
 
 ![demo_image](media/demo.png)
+
+**Step 5**: You may now use a [Xbox](https://www.xbox.com/en-SG/accessories/controllers/xbox-wireless-controller) or [Logitech F710](https://www.logitechg.com/en-us/products/gamepads/f710-wireless-gamepad.html) joystick to control the ego vehicle. You may change the joystick settings in `launch/common.launch` (`joy_type` and `control_setting`) or customize the button mapping accroding to your own preference in `src/joystick_node.cpp`.
 
 ## Contribution
 You are welcome contributing to the package by opening a pull-request
