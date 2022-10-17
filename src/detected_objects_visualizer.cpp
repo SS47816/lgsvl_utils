@@ -398,7 +398,7 @@ DetectedObjectsVisualizer::ObjectsToArrows(const autoware_msgs::DetectedObjectAr
         // Set the pose of the marker.  This is a full 6DOF pose relative to the frame/time specified in the header
         arrow_marker.pose.position.x = object.pose.position.x;
         arrow_marker.pose.position.y = object.pose.position.y;
-        arrow_marker.pose.position.z = arrow_height_;
+        arrow_marker.pose.position.z = object.pose.position.z;
 
         arrow_marker.pose.orientation.x = q_tf.getX();
         arrow_marker.pose.orientation.y = q_tf.getY();
@@ -478,7 +478,7 @@ DetectedObjectsVisualizer::ObjectsToLabels(const autoware_msgs::DetectedObjectAr
 
       label_marker.pose.position.x = object.pose.position.x;
       label_marker.pose.position.y = object.pose.position.y;
-      label_marker.pose.position.z = label_height_;
+      label_marker.pose.position.z = object.pose.position.z + label_height_;
       label_marker.scale.x = 0.5;
       label_marker.scale.y = 0.5;
       label_marker.scale.z = 0.5;
