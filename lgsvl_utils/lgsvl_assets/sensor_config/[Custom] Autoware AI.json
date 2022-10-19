@@ -45,7 +45,7 @@
       "description": "This sensor sends data about the vehicle chassis. The data includes:\n\t* Speed [m/s]\n\t* Throttle [%]\n\t* Braking [%]\n\t* Steering [+/- %]\n\t* Parking Brake Status [bool]\n\t* High Beam Status [bool]\n\t* Low Beam Status [bool]\n\t* Hazard Light Status [bool]\n\t* Fog Light Status [bool]\n\t* Left Turn Signal Status [bool]\n\t* Right Turn Signal Status [bool]\n\t* Wiper Status [bool]\n\t* Reverse Gear Status [bool]\n\t* Selected Gear [Int]\n\t* Engine Status [bool]\n\t* Engine RPM [RPM]\n\t* GPS Latitude [Latitude]\n\t* GPS Longitude [Longitude]\n\t* Altitude [m]\n\t* Orientation [3D Vector of Euler angles]\n\t* Velocity [3D Vector of m/s]\nSee https://www.svlsimulator.com/docs/simulation-content/sensors-list/#can-bus for more details.",
       "copyright": "LG Electronics Inc.",
       "licenseName": "LG Content",
-      "imageUrl": "/api/v1/assets/download/preview/cd38d045-4374-4cf4-a62b-8bfba1128a39",
+      "imageUrl": "/api/v1/assets/download/preview/444f9f63-7e0e-474d-9cf4-9a6fc8813c7b",
       "status": "active",
       "owner": {
         "id": "0d888b00-fa53-47c1-882a-b68391268a11",
@@ -117,7 +117,8 @@
       "Frequency": 20,
       "Topic": "/simulator/ground_truth/odom",
       "Frame": "map",
-      "IgnoreMapOrigin": true
+      "IgnoreMapOrigin": true,
+      "ChildFrame": "base_link"
     },
     "transform": {
       "x": 0,
@@ -159,7 +160,7 @@
       "description": "This sensor outputs the GPS location of the vehicle in Longitude/Latitude and Northing/Easting coordintates and the vehicle velocity.\nSee https://www.svlsimulator.com/docs/simulation-content/sensors-list/#gps-odometry for more details.",
       "copyright": "LG Electronics Inc.",
       "licenseName": "LG Content",
-      "imageUrl": "/api/v1/assets/download/preview/d672c52e-0e1a-494e-a95c-fc52593a119d",
+      "imageUrl": "/api/v1/assets/download/preview/d47cccd4-a029-4c03-87ef-3a5d3c1994a0",
       "status": "active",
       "owner": {
         "id": "0d888b00-fa53-47c1-882a-b68391268a11",
@@ -455,17 +456,10 @@
   },
   {
     "params": {
-      "LaserCount": 32,
-      "MinDistance": 0.5,
-      "MaxDistance": 200,
-      "RotationFrequency": 10,
-      "MeasurementsPerRotation": 360,
-      "FieldOfView": 40,
-      "CenterAngle": -5,
-      "Compensated": true,
-      "PointColor": "#ff000000",
-      "Topic": "/simulator/ground_truth/points_center_raw",
-      "Frame": "lidar_center"
+      "Topic": "/simulator/ground_truth/3d_detections",
+      "Frame": "lidar_center",
+      "MaxDistance": 100,
+      "Frequency": 20
     },
     "transform": {
       "x": 0,
@@ -475,68 +469,10 @@
       "yaw": 0,
       "roll": 0
     },
-    "name": "Center Lidar (Velodyne 32C)",
-    "parent": null,
-    "pluginId": "b30d0478-8c7b-4687-bfc2-b3cdb3f5faff",
-    "sortKey": 8,
-    "plugin": {
-      "isFavored": true,
-      "isShared": false,
-      "isOwned": false,
-      "accessInfo": {
-        "userAccessType": "favored",
-        "owner": {
-          "id": "0d888b00-fa53-47c1-882a-b68391268a11",
-          "firstName": "SVL",
-          "lastName": "Content"
-        }
-      },
-      "supportedSimulatorVersions": [
-        "2021.3",
-        "2021.2",
-        "2021.2.2",
-        "2021.1",
-        "2021.1.1"
-      ],
-      "id": "b30d0478-8c7b-4687-bfc2-b3cdb3f5faff",
-      "name": "Lidar Sensor",
-      "type": "LidarSensor",
-      "category": "sensor",
-      "ownerId": "0d888b00-fa53-47c1-882a-b68391268a11",
-      "accessType": "public",
-      "description": "This sensor returns a point cloud after 1 revolution.\nSee https://www.svlsimulator.com/docs/simulation-content/sensors-list/#lidar for more details.",
-      "copyright": "LG Electronics Inc.",
-      "licenseName": "LG Content",
-      "imageUrl": "/api/v1/assets/download/preview/dd44a969-c038-4966-a39f-a445ab3b6c00",
-      "status": "active",
-      "owner": {
-        "id": "0d888b00-fa53-47c1-882a-b68391268a11",
-        "firstName": "SVL",
-        "lastName": "Content"
-      },
-      "shareRequests": []
-    },
-    "type": "LidarSensor"
-  },
-  {
-    "params": {
-      "Topic": "/simulator/ground_truth/3d_detections",
-      "Frame": "lidar_center",
-      "MaxDistance": 100,
-      "Frequency": 20
-    },
-    "transform": {
-      "x": 0,
-      "y": 0,
-      "z": 0,
-      "pitch": 0,
-      "yaw": 0,
-      "roll": 0
-    },
     "name": "3D Ground Truth Sensor",
-    "parent": "Center Lidar (Velodyne 32C)",
+    "parent": null,
     "pluginId": "e3fef197-9724-48ec-b98e-c5a0892d09c4",
-    "sortKey": 9,
+    "sortKey": 8,
     "plugin": {
       "isFavored": true,
       "isShared": false,
@@ -565,7 +501,7 @@
       "description": "This sensor returns 3D ground truth data for training and creates bounding boxes around the detected objects. The color of the object corresponds to the object's type:\n\t[\n\t\t\"Car\": \"Green\"\n\t\t\"Pedestrian\": \"Yellow\"\n\t\t\"Bicycle\": \"Cyan\"\n\t\t\"Unknown\":  \"Magenta\"\n\t]\nSee https://www.svlsimulator.com/docs/simulation-content/sensors-list/#3d-ground-truth for more details.",
       "copyright": "LG Electronics Inc.",
       "licenseName": "LG Content",
-      "imageUrl": "/api/v1/assets/download/preview/fc200028-6393-4dc5-aa5e-4369df4d4e09",
+      "imageUrl": "/api/v1/assets/download/preview/23af29b0-4f5d-430f-9603-882e04d95cd3",
       "status": "active",
       "owner": {
         "id": "0d888b00-fa53-47c1-882a-b68391268a11",
@@ -575,71 +511,6 @@
       "shareRequests": []
     },
     "type": "PerceptionSensor3D"
-  },
-  {
-    "params": {
-      "LaserCount": 32,
-      "MinDistance": 0.5,
-      "MaxDistance": 200,
-      "RotationFrequency": 10,
-      "MeasurementsPerRotation": 360,
-      "FieldOfView": 40,
-      "CenterAngle": -5,
-      "Compensated": true,
-      "PointColor": "#ff000000",
-      "Topic": "/simulator/ground_truth/points_front_raw",
-      "Frame": "lidar_front"
-    },
-    "transform": {
-      "x": 0,
-      "y": 1.35,
-      "z": 1.7,
-      "pitch": 15,
-      "yaw": 0,
-      "roll": 0
-    },
-    "name": "Front Lidar (Velodyne 32C)",
-    "parent": null,
-    "pluginId": "b30d0478-8c7b-4687-bfc2-b3cdb3f5faff",
-    "sortKey": 10,
-    "plugin": {
-      "isFavored": true,
-      "isShared": false,
-      "isOwned": false,
-      "accessInfo": {
-        "userAccessType": "favored",
-        "owner": {
-          "id": "0d888b00-fa53-47c1-882a-b68391268a11",
-          "firstName": "SVL",
-          "lastName": "Content"
-        }
-      },
-      "supportedSimulatorVersions": [
-        "2021.3",
-        "2021.2",
-        "2021.2.2",
-        "2021.1",
-        "2021.1.1"
-      ],
-      "id": "b30d0478-8c7b-4687-bfc2-b3cdb3f5faff",
-      "name": "Lidar Sensor",
-      "type": "LidarSensor",
-      "category": "sensor",
-      "ownerId": "0d888b00-fa53-47c1-882a-b68391268a11",
-      "accessType": "public",
-      "description": "This sensor returns a point cloud after 1 revolution.\nSee https://www.svlsimulator.com/docs/simulation-content/sensors-list/#lidar for more details.",
-      "copyright": "LG Electronics Inc.",
-      "licenseName": "LG Content",
-      "imageUrl": "/api/v1/assets/download/preview/dd44a969-c038-4966-a39f-a445ab3b6c00",
-      "status": "active",
-      "owner": {
-        "id": "0d888b00-fa53-47c1-882a-b68391268a11",
-        "firstName": "SVL",
-        "lastName": "Content"
-      },
-      "shareRequests": []
-    },
-    "type": "LidarSensor"
   },
   {
     "params": {
@@ -664,7 +535,7 @@
     "name": "Main Camera",
     "parent": null,
     "pluginId": "3d4f1e08-4c62-4e9f-b859-b26d4910b85e",
-    "sortKey": 11,
+    "sortKey": 9,
     "plugin": {
       "isFavored": true,
       "isShared": false,
@@ -706,62 +577,13 @@
   },
   {
     "params": {
-      "Frame": "camera",
-      "FieldOfView": 90,
-      "Topic": "/simulator/ground_truth/2d_detections"
-    },
-    "name": "2D Ground Truth Sensor",
-    "parent": "Main Camera",
-    "pluginId": "e0bfb6cc-a8f0-425e-9b6c-a643ca1e255a",
-    "sortKey": 12,
-    "plugin": {
-      "isFavored": true,
-      "isShared": false,
-      "isOwned": false,
-      "accessInfo": {
-        "userAccessType": "favored",
-        "owner": {
-          "id": "0d888b00-fa53-47c1-882a-b68391268a11",
-          "firstName": "SVL",
-          "lastName": "Content"
-        }
-      },
-      "supportedSimulatorVersions": [
-        "2021.3",
-        "2021.2",
-        "2021.2.2",
-        "2021.1",
-        "2021.1.1"
-      ],
-      "id": "e0bfb6cc-a8f0-425e-9b6c-a643ca1e255a",
-      "name": "2D Ground Truth Sensor",
-      "type": "PerceptionSensor2D",
-      "category": "sensor",
-      "ownerId": "0d888b00-fa53-47c1-882a-b68391268a11",
-      "accessType": "public",
-      "description": "This sensor outputs an image where objects are encased in a box. The color of the box depends on the type of object.\n\t[\n\t\t\"Car\": \"Green\"\n\t\t\"Pedestrian\": \"Yellow\"\n\t\t\"Bicycle\": \"Cyan\"\n\t\t\"Unknown\":  \"Magenta\"\n\t]\nSee https://www.svlsimulator.com/docs/simulation-content/sensors-list/#2d-ground-truth for more details.",
-      "copyright": "LG Electronics Inc.",
-      "licenseName": "LG Content",
-      "imageUrl": "/api/v1/assets/download/preview/67d4aed4-5c4a-4eae-8fb7-c3e561aa4c71",
-      "status": "active",
-      "owner": {
-        "id": "0d888b00-fa53-47c1-882a-b68391268a11",
-        "firstName": "SVL",
-        "lastName": "Content"
-      },
-      "shareRequests": []
-    },
-    "type": "PerceptionSensor2D"
-  },
-  {
-    "params": {
       "Topic": "/simulator/control/vehicle_cmd",
       "Frame": "base_link"
     },
     "name": "LGSVL Control Sensor",
     "parent": null,
     "pluginId": "a5696615-d3e2-45e9-afa3-9b5ae7359e02",
-    "sortKey": 13,
+    "sortKey": 10,
     "plugin": {
       "isFavored": true,
       "isShared": false,
@@ -817,7 +639,7 @@
     "name": "Keyboard Car Control",
     "parent": "LGSVL Control Sensor",
     "pluginId": "a2ff904a-ff06-4f06-9e45-cb58217a7142",
-    "sortKey": 14,
+    "sortKey": 11,
     "plugin": {
       "isFavored": true,
       "isShared": false,
@@ -846,7 +668,7 @@
       "description": "This sensor is required for a vehicle to accept keyboard control commands. Parameters are not required.\nSee https://www.svlsimulator.com/docs/simulation-content/sensors-list/#keyboard-control for more details.",
       "copyright": "LG Electronics Inc.",
       "licenseName": "LG Content",
-      "imageUrl": "/api/v1/assets/download/preview/990aa76e-ecc4-4404-a4fe-7e6736b39082",
+      "imageUrl": "/api/v1/assets/download/preview/7d0e8f41-8f38-4b0f-9e36-1ab6540ea6df",
       "status": "active",
       "owner": {
         "id": "0d888b00-fa53-47c1-882a-b68391268a11",
@@ -873,7 +695,7 @@
     "name": "Autoware Car Control",
     "parent": "LGSVL Control Sensor",
     "pluginId": "76ff7bd1-81bf-4284-b9bf-e8173dc6053e",
-    "sortKey": 15,
+    "sortKey": 12,
     "plugin": {
       "isFavored": true,
       "isShared": false,
