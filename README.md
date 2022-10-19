@@ -27,14 +27,12 @@ ROS Helper Nodes for utilising LGSVL Simulator in Autonomous Vehicles Developmen
 * **Vehicle Model**: Display the ego vehicle model in Rviz
 
 **TODOs**
-* feat: Packing functions into this pkg
 * feat: 2D Ground Truth Objects
 * feat: Support for Other Sensors
 * feat: Relocalization?
 
 **Known Issues**
 * The official BorregasAve lanelet2 map file contains minor connection errors (not going to fix)
-* PCD Map stays idle during driving (issue)
 
 ## Dependencies
 * System Requirements:
@@ -81,13 +79,28 @@ source devel/setup.bash
 
 ## Usage
 ### Example BorregasAve Map in LGSVL
-**Step 1**: Download LGSVL Simulator and register an account
+**Step 1**: Download LGSVL Simulator and register an account from [here](https://www.svlsimulator.com/)
 
-**Step 2**: Select a the `UT Lexus` Vehicle and upload the sensor configuration provided in `lgsvl_utils/lgsvl_assets/sensor_config/[Custom] Autoware AI.json`
+**Step 2**: Download the LGSVL maps from the [official repo](https://github.com/lgsvl/autoware-data)
+```bash
+# create a directory called `shared_dir` under HOME directory
+cd
+mkdir shared_dir
+cd ~/shared_dir
+# clone the autoware map data into this directory
+git clone https://github.com/lgsvl/autoware-data.git
+```
 
-**Step 3**: Select the BorregasAve Map and start the simulation
+Replace all the contents in `~/shared_dir/autoware-data/BorregasAve/` with the contents in `lgsvl_utils/lgsvl_utils/lgsvl_assets/BorregasAve/`
 
-**Step 4**: Launch the nodes in this `lgsvl_utils` pkg using the `lgsvl_utils/launch/lgsvl_borregas.launch`
+**Step 3**: Create a new simulation on the LGSVL simulator web client.
+1. On the `General` page, fill in some information and select your local cluster.
+2. On the `Test Case` page, select the `BorregasAve` Map, `UT Lexus` Vehicle and upload the sensor configuration provided in `lgsvl_utils/lgsvl_assets/sensor_config/[Custom] Autoware AI.json`
+3. On the `Autopilot` page, select `Autoware.AI v1.14` and use the default `localhost:9090`
+
+**Step 4**: Start the simulation
+
+**Step 5**: Launch the nodes in this `lgsvl_utils` pkg using the `lgsvl_utils/launch/lgsvl_borregas.launch`
 ```bash
 # launch the all the nodes on the example BorregasAve Map
 roslaunch lgsvl_utils borregas.launch 
@@ -95,7 +108,10 @@ roslaunch lgsvl_utils borregas.launch
 
 ![demo_image](media/demo.png)
 
-**Step 5**: You may now use a [Xbox](https://www.xbox.com/en-SG/accessories/controllers/xbox-wireless-controller) or [Logitech F710](https://www.logitechg.com/en-us/products/gamepads/f710-wireless-gamepad.html) joystick to control the ego vehicle. You may change the joystick settings in `launch/common.launch` (`joy_type` and `control_setting`) or customize the button mapping accroding to your own preference in `src/joystick_node.cpp`.
+**Step 6**: You may now use a [Xbox](https://www.xbox.com/en-SG/accessories/controllers/xbox-wireless-controller) or [Logitech F710](https://www.logitechg.com/en-us/products/gamepads/f710-wireless-gamepad.html) joystick to control the ego vehicle. You may change the joystick settings in `launch/common.launch` (`joy_type` and `control_setting`) or customize the button mapping accroding to your own preference in `src/joystick_node.cpp`.
+
+**Step 7**: The mode of the ego vehicle is fully controlled by the joystick, for example: `A` -> Autonomous Mode, `B` -> Brake Mode, `X` -> Manual Mode, `Y` -> Manual Reverse Mode
+(**Note:** For safety considerations, the Autonomous Mode (`A`) can only be started when the vehicle is in Brake Mode (`B`).)
 
 ## Contribution
 You are welcome contributing to the package by opening a pull-request
