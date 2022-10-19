@@ -118,11 +118,11 @@ void JoystickTeleop::joystickCallback(const sensor_msgs::Joy::ConstPtr& joy_msg)
     B = joy_msg->buttons[1];
     X = joy_msg->buttons[2];
     Y = joy_msg->buttons[3];
-    // LB = joy_msg->buttons[4];                   // doing nothing
-    // RB = joy_msg->buttons[5];                   // doing nothing
+    LB = joy_msg->buttons[4];                   // doing nothing
+    RB = joy_msg->buttons[5];                   // doing nothing
     
-    // button_stick_left = joy_msg->buttons[10];   // doing nothing
-    // button_stick_right = joy_msg->buttons[11];  // doing nothing
+    button_stick_left = joy_msg->buttons[10];   // doing nothing
+    button_stick_right = joy_msg->buttons[11];  // doing nothing
     
     cross_key_LR = joy_msg->axes[0];
     cross_key_UD = joy_msg->axes[1];
@@ -131,8 +131,8 @@ void JoystickTeleop::joystickCallback(const sensor_msgs::Joy::ConstPtr& joy_msg)
     UD_axis_stick_R = joy_msg->axes[4];
     RT = joy_msg->axes[5];                      // [0, 1], release the full power
 
-    // LR_axis_stick_L = joy_msg->axes[6];         // doing nothing
-    // UD_axis_stick_L = joy_msg->axes[7];         // doing nothing
+    LR_axis_stick_L = joy_msg->axes[6];         // doing nothing
+    UD_axis_stick_L = joy_msg->axes[7];         // doing nothing
   }
   else if (joy_type_.compare("Xbox") == 0)      // default using xbox wired controller
   {
@@ -140,11 +140,11 @@ void JoystickTeleop::joystickCallback(const sensor_msgs::Joy::ConstPtr& joy_msg)
     B = joy_msg->buttons[1];
     X = joy_msg->buttons[2];
     Y = joy_msg->buttons[3];
-    // LB = joy_msg->buttons[4];                   // doing nothing
-    // RB = joy_msg->buttons[5];                   // doing nothing
+    LB = joy_msg->buttons[4];                   // doing nothing
+    RB = joy_msg->buttons[5];                   // doing nothing
 
-    // button_stick_left = joy_msg->buttons[9];    // doing nothing
-    // button_stick_right = joy_msg->buttons[10];  // doing nothing
+    button_stick_left = joy_msg->buttons[9];    // doing nothing
+    button_stick_right = joy_msg->buttons[10];  // doing nothing
     
     LR_axis_stick_L = joy_msg->axes[0];         
     UD_axis_stick_L = joy_msg->axes[1];
@@ -153,8 +153,8 @@ void JoystickTeleop::joystickCallback(const sensor_msgs::Joy::ConstPtr& joy_msg)
     UD_axis_stick_R = joy_msg->axes[4];
     RT = joy_msg->axes[5];                      // [1.0, -1.0], release the full power
 
-    // cross_key_LR = joy_msg->axes[6];            // doing nothing
-    // cross_key_UD = joy_msg->axes[7];            // doing nothing
+    cross_key_LR = joy_msg->axes[6];            // doing nothing
+    cross_key_UD = joy_msg->axes[7];            // doing nothing
   }
   else
   {

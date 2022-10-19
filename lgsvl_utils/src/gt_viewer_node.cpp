@@ -77,7 +77,7 @@ GTViwerNode::GTViwerNode() : tf2_listener(tf2_buffer)
 
 void GTViwerNode::detections2DCallback(const lgsvl_msgs::Detection2DArray::ConstPtr& lgsvl_detections2d)
 {
-  lgsvl_detections2d->header;
+  // lgsvl_detections2d->header;
 }
 
 jsk_recognition_msgs::BoundingBox GTViwerNode::transformJskBbox(const lgsvl_msgs::Detection3D::ConstPtr& lgsvl_detection3d, const geometry_msgs::Pose& pose_transformed)
@@ -161,7 +161,6 @@ autoware_msgs::DetectedObject GTViwerNode::transformAutowareObject(const lgsvl_m
     point.z = pt.z();
     autoware_object.convex_hull.polygon.points.emplace_back(point);
   }
-
   autoware_object.convex_hull.polygon.points.push_back(autoware_object.convex_hull.polygon.points.front());
 
   return std::move(autoware_object);
