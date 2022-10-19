@@ -14,6 +14,8 @@ ROS Helper Nodes for utilising LGSVL Simulator in Autonomous Vehicles Developmen
 
 ![cover_image](media/demo.gif)
 
+## Updates
+* [19 Oct 2022] Major refactor of the repo, included minimal required [autoware_ai](https://github.com/autowarefoundation) components so now you can use this repo **out-of-the box**.
 ## Features
 * **Ground Truth Objects**: Convert `lgsvl` 3D ground truth objects to `autoware` and `jsk_recognition` messages and visualize them in Rviz
 * **Vehicle Status Publishing**: The ego vehicle's Can Bus data are extracted from the `lgsvl` simulator and published to ROS
@@ -31,25 +33,49 @@ ROS Helper Nodes for utilising LGSVL Simulator in Autonomous Vehicles Developmen
 * feat: Relocalization?
 
 **Known Issues**
-* BorregasAve lanelet2 map contains minor connection errors
-* PCD Map stays idle during driving (suspected to be the publishing rate issue)
+* The official BorregasAve lanelet2 map file contains minor connection errors (not going to fix)
+* PCD Map stays idle during driving (issue)
 
 ## Dependencies
-* lanelet2
-* lgsvl-msgs
-* autoware-msgs
-* jsk-recognition-msgs
+* System Requirements:
+  * Ubuntu 18.04/20.04
+  * ROS Melodic/Noetic
+  * C++11 above
+  * CMake: 3.0.2 above
+* This package is self-contained, only dependens on standard ROS pkgs:
+  * jsk_recognition_msgs
+  * autoware_msgs
+  * lgsvl_msgs
+  * visualization_msgs
+  * geometry_msgs
+  * sensor_msgs
+  * nav_msgs
+  * std_msgs
+  * roscpp
+  * rospy
+  * tf2_ros
+  * tf2_eigen
+  * tf2_geometry_msgs
+  * tf
+  * joy
+  * cv_bridge
+  * image_transport
+  * rosbridge_server
 
 ## Installation
+To use this package, you will need to create a `catkin_ws` first. Details please see the [ROS official tutorial](http://wiki.ros.org/catkin/Tutorials/create_a_workspace).
 ```bash
-# clone the repo
-cd catkin_ws/src
+# clone the repo into your catkin workspace (assuming ~/catkin_ws here)
+cd ~/catkin_ws/src
 git clone https://github.com/SS47816/lgsvl_utils.git
-
-# install dependencies & build 
 cd ..
+
+# install dependencies
 rosdep install --from-paths src --ignore-src -r -y
+
+# build
 catkin_make
+# source 
 source devel/setup.bash
 ```
 
@@ -80,4 +106,6 @@ We are following:
 and [ROS C++ Style Guide](http://wiki.ros.org/CppStyleGuide)
 
 ## License
-MIT License
+The `lgsvl_utils` is released under the [MIT License](https://github.com/SS47816/lgsvl_utils/blob/main/LICENSE)
+
+The included `autoware_ai` components follow their own [Apache License 2.0](https://github.com/autowarefoundation/autoware_ai_common/blob/master/LICENSE)
